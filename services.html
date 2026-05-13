@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services & Pricing | Phantom Boosting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #e0f2fe;       
+            --card-white: #ffffff;     
+            --primary-blue: #0ea5e9;   
+            --dark-blue: #0369a1;      
+            --text-main: #334155;      
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
+        .container { padding: 15px; }
+
+        /* Top Nav & Hamburger */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; color: var(--dark-blue); }
+        .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
+        .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
+        .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
+
+        /* Slide-out Sidebar */
+        .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
+        .sidebar-menu.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-style: italic; }
+        .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
+        .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
+        .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
+        .sidebar-menu a:hover { background: var(--bg-color); color: var(--dark-blue); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        .overlay.active { display: block; }
+
+        /* --- SERVICES PAGE STYLES --- */
+        .page-title { text-align: center; color: var(--dark-blue); margin-bottom: 20px; }
+        
+        .search-box { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: var(--card-white); color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+
+        .category-header { background: var(--dark-blue); color: white; padding: 12px 15px; border-radius: 10px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        
+        .service-card { background: var(--card-white); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); }
+        .service-id { background: #f1f5f9; padding: 3px 8px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; color: #64748b; margin-right: 5px; }
+        .service-name { font-weight: bold; color: var(--text-main); font-size: 0.95rem; margin-bottom: 10px; display: block; line-height: 1.4; }
+        
+        .service-details { display: flex; justify-content: space-between; font-size: 0.85rem; border-top: 1px solid #f1f5f9; padding-top: 10px; }
+        .detail-item { display: flex; flex-direction: column; }
+        .detail-label { color: #94a3b8; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+        .detail-value { font-weight: 900; color: var(--dark-blue); }
+        .price-value { color: #16a34a; font-size: 1rem; }
+
+        /* Mega Footer */
+        .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
+        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
+        .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+        .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
+        .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
+        .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
+        
+        /* 3x2 Payment Grid */
+        .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-menu" id="sideMenu">
+        <div class="sidebar-header">
+            <h2>Phantom</h2>
+            <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
+        </div>
+        <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
+        <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
+        <a href="services.html"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
+        <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
+        <div style="flex-grow: 1;"></div>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
+        <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        
+        <!-- Top Nav -->
+        <div class="top-nav">
+            <div class="nav-left">
+                <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
+                <span>Services</span>
+            </div>
+            <div class="nav-balance">₹ 0.00</div>
+        </div>
+
+        <h2 class="page-title"><i class="fa-solid fa-tags"></i> Services & Pricing</h2>
+
+        <!-- Search Bar -->
+        <input type="text" class="search-box" placeholder="🔍 Search for a service (e.g. Instagram Likes)...">
+
+        <!-- CATEGORY 1: INSTAGRAM -->
+        <div class="category-header">
+            <i class="fa-brands fa-instagram"></i> Instagram Services
+        </div>
+
+        <!-- Dummy Service 1 -->
+        <div class="service-card">
+            <span class="service-name"><span class="service-id">3102</span> Instagram Followers [High Quality / Refill]</span>
+            <div class="service-details">
+                <div class="detail-item">
+                    <span class="detail-label">Min / Max</span>
+                    <span class="detail-value">100 / 50K</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Avg. Time</span>
+                    <span class="detail-value">2 Hours</span>
+                </div>
+                <div class="detail-item" style="text-align: right;">
+                    <span class="detail-label">Rate per 1000</span>
+                    <span class="detail-value price-value">₹ 28.50</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dummy Service 2 -->
+        <div class="service-card">
+            <span class="service-name"><span class="service-id">3155</span> Instagram Likes [Instant / Non-Drop]</span>
+            <div class="service-details">
+                <div class="detail-item">
+                    <span class="detail-label">Min / Max</span>
+                    <span class="detail-value">50 / 100K</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Avg. Time</span>
+                    <span class="detail-value">10 Mins</span>
+                </div>
+                <div class="detail-item" style="text-align: right;">
+                    <span class="detail-label">Rate per 1000</span>
+                    <span class="detail-value price-value">₹ 5.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY 2: YOUTUBE -->
+        <div class="category-header" style="background: #dc2626; margin-top: 25px;">
+            <i class="fa-brands fa-youtube"></i> YouTube Services
+        </div>
+
+        <!-- Dummy Service 3 -->
+        <div class="service-card" style="border-left-color: #dc2626;">
+            <span class="service-name"><span class="service-id">2071</span> YouTube Views [Worldwide / Speed: 5K/Day]</span>
+            <div class="service-details">
+                <div class="detail-item">
+                    <span class="detail-label">Min / Max</span>
+                    <span class="detail-value">1000 / 1M</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Avg. Time</span>
+                    <span class="detail-value">12 Hours</span>
+                </div>
+                <div class="detail-item" style="text-align: right;">
+                    <span class="detail-label">Rate per 1000</span>
+                    <span class="detail-value price-value">₹ 110.00</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Mega Footer -->
+    <div class="mega-footer">
+        <h1>Phantom</h1>
+        <p class="tagline">Phantom Boosting is the Best destination for social media marketing services.</p>
+        
+        <p style="font-weight: bold; margin-bottom: 10px;">Follow us on</p>
+        <div class="social-circles">
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+
+        <p style="font-weight: bold; margin-bottom: 15px;">Quick Links</p>
+        <div class="footer-links">
+            <a href="#">Sign in</a>
+            <a href="#">Services</a>
+            <a href="terms.html">Terms</a>
+            <a href="#">Sign up</a>
+        </div>
+        
+        <!-- 3x2 Payment Grid -->
+        <div class="payment-methods" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
+            <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
+            <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
+            <div class="pay-text" style="color: #002970; font-size: 1.1rem; font-weight: 900;">Paytm</div>
+            <div class="pay-text" style="color: #16a34a; font-size: 1rem; font-weight: 900;">Navi</div>
+            <div class="pay-text" style="color: #ca8a04; font-size: 1rem; font-weight: 900;">FamPay</div>
+            <div class="pay-text" style="color: #ea580c; font-size: 1.1rem; font-weight: 900; font-style: italic;">UPI</div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
+        function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
+    </script>
+
+</body>
+</html>
