@@ -7,104 +7,117 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            var(--bg-color): #e0f2fe;       
+            --bg-color: #e0f2fe;       
             --card-white: #ffffff;     
             --primary-blue: #0ea5e9;   
             --dark-blue: #0369a1;      
             --text-main: #334155;      
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: #e0f2fe; /* Light Sky Blue */
-            margin: 0;
-            color: var(--text-main);
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; }
 
-        /* Top Nav & Announcement */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; font-size: 1rem; color: var(--dark-blue); font-weight: bold; }
+        /* Top Nav with Hamburger on Left */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; color: var(--dark-blue); }
+        .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
+        .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
+        .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
+
+        /* Slide-out Sidebar CSS */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            left: -300px; /* Hidden off-screen */
+            width: 260px;
+            height: 100vh;
+            background: var(--card-white);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: 0.3s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-menu.active { left: 0; } /* Slides it in */
+        
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-style: italic; }
+        .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
+        
+        .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
+        .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
+        .sidebar-menu a:hover { background: var(--bg-color); color: var(--dark-blue); }
+        
+        /* Dark Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
+        .overlay.active { display: block; }
+
+        /* Dashboard Styles */
         .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
-
-        /* Order Form Area */
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         select, input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
         .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; }
-
-        /* NEW: Order Description Grid (From your screenshot) */
         .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
-        
-        .order-desc-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .desc-box {
-            background: var(--card-white);
-            border: 1px solid #bae6fd;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
+        .order-desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .desc-box { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 12px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .desc-box span { display: block; color: #64748b; font-size: 0.85rem; margin-bottom: 5px; }
         .desc-box strong { color: var(--dark-blue); font-size: 0.95rem; }
-
-        /* NEW: Detailed Description Box */
-        .full-desc {
-            background: var(--card-white);
-            border: 1px solid #bae6fd;
-            border-radius: 15px;
-            padding: 20px;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
+        .full-desc { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 15px; padding: 20px; font-size: 0.85rem; line-height: 1.6; color: var(--text-main); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .full-desc h4 { margin-top: 0; color: var(--dark-blue); font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
-
-        /* NEW: Mega Footer (From your screenshot) */
-        .mega-footer {
-            background: var(--dark-blue); /* Deep professional blue */
-            color: white;
-            padding: 40px 20px 80px 20px;
-            border-radius: 35px 35px 0 0;
-            text-align: center;
-            margin-top: 40px;
-        }
+        
+        /* Mega Footer */
+        .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
         .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
-        
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
-        
         .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
         .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
-        
-        .contact-info { color: #38bdf8; font-weight: bold; margin-bottom: 20px; font-size: 1.1rem; }
-        .security-badge { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; }
-        
-        /* Payment Grid */
         .payment-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
         .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
-
-        .copyright { font-size: 0.8rem; color: #bae6fd; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-
-        /* Floating WhatsApp */
+        
         .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; z-index: 100; }
     </style>
 </head>
 <body>
 
+    <div class="overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+    <div class="sidebar-menu" id="sideMenu">
+        <div class="sidebar-header">
+            <h2>Phantom</h2>
+            <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
+        </div>
+        
+        <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
+        <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
+        <a href="#"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
+        <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
+        
+        <div style="flex-grow: 1;"></div>
+        
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
+        <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;">
+            <i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions
+        </a>
+    </div>
+
     <div class="container">
+        
         <div class="top-nav">
-            <span>👋 Welcome, User!</span>
-            <i class="fa-solid fa-bars" style="font-size: 1.2rem;"></i>
+            <div class="nav-left">
+                <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
+                <span>👋 Welcome!</span>
+            </div>
+            <div class="nav-balance">
+                ₹ 0.00
+            </div>
         </div>
 
         <div class="announcement">
@@ -112,7 +125,6 @@
             <span><strong>Flash Sale:</strong> All Instagram Views are currently 10% off!</span>
         </div>
 
-        <!-- Order Form Section -->
         <div class="order-section">
             <div class="form-group">
                 <label>Category</label>
@@ -121,56 +133,35 @@
                     <option>📸 Instagram High Quality Followers</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>Service</label>
                 <select>
                     <option>2071 - YouTube Views [Worldwide]</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label>Link</label>
                 <input type="url" placeholder="Paste target URL here">
             </div>
-
             <div class="form-group">
                 <label>Quantity</label>
                 <input type="number" placeholder="Min: 1000 - Max: 1000000">
             </div>
-
             <div class="form-group">
                 <label>Charge</label>
                 <input type="text" placeholder="₹ 0.00" readonly style="background: #e2e8f0; font-weight: bold;">
             </div>
-
             <button class="submit-btn">Submit Order</button>
         </div>
 
-        <!-- Order Description Area -->
         <div class="section-title">Order Description</div>
-
-        <!-- 2x2 Grid -->
         <div class="order-desc-grid">
-            <div class="desc-box">
-                <span>Start time</span>
-                <strong>12-48 Hours (for ads)</strong>
-            </div>
-            <div class="desc-box">
-                <span>Speed</span>
-                <strong>High for big orders</strong>
-            </div>
-            <div class="desc-box">
-                <span>Quality</span>
-                <strong>100% Real</strong>
-            </div>
-            <div class="desc-box">
-                <span>Refill</span>
-                <strong><i class="fa-solid fa-check" style="color: #16a34a;"></i> Lifetime</strong>
-            </div>
+            <div class="desc-box"><span>Start time</span><strong>12-48 Hours (for ads)</strong></div>
+            <div class="desc-box"><span>Speed</span><strong>High for big orders</strong></div>
+            <div class="desc-box"><span>Quality</span><strong>100% Real</strong></div>
+            <div class="desc-box"><span>Refill</span><strong><i class="fa-solid fa-check" style="color: #16a34a;"></i> Lifetime</strong></div>
         </div>
 
-        <!-- Detailed Bullet Points -->
         <div class="full-desc">
             <h4>Description</h4>
             ⚠️ Max video length 4 min<br>
@@ -183,7 +174,6 @@
         </div>
     </div>
 
-    <!-- Mega Footer -->
     <div class="mega-footer">
         <h1>Phantom</h1>
         <p class="tagline">Phantom Boosting is the Best destination for social media marketing services. 100% Quality focused SMM panel.</p>
@@ -199,42 +189,35 @@
         <div class="footer-links">
             <a href="#">Sign in</a>
             <a href="#">Services</a>
-            <a href="#">Blog</a>
-            <a href="#">Terms</a>
+            <a href="terms.html">Terms</a>
             <a href="#">Sign up</a>
         </div>
-
-        <div class="contact-info">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp Support<br><br>
-            <i class="fa-solid fa-phone"></i> CALL US (10:00 AM TO 10:00 PM)
-        </div>
-
-        <div class="security-badge">
-            100% Secure, No Worries
-        </div>
-
-        <!-- Payment Icons Grid -->
         <div class="payment-methods">
             <div class="pay-icon"><i class="fa-brands fa-cc-mastercard" style="color: #eb001b;"></i></div>
             <div class="pay-text">Payoneer</div>
             <div class="pay-icon"><i class="fa-brands fa-cc-apple-pay" style="color: #000;"></i></div>
             <div class="pay-icon"><i class="fa-brands fa-cc-stripe" style="color: #635bff;"></i></div>
-            
             <div class="pay-icon"><i class="fa-brands fa-cc-paypal" style="color: #00457c;"></i></div>
             <div class="pay-icon"><i class="fa-brands fa-cc-visa" style="color: #1434cb;"></i></div>
             <div class="pay-text">Skrill</div>
             <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4;"></i></div>
         </div>
-
-        <div class="copyright">
-            Copyright &copy; Phantom Boosting. All right reserved.
-        </div>
     </div>
 
-    <!-- Floating WhatsApp Button -->
     <a href="#" class="whatsapp-float">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").classList.add("active");
+            document.getElementById("menuOverlay").classList.add("active");
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").classList.remove("active");
+            document.getElementById("menuOverlay").classList.remove("active");
+        }
+    </script>
 
 </body>
 </html>
