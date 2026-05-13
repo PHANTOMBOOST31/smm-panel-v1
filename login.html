@@ -1,176 +1,69 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Phantom Boosting</title>
+    <title>Login | Phantom</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #e0f2fe;       
-            --card-white: #ffffff;     
-            --primary-blue: #0ea5e9;   
-            --dark-blue: #0369a1;      
-            --text-main: #334155;      
-        }
-
-        body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: var(--bg-color); 
-            margin: 0; 
-            color: var(--text-main); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .login-card {
-            background: var(--card-white);
-            width: 100%;
-            max-width: 400px;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-align: center;
-            border-top: 5px solid var(--primary-blue);
-        }
-
-        .brand-title {
-            color: var(--dark-blue);
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-style: italic;
-            margin: 0 0 5px 0;
-        }
-
-        .brand-subtitle {
-            color: #64748b;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 1.1rem;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 15px 15px 15px 45px;
-            border-radius: 10px;
-            border: 1px solid #bae6fd;
-            background: #f8fafc;
-            color: var(--text-main);
-            box-sizing: border-box;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
-            background: #ffffff;
-        }
-
-        .options-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-            margin-bottom: 25px;
-        }
-
-        .options-row a {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .options-row a:hover {
-            text-decoration: underline;
-        }
-
-        .login-btn {
-            background: var(--primary-blue);
-            color: white;
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
-        }
-
-        .login-btn:hover {
-            background: var(--dark-blue);
-        }
-
-        .signup-link {
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: #64748b;
-        }
-
-        .signup-link a {
-            color: var(--dark-blue);
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .signup-link a:hover {
-            text-decoration: underline;
-        }
+        :root { --primary: #0ea5e9; --dark: #0369a1; --bg: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        h1 { color: var(--dark); text-align: center; margin-bottom: 25px; font-weight: 800; font-style: italic; }
+        .input-group { margin-bottom: 15px; position: relative; }
+        .input-group i { position: absolute; left: 15px; top: 15px; color: #94a3b8; }
+        input { width: 100%; padding: 12px 15px 12px 45px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--primary); }
+        button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        button:hover { background: var(--dark); }
+        .link { text-align: center; margin-top: 20px; font-size: 14px; color: #64748b; }
+        .link a { color: var(--primary); text-decoration: none; font-weight: 700; }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <h1 class="brand-title">Phantom</h1>
-        <p class="brand-subtitle">Welcome back! Please sign in.</p>
-
-        <!-- Dummy Form: Redirects to Dashboard immediately for now -->
-        <form action="dashboard.html" method="GET">
-            <div class="input-group">
-                <i class="fa-solid fa-envelope"></i>
-                <input type="email" placeholder="Email Address" required>
-            </div>
-
-            <div class="input-group">
-                <i class="fa-solid fa-lock"></i>
-                <input type="password" placeholder="Password" required>
-            </div>
-
-            <div class="options-row">
-                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
-                    <input type="checkbox" style="accent-color: var(--primary-blue);"> Remember me
-                </label>
-                <a href="#">Forgot Password?</a>
-            </div>
-
-            <button type="submit" class="login-btn">Sign In</button>
-        </form>
-
-        <div class="signup-link">
-            Don't have an account? <a href="register.html">Sign up here</a>
+<div class="card">
+    <h1>Phantom</h1>
+    <form id="loginForm">
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="lUser" placeholder="Username" required>
         </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="lPass" placeholder="Password" required>
+        </div>
+        <button type="submit">Login to Dashboard</button>
+    </form>
+    <div class="link">
+        Don't have an account? <a href="register.html">Sign Up here</a>
     </div>
+</div>
+
+<script>
+    document.getElementById('loginForm').onsubmit = function(e) {
+        e.preventDefault();
+        
+        // Grab the username and password the customer just typed in
+        const enteredUser = document.getElementById('lUser').value;
+        const enteredPass = document.getElementById('lPass').value;
+
+        // Check if they match what was saved during Registration
+        if (enteredUser === localStorage.getItem('username') && enteredPass === localStorage.getItem('password')) {
+            
+            // If correct, create the "Unlock Key"
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // Send them safely to the dashboard
+            window.location.href = "dashboard.html";
+            
+        } else {
+            // If incorrect, stop them and show an error
+            alert("Invalid Username or Password! Please check your details or register first.");
+        }
+    };
+</script>
 
 </body>
 </html>
