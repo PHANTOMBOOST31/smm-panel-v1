@@ -17,50 +17,48 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; }
 
-        /* Top Nav with Hamburger on Left */
+        /* Top Nav & Hamburger */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
-        /* Slide-out Sidebar CSS */
-        .sidebar-menu {
-            position: fixed;
-            top: 0;
-            left: -300px; /* Hidden off-screen */
-            width: 260px;
-            height: 100vh;
-            background: var(--card-white);
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: 0.3s ease-in-out;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-menu.active { left: 0; } /* Slides it in */
-        
+        /* Slide-out Sidebar */
+        .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
+        .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
         .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-style: italic; }
         .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
-        
         .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
         .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
         .sidebar-menu a:hover { background: var(--bg-color); color: var(--dark-blue); }
-        
-        /* Dark Overlay */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .overlay.active { display: block; }
 
-        /* Dashboard Styles */
+        /* Announcement */
         .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
+
+        /* --- RESTORED: Status Cards --- */
+        .card { background: var(--card-white); border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); transition: 0.2s; }
+        .card:hover { transform: translateY(-2px); }
+        .card-icon { background: var(--bg-color); color: var(--primary-blue); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 1.2rem; }
+        .card-info h4 { margin: 0; font-size: 0.85rem; color: #64748b; }
+        .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
+
+        /* --- RESTORED: Social Grid --- */
+        .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
+        .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
+        .social-item:hover { transform: scale(1.05); }
+
+        /* Order Section */
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         select, input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
         .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; }
+        
+        /* Order Descriptions */
         .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
         .order-desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .desc-box { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 12px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
@@ -81,50 +79,100 @@
         .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         
+        /* Floating WhatsApp */
         .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; z-index: 100; }
     </style>
 </head>
 <body>
 
+    <!-- OVERLAY -->
     <div class="overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
+    <!-- SIDEBAR -->
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
             <h2>Phantom</h2>
             <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
         </div>
-        
         <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
         <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
         <a href="#"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
         <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
-        
         <div style="flex-grow: 1;"></div>
-        
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
-        <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;">
-            <i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions
-        </a>
+        <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
     </div>
 
+    <!-- MAIN CONTENT -->
     <div class="container">
         
+        <!-- Top Nav -->
         <div class="top-nav">
             <div class="nav-left">
                 <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
                 <span>👋 Welcome!</span>
             </div>
-            <div class="nav-balance">
-                ₹ 0.00
-            </div>
+            <div class="nav-balance">₹ 0.00</div>
         </div>
 
+        <!-- Announcement -->
         <div class="announcement">
             <i class="fa-solid fa-bolt"></i>
             <span><strong>Flash Sale:</strong> All Instagram Views are currently 10% off!</span>
         </div>
 
+        <!-- RESTORED: STATUS CARDS -->
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-user"></i></div>
+            <div class="card-info">
+                <h4>Account Status</h4>
+                <p>New</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="card-info">
+                <h4>Account Spending</h4>
+                <p>₹ 0.00</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="card-info">
+                <h4>Account Balance</h4>
+                <p>₹ 0.00</p>
+            </div>
+        </div>
+
+        <!-- Special Green "Add Funds" Card -->
+        <a href="add-funds.html" style="text-decoration: none;">
+            <div class="card" style="border-left-color: #22c55e;">
+                <div class="card-icon" style="color: #22c55e; background: #dcfce7;"><i class="fa-solid fa-plus"></i></div>
+                <div class="card-info">
+                    <h4>Add Funds</h4>
+                    <p style="color: #16a34a;">Click Now</p>
+                </div>
+            </div>
+        </a>
+
+        <!-- RESTORED: SOCIAL MEDIA GRID -->
+        <div class="social-grid">
+            <div class="social-item"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-spotify" style="color: #1DB954;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-tiktok" style="color: #000000;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-pinterest" style="color: #E60023;"></i></div>
+            <div class="social-item"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i></div>
+        </div>
+
+        <!-- Order Form Section -->
         <div class="order-section">
             <div class="form-group">
                 <label>Category</label>
@@ -154,6 +202,7 @@
             <button class="submit-btn">Submit Order</button>
         </div>
 
+        <!-- Order Description -->
         <div class="section-title">Order Description</div>
         <div class="order-desc-grid">
             <div class="desc-box"><span>Start time</span><strong>12-48 Hours (for ads)</strong></div>
@@ -174,6 +223,7 @@
         </div>
     </div>
 
+    <!-- Mega Footer -->
     <div class="mega-footer">
         <h1>Phantom</h1>
         <p class="tagline">Phantom Boosting is the Best destination for social media marketing services. 100% Quality focused SMM panel.</p>
@@ -208,6 +258,7 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
+    <!-- MENU SCRIPT -->
     <script>
         function openMenu() {
             document.getElementById("sideMenu").classList.add("active");
