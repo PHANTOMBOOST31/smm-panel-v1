@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Phantom Boosting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --primary: #0ea5e9; --dark: #0369a1; --bg: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        h1 { color: var(--dark); text-align: center; margin-bottom: 25px; font-weight: 800; font-style: italic; }
+        .input-group { margin-bottom: 15px; position: relative; }
+        .input-group i { position: absolute; left: 15px; top: 15px; color: #94a3b8; }
+        input { width: 100%; padding: 12px 15px 12px 45px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--primary); }
+        button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        button:hover { background: var(--dark); }
+        .link { text-align: center; margin-top: 20px; font-size: 14px; color: #64748b; }
+        .link a { color: var(--primary); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Phantom</h1>
+    <form id="regForm">
+        <div class="input-group"><i class="fas fa-at"></i><input type="text" id="user" placeholder="Username" required></div>
+        <div class="input-group"><i class="fas fa-user"></i><input type="text" id="name" placeholder="Full Name" required></div>
+        <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="email" placeholder="Email Address" required></div>
+        <div class="input-group"><i class="fab fa-whatsapp"></i><input type="tel" id="phone" placeholder="WhatsApp Number" required></div>
+        <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="pass" placeholder="Password" required></div>
+        <button type="submit">Create Account</button>
+    </form>
+    <div class="link">Already have an account? <a href="login.html">Login</a></div>
+</div>
+
+<script>
+    document.getElementById('regForm').onsubmit = function(e) {
+        e.preventDefault();
+        // Saving user data locally
+        localStorage.setItem('username', document.getElementById('user').value);
+        localStorage.setItem('password', document.getElementById('pass').value);
+        localStorage.setItem('isRegistered', 'true');
+        
+        alert("Registration Successful! Please login to continue.");
+        window.location.href = "login.html";
+    };
+</script>
+
+</body>
+</html>
