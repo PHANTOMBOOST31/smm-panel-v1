@@ -1,223 +1,238 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Phantom Boosting</title>
-    <!-- We'll use FontAwesome for the hearts and social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-pink: #ffe4e9;
-            --card-white: #ffffff;
-            --accent-red: #d93d59;
-            --text-dark: #4a4a4a;
+            var(--bg-color): #e0f2fe;       
+            --card-white: #ffffff;     
+            --primary-blue: #0ea5e9;   
+            --dark-blue: #0369a1;      
+            --text-main: #334155;      
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background-color: var(--bg-pink);
+            background-color: #e0f2fe; /* Light Sky Blue */
             margin: 0;
-            padding: 15px;
-            color: var(--text-dark);
+            color: var(--text-main);
         }
 
-        /* Top Header Area */
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            font-size: 0.9rem;
-            color: var(--accent-red);
-            font-weight: bold;
-        }
+        .container { padding: 15px; }
 
-        /* Status Cards */
-        .card {
-            background: var(--card-white);
-            border-radius: 20px;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            position: relative;
-        }
+        /* Top Nav & Announcement */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; font-size: 1rem; color: var(--dark-blue); font-weight: bold; }
+        .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
+        .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
-        .card-icon {
-            background: var(--accent-red);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-        }
+        /* Order Form Area */
+        .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        select, input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
+        .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; }
 
-        .card-info h4 { margin: 0; font-size: 0.85rem; color: #888; }
-        .card-info p { margin: 2px 0 0; font-size: 1.1rem; font-weight: bold; color: var(--accent-red); }
-
-        /* Social Icons Grid */
-        .social-grid {
+        /* NEW: Order Description Grid (From your screenshot) */
+        .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
+        
+        .order-desc-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .social-item {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            font-size: 1.2rem;
-            color: #555;
-        }
-
-        /* Order Form Card */
-        .order-card {
-            background: var(--accent-red);
-            border-radius: 25px;
-            padding: 25px;
-            color: white;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             margin-bottom: 20px;
         }
-
-        .tab {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 15px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .tab.active { background: white; color: var(--accent-red); }
-
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 0.85rem; }
-        
-        select, input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            background: white;
-            color: var(--text-dark);
-            box-sizing: border-box;
-        }
-
-        .submit-btn {
-            background: white;
-            color: var(--accent-red);
-            width: 100%;
+        .desc-box {
+            background: var(--card-white);
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
             padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
+        .desc-box span { display: block; color: #64748b; font-size: 0.85rem; margin-bottom: 5px; }
+        .desc-box strong { color: var(--dark-blue); font-size: 0.95rem; }
 
-        /* WhatsApp Button */
-        .whatsapp {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #25d366;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        /* NEW: Detailed Description Box */
+        .full-desc {
+            background: var(--card-white);
+            border: 1px solid #bae6fd;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
+        .full-desc h4 { margin-top: 0; color: var(--dark-blue); font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+
+        /* NEW: Mega Footer (From your screenshot) */
+        .mega-footer {
+            background: var(--dark-blue); /* Deep professional blue */
+            color: white;
+            padding: 40px 20px 80px 20px;
+            border-radius: 35px 35px 0 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
+        .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+        
+        .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
+        
+        .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
+        .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
+        
+        .contact-info { color: #38bdf8; font-weight: bold; margin-bottom: 20px; font-size: 1.1rem; }
+        .security-badge { font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; }
+        
+        /* Payment Grid */
+        .payment-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
+        .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+
+        .copyright { font-size: 0.8rem; color: #bae6fd; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+        /* Floating WhatsApp */
+        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; z-index: 100; }
     </style>
 </head>
 <body>
 
-    <div class="top-nav">
-        <span>Currently on: New order</span>
-        <div class="top-icons">
-            <i class="fa-solid fa-heart"></i>
+    <div class="container">
+        <div class="top-nav">
+            <span>👋 Welcome, User!</span>
+            <i class="fa-solid fa-bars" style="font-size: 1.2rem;"></i>
+        </div>
+
+        <div class="announcement">
+            <i class="fa-solid fa-bolt"></i>
+            <span><strong>Flash Sale:</strong> All Instagram Views are currently 10% off!</span>
+        </div>
+
+        <!-- Order Form Section -->
+        <div class="order-section">
+            <div class="form-group">
+                <label>Category</label>
+                <select>
+                    <option>▶️ YouTube 100% REAL Views</option>
+                    <option>📸 Instagram High Quality Followers</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Service</label>
+                <select>
+                    <option>2071 - YouTube Views [Worldwide]</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Link</label>
+                <input type="url" placeholder="Paste target URL here">
+            </div>
+
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" placeholder="Min: 1000 - Max: 1000000">
+            </div>
+
+            <div class="form-group">
+                <label>Charge</label>
+                <input type="text" placeholder="₹ 0.00" readonly style="background: #e2e8f0; font-weight: bold;">
+            </div>
+
+            <button class="submit-btn">Submit Order</button>
+        </div>
+
+        <!-- Order Description Area -->
+        <div class="section-title">Order Description</div>
+
+        <!-- 2x2 Grid -->
+        <div class="order-desc-grid">
+            <div class="desc-box">
+                <span>Start time</span>
+                <strong>12-48 Hours (for ads)</strong>
+            </div>
+            <div class="desc-box">
+                <span>Speed</span>
+                <strong>High for big orders</strong>
+            </div>
+            <div class="desc-box">
+                <span>Quality</span>
+                <strong>100% Real</strong>
+            </div>
+            <div class="desc-box">
+                <span>Refill</span>
+                <strong><i class="fa-solid fa-check" style="color: #16a34a;"></i> Lifetime</strong>
+            </div>
+        </div>
+
+        <!-- Detailed Bullet Points -->
+        <div class="full-desc">
+            <h4>Description</h4>
+            ⚠️ Max video length 4 min<br>
+            🎯 True Real Views<br>
+            🎯 100% Real worldwide SKIP + Display<br>
+            🌟 We are the <strong>MAIN PROVIDER</strong> of this service<br>
+            🌟 API users are most welcome for discount<br>
+            🌟 We provide 100% <em>High Quality</em> Service & support<br>
+            🟢 Contact us on WhatsApp/Tickets for ❤️ discount ❤️
         </div>
     </div>
 
-    <!-- Account Status Card -->
-    <div class="card">
-        <div class="card-icon"><i class="fa-solid fa-user"></i></div>
-        <div class="card-info">
-            <h4>Account Status</h4>
-            <p>New</p>
+    <!-- Mega Footer -->
+    <div class="mega-footer">
+        <h1>Phantom</h1>
+        <p class="tagline">Phantom Boosting is the Best destination for social media marketing services. 100% Quality focused SMM panel.</p>
+        
+        <p style="font-weight: bold; margin-bottom: 10px;">Follow us on</p>
+        <div class="social-circles">
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+
+        <p style="font-weight: bold; margin-bottom: 15px;">Quick Links</p>
+        <div class="footer-links">
+            <a href="#">Sign in</a>
+            <a href="#">Services</a>
+            <a href="#">Blog</a>
+            <a href="#">Terms</a>
+            <a href="#">Sign up</a>
+        </div>
+
+        <div class="contact-info">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp Support<br><br>
+            <i class="fa-solid fa-phone"></i> CALL US (10:00 AM TO 10:00 PM)
+        </div>
+
+        <div class="security-badge">
+            100% Secure, No Worries
+        </div>
+
+        <!-- Payment Icons Grid -->
+        <div class="payment-methods">
+            <div class="pay-icon"><i class="fa-brands fa-cc-mastercard" style="color: #eb001b;"></i></div>
+            <div class="pay-text">Payoneer</div>
+            <div class="pay-icon"><i class="fa-brands fa-cc-apple-pay" style="color: #000;"></i></div>
+            <div class="pay-icon"><i class="fa-brands fa-cc-stripe" style="color: #635bff;"></i></div>
+            
+            <div class="pay-icon"><i class="fa-brands fa-cc-paypal" style="color: #00457c;"></i></div>
+            <div class="pay-icon"><i class="fa-brands fa-cc-visa" style="color: #1434cb;"></i></div>
+            <div class="pay-text">Skrill</div>
+            <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4;"></i></div>
+        </div>
+
+        <div class="copyright">
+            Copyright &copy; Phantom Boosting. All right reserved.
         </div>
     </div>
 
-    <!-- Balance Card -->
-    <div class="card">
-        <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
-        <div class="card-info">
-            <h4>Account Balance</h4>
-            <p>₹ 0.00</p>
-        </div>
-    </div>
-
-    <!-- Social Grid (Like in 1000504968.png) -->
-    <div class="social-grid">
-        <div class="social-item"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
-        <div class="social-item"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
-        <div class="social-item"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
-        <div class="social-item"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
-    </div>
-
-    <!-- Order Form (Like in 1000504969.png) -->
-    <div class="order-card">
-        <div class="tabs">
-            <div class="tab active">New Order</div>
-            <div class="tab">Mass Order</div>
-        </div>
-
-        <div class="form-group">
-            <label>Category</label>
-            <select>
-                <option>Instagram - High Quality Followers</option>
-                <option>Instagram - Real Likes</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Service</label>
-            <select>
-                <option>Select a service...</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Link</label>
-            <input type="text" placeholder="https://instagram.com/your-username">
-        </div>
-
-        <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" placeholder="Min: 10 - Max: 1,000,000">
-        </div>
-
-        <button class="submit-btn">Submit</button>
-    </div>
-
-    <!-- Floating WhatsApp -->
-    <a href="#" class="whatsapp">
+    <!-- Floating WhatsApp Button -->
+    <a href="#" class="whatsapp-float">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
