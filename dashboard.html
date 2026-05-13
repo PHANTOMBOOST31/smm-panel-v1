@@ -1,48 +1,225 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard | Phantom Boosting</title>
+    <title>Dashboard | Phantom Boosting</title>
+    <!-- We'll use FontAwesome for the hearts and social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; display: flex; }
-        .sidebar { width: 250px; background-color: #1e293b; height: 100vh; padding: 20px; }
-        .sidebar h2 { color: #38bdf8; }
-        .sidebar a { color: #94a3b8; text-decoration: none; display: block; padding: 12px 0; border-bottom: 1px solid #334155; }
-        .main-content { flex-grow: 1; padding: 40px; }
-        .balance-card { background-color: #1e293b; padding: 20px; border-radius: 8px; border-left: 5px solid #38bdf8; margin-bottom: 30px; }
-        .order-box { background-color: #1e293b; padding: 30px; border-radius: 8px; }
-        select, input { width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #334155; background-color: #0f172a; color: white; margin-bottom: 20px; }
-        .btn { background-color: #38bdf8; color: #0f172a; padding: 15px; border: none; width: 100%; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        :root {
+            --bg-pink: #ffe4e9;
+            --card-white: #ffffff;
+            --accent-red: #d93d59;
+            --text-dark: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-pink);
+            margin: 0;
+            padding: 15px;
+            color: var(--text-dark);
+        }
+
+        /* Top Header Area */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        /* Status Cards */
+        .card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .card-icon {
+            background: var(--accent-red);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .card-info h4 { margin: 0; font-size: 0.85rem; color: #888; }
+        .card-info p { margin: 2px 0 0; font-size: 1.1rem; font-weight: bold; color: var(--accent-red); }
+
+        /* Social Icons Grid */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .social-item {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Order Form Card */
+        .order-card {
+            background: var(--accent-red);
+            border-radius: 25px;
+            padding: 25px;
+            color: white;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .tab.active { background: white; color: var(--accent-red); }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 0.85rem; }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: white;
+            color: var(--text-dark);
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            background: white;
+            color: var(--accent-red);
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #25d366;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Phantom</h2>
-        <a href="dashboard.html">📦 New Order</a>
-        <a href="orders.html">📋 My Orders</a>
-        <a href="#">💸 Add Funds</a>
-    </div>
-    <div class="main-content">
-        <div class="balance-card">
-            <h3>Account Balance</h3>
-            <h1>₹ 0.00</h1>
+
+    <div class="top-nav">
+        <span>Currently on: New order</span>
+        <div class="top-icons">
+            <i class="fa-solid fa-heart"></i>
         </div>
-        <div class="order-box">
-            <h2>New Social Order</h2>
+    </div>
+
+    <!-- Account Status Card -->
+    <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-user"></i></div>
+        <div class="card-info">
+            <h4>Account Status</h4>
+            <p>New</p>
+        </div>
+    </div>
+
+    <!-- Balance Card -->
+    <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
+        <div class="card-info">
+            <h4>Account Balance</h4>
+            <p>₹ 0.00</p>
+        </div>
+    </div>
+
+    <!-- Social Grid (Like in 1000504968.png) -->
+    <div class="social-grid">
+        <div class="social-item"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
+        <div class="social-item"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
+        <div class="social-item"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
+        <div class="social-item"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
+    </div>
+
+    <!-- Order Form (Like in 1000504969.png) -->
+    <div class="order-card">
+        <div class="tabs">
+            <div class="tab active">New Order</div>
+            <div class="tab">Mass Order</div>
+        </div>
+
+        <div class="form-group">
             <label>Category</label>
             <select>
-                <option>Instagram Followers (High Quality)</option>
-                <option>Instagram Likes (Instant)</option>
-                <option>Instagram Views (Reels)</option>
-                <option>Telegram Members</option>
+                <option>Instagram - High Quality Followers</option>
+                <option>Instagram - Real Likes</option>
             </select>
-            <label>Link</label>
-            <input type="text" placeholder="Paste your Instagram link here...">
-            <label>Quantity</label>
-            <input type="number" placeholder="Enter quantity">
-            <button class="btn">Place Order</button>
         </div>
+
+        <div class="form-group">
+            <label>Service</label>
+            <select>
+                <option>Select a service...</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Link</label>
+            <input type="text" placeholder="https://instagram.com/your-username">
+        </div>
+
+        <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" placeholder="Min: 10 - Max: 1,000,000">
+        </div>
+
+        <button class="submit-btn">Submit</button>
     </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="#" class="whatsapp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
 </body>
 </html>
