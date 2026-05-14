@@ -287,20 +287,26 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 1. Check if logged in & Fetch Customer ID
+        // 1. Check VIP Pass AND Database File
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                // If not logged in, kick out to login page
+                // No VIP pass? Kick out.
                 window.location.href = "login.html";
             } else {
-                // Fetch the unique Customer ID from Firestore
                 try {
                     const docRef = doc(db, "users", user.uid);
                     const docSnap = await getDoc(docRef);
 
                     if (docSnap.exists()) {
+                        // File exists! Let them in and show ID.
                         const userData = docSnap.data();
                         document.getElementById('displayId').innerText = userData.customerId || "N/A";
+                    } else {
+                        // THE FIX: The VIP pass is valid, but the database file is DELETED!
+                        // Instantly revoke their pass and kick them out.
+                        alert("Your account has been deleted or suspended by the Admin.");
+                        await signOut(auth);
+                        window.location.href = "login.html";
                     }
                 } catch (error) {
                     console.error("Error fetching data:", error);
@@ -311,9 +317,8 @@
 
         // 2. Handle Logout Button
         document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault(); // Stop the link from jumping the page
+            e.preventDefault();
             signOut(auth).then(() => {
-                // Successfully logged out, send to login page
                 window.location.href = "login.html";
             }).catch((error) => {
                 console.error("Logout error", error);
