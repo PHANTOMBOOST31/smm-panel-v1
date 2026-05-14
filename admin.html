@@ -116,10 +116,10 @@
         </div>
     </div>
 
-    <script type="module">
+   <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { initializeFirestore, doc, getDoc, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
@@ -144,7 +144,7 @@
 
                     if (docSnap.exists() && docSnap.data().role === "admin") {
                         document.body.style.display = "flex"; 
-                        loadPendingRequests(); // Trigger the table load!
+                        loadPendingRequests(); 
                     } else {
                         window.location.href = "dashboard.html";
                     }
@@ -154,23 +154,22 @@
             }
         });
 
-        // FETCH DATA FROM DATABASE
-        async function loadPendingRequests() {
+        // 1. FETCH DATA FROM DATABASE
+        window.loadPendingRequests = async function() {
             const tbody = document.getElementById("requestsTableBody");
             
             try {
-                // Look inside "fund_requests" where status is "pending"
                 const q = query(collection(db, "fund_requests"), where("status", "==", "pending"));
                 const querySnapshot = await getDocs(q);
                 
-                tbody.innerHTML = ""; // Clear loading text
+                tbody.innerHTML = ""; 
                 
                 let count = 0;
                 querySnapshot.forEach((docSnap) => {
                     count++;
                     const data = docSnap.data();
+                    const requestId = docSnap.id; // The hidden ID of the receipt
                     
-                    // Build the live HTML row
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td><strong>${data.customerId}</strong></td>
@@ -178,8 +177,8 @@
                         <td>${data.utr}</td>
                         <td style="font-weight: bold; color: var(--success);">₹ ${data.amount}</td>
                         <td>
-                            <button class="btn btn-approve" onclick="alert('Ready to build Approve logic next!')"><i class="fa-solid fa-check"></i></button>
-                            <button class="btn btn-reject" onclick="alert('Ready to build Reject logic next!')"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-approve" onclick="approveRequest('${requestId}', '${data.uid}', ${data.amount})"><i class="fa-solid fa-check"></i> Approve</button>
+                            <button class="btn btn-reject" onclick="rejectRequest('${requestId}')"><i class="fa-solid fa-xmark"></i> Reject</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -192,10 +191,52 @@
                     document.getElementById("newBadge").innerText = count + " New";
                 } else {
                     tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #64748b;'>No pending requests right now.</td></tr>";
+                    document.getElementById("newBadge").style.display = "none";
                 }
 
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan='5' style='color: red; text-align: center;'>Error loading data: ${error.message}</td></tr>`;
+            }
+        }
+
+        // 2. THE APPROVE LOGIC (Adds money to wallet)
+        window.approveRequest = async function(requestId, userId, amount) {
+            if(!confirm("Are you sure you want to add ₹" + amount + " to this user's wallet?")) return;
+            
+            try {
+                // Find the user and add the money
+                const userRef = doc(db, "users", userId);
+                await updateDoc(userRef, {
+                    balance: increment(amount)
+                });
+
+                // Find the receipt and mark it as Approved
+                const reqRef = doc(db, "fund_requests", requestId);
+                await updateDoc(reqRef, {
+                    status: "approved"
+                });
+
+                alert("✅ Funds successfully added to user's wallet!");
+                loadPendingRequests(); // Refresh the table instantly
+
+            } catch (error) {
+                alert("Action Blocked! Check Firebase Rules: " + error.message);
+            }
+        }
+
+        // 3. THE REJECT LOGIC (Denies the money)
+        window.rejectRequest = async function(requestId) {
+            if(!confirm("Are you sure you want to REJECT this payment request?")) return;
+            
+            try {
+                const reqRef = doc(db, "fund_requests", requestId);
+                await updateDoc(reqRef, {
+                    status: "rejected"
+                });
+                
+                loadPendingRequests(); 
+            } catch (error) {
+                alert("Error: " + error.message);
             }
         }
     </script>
