@@ -280,7 +280,6 @@
         serviceSelect.addEventListener("change", calculateCharge);
         quantityInput.addEventListener("input", calculateCharge);
 
-        // Placeholder for the next step so the button doesn't refresh the page!
         document.getElementById('submitOrderBtn').addEventListener('click', (e) => {
             e.preventDefault();
             alert("Calculator is working! Ready to build the Wallet Deduction Logic next.");
@@ -320,11 +319,11 @@
                         document.getElementById('cardBalance').innerText = "₹ " + (userData.balance || "0");
                         document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || "0");
                     } else {
-                        alert("Your account has been deleted or suspended by the Admin.");
+                        // Document doesn't exist (Ghost Account)
+                        alert("Your profile file is missing! Forcing logout so you can create a fresh one.");
+                        window.localStorage.clear();
+                        window.sessionStorage.clear();
                         await signOut(auth);
                         window.location.href = "login.html";
                     }
-                } catch (error) {
-                    console.error("Error fetching data:", error);
-                }
-            }
+                } ca
