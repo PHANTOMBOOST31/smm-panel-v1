@@ -73,10 +73,8 @@
 </head>
 <body>
 
-    <!-- OVERLAY -->
     <div class="overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
-    <!-- SIDEBAR -->
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
             <h2>Phantom</h2>
@@ -89,24 +87,24 @@
         <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
+        
+        <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
+        
         <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
         
-        <!-- Top Nav -->
         <div class="top-nav">
             <div class="nav-left">
                 <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
                 <span>Add Funds</span>
             </div>
-            <div class="nav-balance">₹ 0.00</div>
+            <div class="nav-balance" id="navBalance">Loading...</div>
         </div>
 
         <h2 class="page-title">Deposit Money</h2>
 
-        <!-- Rules Box -->
         <div class="rules-box">
             <strong>⚠️ Important Rules:</strong><br><br>
             • Minimum Deposit is <strong>₹15</strong>.<br>
@@ -115,11 +113,10 @@
             • Your balance will be updated by our team within <strong>5-10 Minutes</strong>.
         </div>
 
-        <!-- Scan & Pay Card -->
         <div class="qr-card">
             <h3><i class="fa-solid fa-qrcode"></i> Scan & Pay</h3>
             
-         <img src="qr-code.jpg" alt="UPI QR Code" style="width: 220px; border-radius: 15px; margin-bottom: 15px; border: 3px solid #0ea5e9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            <img src="qr-code.jpg" alt="UPI QR Code" style="width: 220px; border-radius: 15px; margin-bottom: 15px; border: 3px solid #0ea5e9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
 
             <div class="upi-box">
                 <span id="upiId">francodebbarma3110@ptaxis</span>
@@ -127,10 +124,11 @@
             </div>
         </div>
 
-        <!-- Payment Verification Form -->
         <div class="payment-form">
             <h3><i class="fa-solid fa-circle-check"></i> Verify Payment</h3>
             
+            <input type="hidden" id="hiddenCustomerId" value="">
+
             <div class="form-group">
                 <label>Amount Paid (₹)</label>
                 <input type="number" id="payAmount" placeholder="Example: 100" required>
@@ -141,7 +139,6 @@
                 <input type="text" id="payUtr" placeholder="12-Digit Number from PhonePe/Paytm/GooglePay" required>
             </div>
 
-            <!-- This button triggers the WhatsApp redirect -->
             <button class="wa-submit-btn" onclick="sendToWhatsApp()">
                 <i class="fa-brands fa-whatsapp"></i> Send Details on WhatsApp
             </button>
@@ -149,7 +146,6 @@
 
     </div>
 
-    <!-- Mega Footer -->
     <div class="mega-footer">
         <h1>Phantom</h1>
         <p class="tagline">Phantom Boosting is the Best destination for social media marketing services.</p>
@@ -169,7 +165,6 @@
             <a href="#">Sign up</a>
         </div>
         
-        <!-- Updated 3x2 Payment Grid -->
         <div class="payment-methods" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
             <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
             <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
@@ -180,39 +175,93 @@
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
-        // Sidebar logic
         function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
         function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
 
-        // Copy UPI Logic
         function copyUPI() {
             var upiText = document.getElementById("upiId").innerText;
             navigator.clipboard.writeText(upiText);
             alert("UPI ID Copied to Clipboard!");
         }
 
-        // WhatsApp Redirect Logic
+        // Upgraded WhatsApp Logic
         function sendToWhatsApp() {
             var amount = document.getElementById("payAmount").value;
             var utr = document.getElementById("payUtr").value;
+            var customerId = document.getElementById("hiddenCustomerId").value || "Unknown User";
             
-            // Safety check so they don't send empty messages
             if(amount === "" || utr === "") {
                 alert("Please enter both the Amount and UTR Number before sending!");
                 return;
             }
 
-            // --- CHANGE THIS TO YOUR ACTUAL WHATSAPP NUMBER ---
-            var myWhatsAppNumber = "919383300728"; // Start with country code, no + symbol
-
-            // Formats the message perfectly for WhatsApp
-            var textMessage = "Hello Phantom Boosting! 👋%0A%0AI just made a payment and need my funds added.%0A%0A💰 *Amount Paid:* ₹" + amount + "%0A🔢 *UTR Number:* " + utr + "%0A%0APlease verify this and update my wallet balance.";
+            var myWhatsAppNumber = "919383300728"; 
             
-            // Redirects to WhatsApp
+            // Now includes the Customer ID automatically!
+            var textMessage = "Hello Phantom Boosting! 👋%0A%0AI just made a payment and need my funds added.%0A%0A👤 *Customer ID:* " + customerId + "%0A💰 *Amount Paid:* ₹" + amount + "%0A🔢 *UTR Number:* " + utr + "%0A%0APlease verify this and update my wallet balance.";
+            
             window.location.href = "https://wa.me/" + myWhatsAppNumber + "?text=" + textMessage;
         }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Your exact keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
+            authDomain: "phantom-boosting.firebaseapp.com",
+            projectId: "phantom-boosting",
+            storageBucket: "phantom-boosting.firebasestorage.app",
+            messagingSenderId: "954894417214",
+            appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Security Check & Balance Fetcher
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        
+                        // Show the live wallet balance in the top right
+                        document.getElementById('navBalance').innerText = "₹ " + (userData.balance || "0.00");
+                        
+                        // Save the Customer ID invisibly so the WhatsApp button can grab it
+                        document.getElementById('hiddenCustomerId').value = userData.customerId || user.email;
+                    } else {
+                        // Kicks them out if their account was deleted from the database
+                        alert("Your account has been deleted or suspended by the Admin.");
+                        await signOut(auth);
+                        window.location.href = "login.html";
+                    }
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            }
+        });
+
+        // Handle Logout Button
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            }).catch((error) => {
+                console.error("Logout error", error);
+            });
+        });
     </script>
 
 </body>
