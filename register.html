@@ -86,9 +86,9 @@
                     createdAt: new Date().toISOString()
                 });
 
-                alert("Account Created Successfully! Welcome to Phantom Boosting.");
-                window.location.href = "dashboard.html"; // Redirect to dashboard
-
+              alert("Account Created Successfully! Please log in to enter your dashboard.");
+window.location.href = "login.html";
+                
             } catch (error) {
                 console.error(error);
                 alert("Error: " + error.message);
