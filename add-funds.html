@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Funds | Phantom Boosting</title>
+    <title>Add Funds | Phantom</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -17,13 +17,11 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; }
 
-        /* Top Nav & Hamburger */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
-        /* Slide-out Sidebar */
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
@@ -35,12 +33,10 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .overlay.active { display: block; }
 
-        /* --- ADD FUNDS PAGE STYLES --- */
         .page-title { text-align: center; color: var(--dark-blue); margin-bottom: 20px; }
         
         .qr-card { background: var(--card-white); border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 5px solid var(--primary-blue); }
         .qr-card h3 { margin-top: 0; color: var(--dark-blue); }
-        .qr-placeholder { width: 200px; height: 200px; background: #f1f5f9; border: 2px dashed #bae6fd; border-radius: 10px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.9rem; }
         
         .upi-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .upi-box span { font-weight: bold; color: var(--dark-blue); }
@@ -54,11 +50,10 @@
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
         
-        /* Special WhatsApp Submit Button */
-        .wa-submit-btn { background: #25d366; color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .wa-submit-btn:hover { background: #1ebc5a; }
+        /* The Dual-Action WhatsApp Button */
+        .wa-submit-btn { background: #25d366; color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2); transition: 0.2s; }
+        .wa-submit-btn:hover { background: #1ebc5a; transform: translateY(-2px); }
 
-        /* Mega Footer */
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
         .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
@@ -66,9 +61,9 @@
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
         .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
         .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
-        
-        /* 3x2 Payment Grid */
         .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -83,14 +78,9 @@
         <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
         <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
-        <a href="#"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
-        <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
-        
         <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
-        
-        <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
     </div>
 
     <div class="container">
@@ -115,9 +105,7 @@
 
         <div class="qr-card">
             <h3><i class="fa-solid fa-qrcode"></i> Scan & Pay</h3>
-            
             <img src="qr-code.jpg" alt="UPI QR Code" style="width: 220px; border-radius: 15px; margin-bottom: 15px; border: 3px solid #0ea5e9; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-
             <div class="upi-box">
                 <span id="upiId">francodebbarma3110@ptaxis</span>
                 <button class="copy-btn" onclick="copyUPI()"><i class="fa-regular fa-copy"></i> Copy</button>
@@ -126,8 +114,6 @@
 
         <div class="payment-form">
             <h3><i class="fa-solid fa-circle-check"></i> Verify Payment</h3>
-            
-            <input type="hidden" id="hiddenCustomerId" value="">
 
             <div class="form-group">
                 <label>Amount Paid (₹)</label>
@@ -136,81 +122,27 @@
             
             <div class="form-group">
                 <label>Transaction ID / UTR Number</label>
-                <input type="text" id="payUtr" placeholder="12-Digit Number from PhonePe/Paytm/GooglePay" required>
+                <input type="text" id="payUtr" placeholder="12-Digit Number from App" required>
             </div>
 
-            <button class="wa-submit-btn" onclick="sendToWhatsApp()">
-                <i class="fa-brands fa-whatsapp"></i> Send Details on WhatsApp
+            <button class="wa-submit-btn" id="dualSubmitBtn">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Submit & Send via WhatsApp
             </button>
         </div>
 
     </div>
 
-    <div class="mega-footer">
-        <h1>Phantom</h1>
-        <p class="tagline">Phantom Boosting is the Best destination for social media marketing services.</p>
-        
-        <p style="font-weight: bold; margin-bottom: 10px;">Follow us on</p>
-        <div class="social-circles">
-            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#"><i class="fa-brands fa-telegram"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-
-        <p style="font-weight: bold; margin-bottom: 15px;">Quick Links</p>
-        <div class="footer-links">
-            <a href="#">Sign in</a>
-            <a href="#">Services</a>
-            <a href="terms.html">Terms</a>
-            <a href="#">Sign up</a>
-        </div>
-        
-        <div class="payment-methods" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
-            <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
-            <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
-            <div class="pay-text" style="color: #002970; font-size: 1.1rem; font-weight: 900;">Paytm</div>
-            <div class="pay-text" style="color: #16a34a; font-size: 1rem; font-weight: 900;">Navi</div>
-            <div class="pay-text" style="color: #ca8a04; font-size: 1rem; font-weight: 900;">FamPay</div>
-            <div class="pay-text" style="color: #ea580c; font-size: 1.1rem; font-weight: 900; font-style: italic;">UPI</div>
-        </div>
-    </div>
-
     <script>
         function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
         function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
-
-        function copyUPI() {
-            var upiText = document.getElementById("upiId").innerText;
-            navigator.clipboard.writeText(upiText);
-            alert("UPI ID Copied to Clipboard!");
-        }
-
-        // Upgraded WhatsApp Logic
-        function sendToWhatsApp() {
-            var amount = document.getElementById("payAmount").value;
-            var utr = document.getElementById("payUtr").value;
-            var customerId = document.getElementById("hiddenCustomerId").value || "Unknown User";
-            
-            if(amount === "" || utr === "") {
-                alert("Please enter both the Amount and UTR Number before sending!");
-                return;
-            }
-
-            var myWhatsAppNumber = "919383300728"; 
-            
-            // Now includes the Customer ID automatically!
-            var textMessage = "Hello Phantom Boosting! 👋%0A%0AI just made a payment and need my funds added.%0A%0A👤 *Customer ID:* " + customerId + "%0A💰 *Amount Paid:* ₹" + amount + "%0A🔢 *UTR Number:* " + utr + "%0A%0APlease verify this and update my wallet balance.";
-            
-            window.location.href = "https://wa.me/" + myWhatsAppNumber + "?text=" + textMessage;
-        }
+        function copyUPI() { navigator.clipboard.writeText(document.getElementById("upiId").innerText); alert("UPI ID Copied!"); }
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, getDoc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Your exact keys
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
             authDomain: "phantom-boosting.firebaseapp.com",
@@ -222,47 +154,82 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
+        const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-        // Security Check & Balance Fetcher
+        let GLOBAL_CUSTOMER_ID = "Unknown";
+        let GLOBAL_UID = "Unknown";
+
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
             } else {
+                GLOBAL_UID = user.uid; 
                 try {
                     const docRef = doc(db, "users", user.uid);
                     const docSnap = await getDoc(docRef);
-
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
-                        
-                        // Show the live wallet balance in the top right
-                        document.getElementById('navBalance').innerText = "₹ " + (userData.balance || "0.00");
-                        
-                        // Save the Customer ID invisibly so the WhatsApp button can grab it
-                        document.getElementById('hiddenCustomerId').value = userData.customerId || user.email;
-                    } else {
-                        // Kicks them out if their account was deleted from the database
-                        alert("Your account has been deleted or suspended by the Admin.");
-                        await signOut(auth);
-                        window.location.href = "login.html";
+                        document.getElementById('navBalance').innerText = "₹ " + (userData.balance || "0");
+                        GLOBAL_CUSTOMER_ID = userData.customerId || "N/A"; 
                     }
                 } catch (error) {
-                    console.error("Error fetching data:", error);
+                    console.error(error);
                 }
             }
         });
 
-        // Handle Logout Button
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+        // --- THE MAGIC DUAL-ACTION LOGIC ---
+        document.getElementById('dualSubmitBtn').addEventListener('click', async (e) => {
             e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            }).catch((error) => {
-                console.error("Logout error", error);
-            });
+            const btn = document.getElementById('dualSubmitBtn');
+            const amountInput = document.getElementById('payAmount').value;
+            const utrInput = document.getElementById('payUtr').value;
+
+            if(!amountInput || !utrInput) {
+                alert("Please enter both the Amount and UTR Number before submitting!");
+                return;
+            }
+
+            // Temporarily disable button to prevent double-clicking
+            btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Processing...";
+            btn.disabled = true;
+
+            try {
+                // ACTION 1: Send Data to Firebase Admin Panel Silently
+                await addDoc(collection(db, "fund_requests"), {
+                    uid: GLOBAL_UID,
+                    customerId: GLOBAL_CUSTOMER_ID,
+                    amount: Number(amountInput),
+                    utr: utrInput,
+                    status: "pending",
+                    createdAt: serverTimestamp()
+                });
+
+                // ACTION 2: Immediately Redirect to WhatsApp
+                const myWhatsAppNumber = "919383300728";
+                const textMessage = "Hello Phantom Boosting! 👋%0A%0AI just made a payment.%0A%0A👤 *Customer ID:* " + GLOBAL_CUSTOMER_ID + "%0A💰 *Amount Paid:* ₹" + amountInput + "%0A🔢 *UTR Number:* " + utrInput + "%0A%0APlease verify this.";
+                
+                window.location.href = "https://wa.me/" + myWhatsAppNumber + "?text=" + textMessage;
+
+                // Reset the form in case they hit the "Back" button later
+                document.getElementById('payAmount').value = "";
+                document.getElementById('payUtr').value = "";
+                btn.innerHTML = "<i class='fa-brands fa-whatsapp' style='font-size: 1.3rem;'></i> Submit & Send via WhatsApp";
+                btn.disabled = false;
+                
+            } catch (error) {
+                // This will catch if your database rules block the save!
+                alert("Error connecting to server. Please try again. Code: " + error.message);
+                btn.innerHTML = "<i class='fa-brands fa-whatsapp' style='font-size: 1.3rem;'></i> Submit & Send via WhatsApp";
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            await signOut(auth);
+            window.location.href = "login.html";
         });
     </script>
-
 </body>
 </html>
