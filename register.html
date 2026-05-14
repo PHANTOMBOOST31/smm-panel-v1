@@ -37,29 +37,20 @@
         </div>
     </div>
 
-    <!-- FIREBASE INTEGRATION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // PASTE YOUR WHATSAPP KEYS BELOW
-        <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
-    authDomain: "phantom-boosting.firebaseapp.com",
-    projectId: "phantom-boosting",
-    storageBucket: "phantom-boosting.firebasestorage.app",
-    messagingSenderId: "954894417214",
-    appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
-  };
-
+        // Your exact keys, formatted perfectly
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
+            authDomain: "phantom-boosting.firebaseapp.com",
+            projectId: "phantom-boosting",
+            storageBucket: "phantom-boosting.firebasestorage.app",
+            messagingSenderId: "954894417214",
+            appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
+        };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
@@ -86,8 +77,8 @@
                     createdAt: new Date().toISOString()
                 });
 
-              alert("Account Created Successfully! Please log in to enter your dashboard.");
-window.location.href = "login.html";
+                alert("Account Created Successfully! Please log in to enter your dashboard.");
+                window.location.href = "login.html";
                 
             } catch (error) {
                 console.error(error);
