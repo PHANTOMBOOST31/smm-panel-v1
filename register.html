@@ -3,50 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up | Phantom Boosting</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Register | Phantom Boosting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --primary: #0ea5e9; --dark: #0369a1; --bg: #f8fafc; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        h1 { color: var(--dark); text-align: center; margin-bottom: 25px; font-weight: 800; font-style: italic; }
-        .input-group { margin-bottom: 15px; position: relative; }
-        .input-group i { position: absolute; left: 15px; top: 15px; color: #94a3b8; }
-        input { width: 100%; padding: 12px 15px 12px 45px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
-        input:focus { outline: none; border-color: var(--primary); }
-        button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        button:hover { background: var(--dark); }
-        .link { text-align: center; margin-top: 20px; font-size: 14px; color: #64748b; }
-        .link a { color: var(--primary); text-decoration: none; font-weight: 700; }
+        body { background-color: #0f172a; color: white; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
-<body>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-<div class="card">
-    <h1>Phantom</h1>
-    <form id="regForm">
-        <div class="input-group"><i class="fas fa-at"></i><input type="text" id="user" placeholder="Username" required></div>
-        <div class="input-group"><i class="fas fa-user"></i><input type="text" id="name" placeholder="Full Name" required></div>
-        <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="email" placeholder="Email Address" required></div>
-        <div class="input-group"><i class="fab fa-whatsapp"></i><input type="tel" id="phone" placeholder="WhatsApp Number" required></div>
-        <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="pass" placeholder="Password" required></div>
-        <button type="submit">Create Account</button>
-    </form>
-    <div class="link">Already have an account? <a href="login.html">Login</a></div>
-</div>
+    <div class="glass w-full max-w-md p-8 rounded-2xl shadow-2xl">
+        <h2 class="text-3xl font-bold text-center mb-2 text-cyan-400">Join Phantom</h2>
+        <p class="text-gray-400 text-center mb-8 text-sm">Create your account to start boosting</p>
 
-<script>
-    document.getElementById('regForm').onsubmit = function(e) {
-        e.preventDefault();
-        // Saving user data locally
-        localStorage.setItem('username', document.getElementById('user').value);
-        localStorage.setItem('password', document.getElementById('pass').value);
-        localStorage.setItem('isRegistered', 'true');
-        
-        alert("Registration Successful! Please login to continue.");
-        window.location.href = "login.html";
-    };
-</script>
+        <form id="registerForm" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-cyan-500 outline-none transition">
+            </div>
 
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <input type="password" id="password" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-cyan-500 outline-none transition">
+            </div>
+
+            <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 rounded-lg transition transform active:scale-95 shadow-lg shadow-cyan-900/20">
+                Create Account
+            </button>
+        </form>
+
+        <div class="mt-6 text-center text-sm text-gray-400">
+            Already have an account? <a href="login.html" class="text-cyan-400 hover:underline">Log in</a>
+        </div>
+    </div>
+
+    <!-- FIREBASE INTEGRATION -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // PASTE YOUR WHATSAPP KEYS BELOW
+        <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
+    authDomain: "phantom-boosting.firebaseapp.com",
+    projectId: "phantom-boosting",
+    storageBucket: "phantom-boosting.firebasestorage.app",
+    messagingSenderId: "954894417214",
+    appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
+  };
+
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const registerForm = document.getElementById('registerForm');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // 1. Create the user in Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 2. Create the "Wallet" in the Database
+                await setDoc(doc(db, "users", user.uid), {
+                    email: email,
+                    balance: 0,
+                    role: "customer",
+                    createdAt: new Date().toISOString()
+                });
+
+                alert("Account Created Successfully! Welcome to Phantom Boosting.");
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+
+            } catch (error) {
+                console.error(error);
+                alert("Error: " + error.message);
+            }
+        });
+    </script>
 </body>
 </html>
