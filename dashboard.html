@@ -17,16 +17,13 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; }
 
-        /* Top Nav & Hamburger */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 5px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
-        /* Customer ID Badge */
         .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid #bae6fd; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
 
-        /* Slide-out Sidebar */
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
@@ -38,30 +35,26 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .overlay.active { display: block; }
 
-        /* Announcement */
         .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
-        /* Status Cards */
         .card { background: var(--card-white); border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); transition: 0.2s; }
         .card:hover { transform: translateY(-2px); }
         .card-icon { background: var(--bg-color); color: var(--primary-blue); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 1.2rem; }
         .card-info h4 { margin: 0; font-size: 0.85rem; color: #64748b; }
         .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
 
-        /* Social Grid */
         .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
         .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
         .social-item:hover { transform: scale(1.05); }
 
-        /* Order Section */
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         select, input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
-        .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; }
+        .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
+        .submit-btn:hover { background: var(--dark-blue); }
         
-        /* Order Descriptions */
         .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
         .order-desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .desc-box { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 12px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
@@ -70,7 +63,6 @@
         .full-desc { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 15px; padding: 20px; font-size: 0.85rem; line-height: 1.6; color: var(--text-main); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .full-desc h4 { margin-top: 0; color: var(--dark-blue); font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
         
-        /* Mega Footer */
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
         .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
@@ -78,11 +70,10 @@
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
         .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
         .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
-        .payment-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
+        .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
         .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         
-        /* Floating WhatsApp */
         .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; z-index: 100; }
     </style>
 </head>
@@ -102,9 +93,7 @@
         <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
-        
         <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
-        
         <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
     </div>
 
@@ -139,7 +128,7 @@
             <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
             <div class="card-info">
                 <h4>Account Spending</h4>
-                <p>₹ 0.00</p>
+                <p id="cardSpending">Loading...</p>
             </div>
         </div>
 
@@ -177,30 +166,31 @@
         <div class="order-section">
             <div class="form-group">
                 <label>Category</label>
-                <select>
-                    <option>▶️ YouTube 100% REAL Views</option>
-                    <option>📸 Instagram High Quality Followers</option>
+                <select id="categorySelect">
+                    <option value="youtube">▶️ YouTube Services</option>
+                    <option value="instagram">📸 Instagram Services</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Service</label>
-                <select>
-                    <option>2071 - YouTube Views [Worldwide]</option>
+                <select id="serviceSelect">
+                    <option value="yt_views">2071 - YouTube Views [Worldwide] (₹70.00 / 1000)</option>
+                    <option value="ig_followers">3052 - Instagram HQ Followers (₹28.00 / 1000)</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Link</label>
-                <input type="url" placeholder="Paste target URL here">
+                <input type="url" id="orderLink" placeholder="Paste target URL here">
             </div>
             <div class="form-group">
                 <label>Quantity</label>
-                <input type="number" placeholder="Min: 1000 - Max: 1000000">
+                <input type="number" id="orderQuantity" placeholder="Min: 100 - Max: 1000000">
             </div>
             <div class="form-group">
                 <label>Charge</label>
-                <input type="text" placeholder="₹ 0.00" readonly style="background: #e2e8f0; font-weight: bold;">
+                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: #e0f2fe; color: #0369a1; border-color: #38bdf8; font-weight: 800; font-size: 1.1rem;">
             </div>
-            <button class="submit-btn">Submit Order</button>
+            <button class="submit-btn" id="submitOrderBtn">Submit Order</button>
         </div>
 
         <div class="section-title">Order Description</div>
@@ -242,7 +232,7 @@
             <a href="#">Sign up</a>
         </div>
 
-        <div class="payment-methods" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
+        <div class="payment-methods">
             <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
             <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
             <div class="pay-text" style="color: #002970; font-size: 1.1rem; font-weight: 900;">Paytm</div>
@@ -257,14 +247,44 @@
     </a>
 
     <script>
-        function openMenu() {
-            document.getElementById("sideMenu").classList.add("active");
-            document.getElementById("menuOverlay").classList.add("active");
+        function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
+        function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
+
+        const services = {
+            "yt_views": { basePrice: 50 },     
+            "ig_followers": { basePrice: 20 }  
+        };
+
+        const profitMargin = 1.40;
+
+        const serviceSelect = document.getElementById("serviceSelect");
+        const quantityInput = document.getElementById("orderQuantity");
+        const chargeInput = document.getElementById("orderCharge");
+
+        function calculateCharge() {
+            const selectedServiceId = serviceSelect.value;
+            const quantity = parseInt(quantityInput.value) || 0;
+
+            if (quantity < 100) {
+                chargeInput.value = "₹ 0.00";
+                return;
+            }
+
+            const basePricePer1000 = services[selectedServiceId].basePrice;
+            const baseCost = (quantity / 1000) * basePricePer1000;
+            const finalCharge = baseCost * profitMargin;
+
+            chargeInput.value = "₹ " + finalCharge.toFixed(2);
         }
-        function closeMenu() {
-            document.getElementById("sideMenu").classList.remove("active");
-            document.getElementById("menuOverlay").classList.remove("active");
-        }
+
+        serviceSelect.addEventListener("change", calculateCharge);
+        quantityInput.addEventListener("input", calculateCharge);
+
+        // Placeholder for the next step so the button doesn't refresh the page!
+        document.getElementById('submitOrderBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert("Calculator is working! Ready to build the Wallet Deduction Logic next.");
+        });
     </script>
 
     <script type="module">
@@ -272,7 +292,6 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Your exact keys
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
             authDomain: "phantom-boosting.firebaseapp.com",
@@ -286,7 +305,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 1. Strict Bouncer & Live Balance Update
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
@@ -297,39 +315,16 @@
 
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
-                        
-                        // Update Customer ID
                         document.getElementById('displayId').innerText = userData.customerId || "N/A";
-                        
-                        // Update Live Balances!
                         document.getElementById('navBalance').innerText = "₹ " + (userData.balance || "0");
                         document.getElementById('cardBalance').innerText = "₹ " + (userData.balance || "0");
-                        
+                        document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || "0");
                     } else {
-                        // Kick out deleted users
                         alert("Your account has been deleted or suspended by the Admin.");
                         await signOut(auth);
                         window.location.href = "login.html";
                     }
                 } catch (error) {
                     console.error("Error fetching data:", error);
-                    document.getElementById('displayId').innerText = "Error";
-                    document.getElementById('navBalance').innerText = "Error";
-                    document.getElementById('cardBalance').innerText = "Error";
                 }
             }
-        });
-
-        // 2. Handle Logout Button
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            }).catch((error) => {
-                console.error("Logout error", error);
-            });
-        });
-    </script>
-</body>
-</html>
-
