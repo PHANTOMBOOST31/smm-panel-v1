@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Phantom Boosting</title>
+    <title>Dashboard | Phantom</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -55,6 +55,14 @@
         .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
         .submit-btn:hover { background: var(--dark-blue); }
         
+        /* Success Receipt CSS */
+        .success-receipt { background-color: #dcfce7; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative; display: none; box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1); }
+        .success-receipt h3 { margin: 0 0 10px 0; color: #15803d; font-size: 1.1rem; }
+        .success-receipt p { margin: 4px 0; font-size: 0.9rem; color: #166534; font-weight: 500; }
+        .success-receipt span { font-weight: bold; color: #14532d; word-wrap: break-word; }
+        .close-receipt { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #15803d; font-size: 1.2rem; font-weight: bold; }
+        .close-receipt:hover { color: #14532d; }
+
         .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
         .order-desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .desc-box { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 12px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
@@ -163,6 +171,17 @@
             <div class="social-item"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i></div>
         </div>
 
+        <div class="success-receipt" id="orderReceipt">
+            <span class="close-receipt" onclick="document.getElementById('orderReceipt').style.display='none'">&times;</span>
+            <h3>Your order received <i class="fa-solid fa-circle-check"></i></h3>
+            <p>ID: <span id="receiptId">...</span></p>
+            <p>Service: <span id="receiptService">...</span></p>
+            <p>Link: <span id="receiptLink">...</span></p>
+            <p>Quantity: <span id="receiptQty">...</span></p>
+            <p>Charge: <span id="receiptCharge">...</span></p>
+            <p>Balance: <span id="receiptBalance">...</span></p>
+        </div>
+
         <div class="order-section">
             <div class="form-group">
                 <label>Category</label>
@@ -247,16 +266,16 @@
     </a>
 
     <script>
+        // Menu functionality
         function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
         function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
 
+        // Auto-Calculator Logic
         const services = {
             "yt_views": { basePrice: 50 },     
             "ig_followers": { basePrice: 20 }  
         };
-
         const profitMargin = 1.40;
-
         const serviceSelect = document.getElementById("serviceSelect");
         const quantityInput = document.getElementById("orderQuantity");
         const chargeInput = document.getElementById("orderCharge");
@@ -264,32 +283,21 @@
         function calculateCharge() {
             const selectedServiceId = serviceSelect.value;
             const quantity = parseInt(quantityInput.value) || 0;
-
-            if (quantity < 100) {
-                chargeInput.value = "₹ 0.00";
-                return;
-            }
-
+            if (quantity < 100) { chargeInput.value = "₹ 0.00"; return; }
             const basePricePer1000 = services[selectedServiceId].basePrice;
             const baseCost = (quantity / 1000) * basePricePer1000;
             const finalCharge = baseCost * profitMargin;
-
             chargeInput.value = "₹ " + finalCharge.toFixed(2);
         }
 
         serviceSelect.addEventListener("change", calculateCharge);
         quantityInput.addEventListener("input", calculateCharge);
-
-        document.getElementById('submitOrderBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert("Calculator is working! Ready to build the Wallet Deduction Logic next.");
-        });
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
@@ -302,28 +310,130 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
+        
+        // This line right here permanently fixes the "Loading..." bug
+        const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
+        let currentBalance = 0;
+        let globalUserId = null;
+
+        // Load Profile Data
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
             } else {
+                globalUserId = user.uid;
                 try {
                     const docRef = doc(db, "users", user.uid);
                     const docSnap = await getDoc(docRef);
 
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
+                        currentBalance = userData.balance || 0;
+                        
                         document.getElementById('displayId').innerText = userData.customerId || "N/A";
-                        document.getElementById('navBalance').innerText = "₹ " + (userData.balance || "0");
-                        document.getElementById('cardBalance').innerText = "₹ " + (userData.balance || "0");
-                        document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || "0");
+                        document.getElementById('navBalance').innerText = "₹ " + currentBalance.toFixed(2);
+                        document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
+                        document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || 0).toFixed(2);
                     } else {
-                        // Document doesn't exist (Ghost Account)
-                        alert("Your profile file is missing! Forcing logout so you can create a fresh one.");
-                        window.localStorage.clear();
-                        window.sessionStorage.clear();
+                        alert("Profile missing! Logging out to reset.");
                         await signOut(auth);
                         window.location.href = "login.html";
                     }
-                } ca
+                } catch (error) {
+                    console.error("Firebase error: ", error);
+                }
+            }
+        });
+
+        // Checkout Bouncer Logic
+        document.getElementById('submitOrderBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            const link = document.getElementById("orderLink").value;
+            const qty = Number(document.getElementById("orderQuantity").value);
+            const chargeText = document.getElementById("orderCharge").value; 
+            const charge = Number(chargeText.replace(/[^0-9.-]+/g,"")); 
+
+            if(!link || qty < 100 || charge <= 0) {
+                alert("⚠️ Please enter a valid link and a minimum quantity of 100.");
+                return;
+            }
+
+            if(currentBalance < charge) {
+                alert("❌ Insufficient Balance! Please add funds to place this order.");
+                return;
+            }
+
+            const btn = document.getElementById('submitOrderBtn');
+            btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Processing...";
+            btn.disabled = true;
+
+            try {
+                // Deduct money and add to spending
+                const userRef = doc(db, "users", globalUserId);
+                await updateDoc(userRef, {
+                    balance: increment(-charge),
+                    spending: increment(charge)
+                });
+
+                // Get selected service name
+                const sel = document.getElementById("serviceSelect");
+                const serviceName = sel.options[sel.selectedIndex].text;
+
+                // Create Order in Database
+                const newOrder = await addDoc(collection(db, "orders"), {
+                    uid: globalUserId,
+                    serviceName: serviceName,
+                    link: link,
+                    quantity: qty,
+                    charge: charge,
+                    status: "pending",
+                    createdAt: serverTimestamp()
+                });
+
+                // Update UI instantly
+                currentBalance -= charge; 
+                let newSpending = Number(document.getElementById('cardSpending').innerText.replace(/[^0-9.-]+/g,"")) + charge;
+                
+                document.getElementById('navBalance').innerText = "₹ " + currentBalance.toFixed(2);
+                document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
+                document.getElementById('cardSpending').innerText = "₹ " + newSpending.toFixed(2);
+
+                // Fill and show Green Receipt
+                document.getElementById("receiptId").innerText = newOrder.id.substring(0, 8).toUpperCase(); 
+                document.getElementById("receiptService").innerText = serviceName;
+                document.getElementById("receiptLink").innerText = link;
+                document.getElementById("receiptQty").innerText = qty;
+                document.getElementById("receiptCharge").innerText = "₹ " + charge.toFixed(2);
+                document.getElementById("receiptBalance").innerText = "₹ " + currentBalance.toFixed(2);
+                
+                document.getElementById("orderReceipt").style.display = "block";
+                
+                // Clear input fields
+                document.getElementById("orderLink").value = "";
+                document.getElementById("orderQuantity").value = "";
+                document.getElementById("orderCharge").value = "₹ 0.00";
+
+                // Scroll to top to see receipt
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                alert("Transaction Failed! Check database rules. Error: " + error.message);
+            }
+
+            btn.innerHTML = "Submit Order";
+            btn.disabled = false;
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            await signOut(auth);
+            window.localStorage.clear();
+            window.sessionStorage.clear();
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+</html>
