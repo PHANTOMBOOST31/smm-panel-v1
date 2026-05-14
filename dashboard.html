@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +19,13 @@
         .container { padding: 15px; }
 
         /* Top Nav & Hamburger */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; color: var(--dark-blue); }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 5px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
+
+        /* Customer ID Badge */
+        .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid #bae6fd; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
 
         /* Slide-out Sidebar */
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
@@ -39,14 +43,14 @@
         .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
-        /* --- RESTORED: Status Cards --- */
+        /* Status Cards */
         .card { background: var(--card-white); border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); transition: 0.2s; }
         .card:hover { transform: translateY(-2px); }
         .card-icon { background: var(--bg-color); color: var(--primary-blue); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 1.2rem; }
         .card-info h4 { margin: 0; font-size: 0.85rem; color: #64748b; }
         .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
 
-        /* --- RESTORED: Social Grid --- */
+        /* Social Grid */
         .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
         .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
         .social-item:hover { transform: scale(1.05); }
@@ -85,10 +89,8 @@
 </head>
 <body>
 
-    <!-- OVERLAY -->
     <div class="overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
-    <!-- SIDEBAR -->
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
             <h2>Phantom</h2>
@@ -101,13 +103,14 @@
         <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
+        
+        <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
+        
         <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
     </div>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
         
-        <!-- Top Nav -->
         <div class="top-nav">
             <div class="nav-left">
                 <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
@@ -116,13 +119,15 @@
             <div class="nav-balance">₹ 0.00</div>
         </div>
 
-        <!-- Announcement -->
+        <div class="id-badge">
+            <i class="fa-solid fa-id-badge" style="color: var(--primary-blue);"></i> ID: <span id="displayId" style="color: var(--primary-blue);">Loading...</span>
+        </div>
+
         <div class="announcement">
             <i class="fa-solid fa-bolt"></i>
             <span><strong>Flash Sale:</strong> All Instagram Views are currently 10% off!</span>
         </div>
 
-        <!-- RESTORED: STATUS CARDS -->
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-user"></i></div>
             <div class="card-info">
@@ -147,7 +152,6 @@
             </div>
         </div>
 
-        <!-- Special Green "Add Funds" Card -->
         <a href="add-funds.html" style="text-decoration: none;">
             <div class="card" style="border-left-color: #22c55e;">
                 <div class="card-icon" style="color: #22c55e; background: #dcfce7;"><i class="fa-solid fa-plus"></i></div>
@@ -158,7 +162,6 @@
             </div>
         </a>
 
-        <!-- RESTORED: SOCIAL MEDIA GRID -->
         <div class="social-grid">
             <div class="social-item"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
             <div class="social-item"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
@@ -172,7 +175,6 @@
             <div class="social-item"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i></div>
         </div>
 
-        <!-- Order Form Section -->
         <div class="order-section">
             <div class="form-group">
                 <label>Category</label>
@@ -202,7 +204,6 @@
             <button class="submit-btn">Submit Order</button>
         </div>
 
-        <!-- Order Description -->
         <div class="section-title">Order Description</div>
         <div class="order-desc-grid">
             <div class="desc-box"><span>Start time</span><strong>12-48 Hours (for ads)</strong></div>
@@ -223,7 +224,6 @@
         </div>
     </div>
 
-    <!-- Mega Footer -->
     <div class="mega-footer">
         <h1>Phantom</h1>
         <p class="tagline">Phantom Boosting is the Best destination for social media marketing services. 100% Quality focused SMM panel.</p>
@@ -243,27 +243,20 @@
             <a href="#">Sign up</a>
         </div>
 
-<div class="payment-methods" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
-    <!-- Row 1 -->
-    <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
-    <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
-    <div class="pay-text" style="color: #002970; font-size: 1.1rem; font-weight: 900;">Paytm</div>
-
-    <!-- Row 2 -->
-    <div class="pay-text" style="color: #16a34a; font-size: 1rem; font-weight: 900;">Navi</div>
-    <div class="pay-text" style="color: #ca8a04; font-size: 1rem; font-weight: 900;">FamPay</div>
-    <div class="pay-text" style="color: #ea580c; font-size: 1.1rem; font-weight: 900; font-style: italic;">UPI</div>
-</div>
-
-
-        
+        <div class="payment-methods" style="grid-template-columns: repeat(3, 1fr); gap: 15px;">
+            <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
+            <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
+            <div class="pay-text" style="color: #002970; font-size: 1.1rem; font-weight: 900;">Paytm</div>
+            <div class="pay-text" style="color: #16a34a; font-size: 1rem; font-weight: 900;">Navi</div>
+            <div class="pay-text" style="color: #ca8a04; font-size: 1rem; font-weight: 900;">FamPay</div>
+            <div class="pay-text" style="color: #ea580c; font-size: 1.1rem; font-weight: 900; font-style: italic;">UPI</div>
+        </div>
     </div>
 
     <a href="#" class="whatsapp-float">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- MENU SCRIPT -->
     <script>
         function openMenu() {
             document.getElementById("sideMenu").classList.add("active");
@@ -277,36 +270,54 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // PASTE YOUR WHATSAPP KEYS BELOW
-       <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        // Your exact keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
+            authDomain: "phantom-boosting.firebaseapp.com",
+            projectId: "phantom-boosting",
+            storageBucket: "phantom-boosting.firebasestorage.app",
+            messagingSenderId: "954894417214",
+            appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
+        };
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
-    authDomain: "phantom-boosting.firebaseapp.com",
-    projectId: "phantom-boosting",
-    storageBucket: "phantom-boosting.firebasestorage.app",
-    messagingSenderId: "954894417214",
-    appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
-  };
-
-  // Initialize Firebase
- 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // This checks if the user has a valid "ID" (is logged in)
-        onAuthStateChanged(auth, (user) => {
+        // 1. Check if logged in & Fetch Customer ID
+        onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                // If they are NOT logged in, kick them back to the register page!
-                window.location.href = "register.html";
+                // If not logged in, kick out to login page
+                window.location.href = "login.html";
+            } else {
+                // Fetch the unique Customer ID from Firestore
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        document.getElementById('displayId').innerText = userData.customerId || "N/A";
+                    }
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    document.getElementById('displayId').innerText = "Error";
+                }
             }
+        });
+
+        // 2. Handle Logout Button
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault(); // Stop the link from jumping the page
+            signOut(auth).then(() => {
+                // Successfully logged out, send to login page
+                window.location.href = "login.html";
+            }).catch((error) => {
+                console.error("Logout error", error);
+            });
         });
     </script>
 </body>
