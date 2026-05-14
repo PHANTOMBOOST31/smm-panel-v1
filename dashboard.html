@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,7 +115,7 @@
                 <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
                 <span>👋 Welcome!</span>
             </div>
-            <div class="nav-balance">₹ 0.00</div>
+            <div class="nav-balance" id="navBalance">Loading...</div>
         </div>
 
         <div class="id-badge">
@@ -148,7 +147,7 @@
             <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="card-info">
                 <h4>Account Balance</h4>
-                <p>₹ 0.00</p>
+                <p id="cardBalance">Loading...</p>
             </div>
         </div>
 
@@ -287,10 +286,9 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 1. Check VIP Pass AND Database File
+        // 1. Strict Bouncer & Live Balance Update
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                // No VIP pass? Kick out.
                 window.location.href = "login.html";
             } else {
                 try {
@@ -298,12 +296,17 @@
                     const docSnap = await getDoc(docRef);
 
                     if (docSnap.exists()) {
-                        // File exists! Let them in and show ID.
                         const userData = docSnap.data();
+                        
+                        // Update Customer ID
                         document.getElementById('displayId').innerText = userData.customerId || "N/A";
+                        
+                        // Update Live Balances!
+                        document.getElementById('navBalance').innerText = "₹ " + (userData.balance || "0");
+                        document.getElementById('cardBalance').innerText = "₹ " + (userData.balance || "0");
+                        
                     } else {
-                        // THE FIX: The VIP pass is valid, but the database file is DELETED!
-                        // Instantly revoke their pass and kick them out.
+                        // Kick out deleted users
                         alert("Your account has been deleted or suspended by the Admin.");
                         await signOut(auth);
                         window.location.href = "login.html";
@@ -311,6 +314,8 @@
                 } catch (error) {
                     console.error("Error fetching data:", error);
                     document.getElementById('displayId').innerText = "Error";
+                    document.getElementById('navBalance').innerText = "Error";
+                    document.getElementById('cardBalance').innerText = "Error";
                 }
             }
         });
@@ -327,3 +332,4 @@
     </script>
 </body>
 </html>
+
