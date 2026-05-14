@@ -116,7 +116,7 @@
         </div>
     </div>
 
-   <script type="module">
+  <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { initializeFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -134,6 +134,7 @@
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
+        // 1. SECURITY LOCK
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
@@ -154,7 +155,7 @@
             }
         });
 
-        // 1. FETCH DATA FROM DATABASE
+        // 2. FETCH PENDING REQUESTS
         window.loadPendingRequests = async function() {
             const tbody = document.getElementById("requestsTableBody");
             
@@ -168,7 +169,7 @@
                 querySnapshot.forEach((docSnap) => {
                     count++;
                     const data = docSnap.data();
-                    const requestId = docSnap.id; // The hidden ID of the receipt
+                    const requestId = docSnap.id; 
                     
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
@@ -199,46 +200,93 @@
             }
         }
 
-        // 2. THE APPROVE LOGIC (Adds money to wallet)
+        // 3. APPROVE REQUEST LOGIC
         window.approveRequest = async function(requestId, userId, amount) {
             if(!confirm("Are you sure you want to add ₹" + amount + " to this user's wallet?")) return;
-            
             try {
-                // Find the user and add the money
                 const userRef = doc(db, "users", userId);
-                await updateDoc(userRef, {
-                    balance: increment(amount)
-                });
+                await updateDoc(userRef, { balance: increment(amount) });
 
-                // Find the receipt and mark it as Approved
                 const reqRef = doc(db, "fund_requests", requestId);
-                await updateDoc(reqRef, {
-                    status: "approved"
-                });
+                await updateDoc(reqRef, { status: "approved" });
 
-                alert("✅ Funds successfully added to user's wallet!");
-                loadPendingRequests(); // Refresh the table instantly
-
+                alert("✅ Funds successfully added!");
+                loadPendingRequests(); 
             } catch (error) {
-                alert("Action Blocked! Check Firebase Rules: " + error.message);
+                alert("Action Blocked: " + error.message);
             }
         }
 
-        // 3. THE REJECT LOGIC (Denies the money)
+        // 4. REJECT REQUEST LOGIC
         window.rejectRequest = async function(requestId) {
             if(!confirm("Are you sure you want to REJECT this payment request?")) return;
-            
             try {
                 const reqRef = doc(db, "fund_requests", requestId);
-                await updateDoc(reqRef, {
-                    status: "rejected"
-                });
-                
+                await updateDoc(reqRef, { status: "rejected" });
                 loadPendingRequests(); 
             } catch (error) {
                 alert("Error: " + error.message);
             }
         }
+
+        // 5. MANUAL WALLET ADJUSTMENT LOGIC (NEW)
+        document.getElementById('updateWalletBtn').addEventListener('click', async () => {
+            const targetId = document.getElementById('targetCustomerId').value.trim();
+            const action = document.getElementById('walletAction').value;
+            const amountStr = document.getElementById('walletAmount').value;
+            const amount = Number(amountStr);
+
+            if (!targetId || amountStr === "" || amount <= 0) {
+                alert("⚠️ Please enter a valid Customer ID and an amount greater than 0.");
+                return;
+            }
+
+            const btn = document.getElementById('updateWalletBtn');
+            btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Updating...";
+            btn.disabled = true;
+
+            try {
+                // Step A: Search the database for this specific Customer ID
+                const usersRef = collection(db, "users");
+                const q = query(usersRef, where("customerId", "==", targetId));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    alert("❌ Error: No user found with Customer ID: " + targetId);
+                    btn.innerHTML = "Update Wallet";
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Step B: Get their hidden database ID
+                let userDocId = null;
+                querySnapshot.forEach((doc) => {
+                    userDocId = doc.id;
+                });
+
+                // Step C: Do the Math (Positive for Add, Negative for Deduct)
+                const finalAmount = action === "add" ? amount : -amount;
+
+                // Step D: Update their wallet!
+                const userRef = doc(db, "users", userDocId);
+                await updateDoc(userRef, {
+                    balance: increment(finalAmount)
+                });
+
+                alert(`✅ Success! You just ${action === 'add' ? 'Added' : 'Deducted'} ₹${amount} for ${targetId}.`);
+                
+                // Clear the boxes for the next time
+                document.getElementById('targetCustomerId').value = "";
+                document.getElementById('walletAmount').value = "";
+
+            } catch (error) {
+                alert("Database Error: " + error.message);
+            }
+
+            btn.innerHTML = "Update Wallet";
+            btn.disabled = false;
+        });
+
     </script>
 </body>
 </html>
