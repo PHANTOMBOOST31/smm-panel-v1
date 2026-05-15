@@ -38,8 +38,9 @@
         .wallet-manager { display: flex; gap: 15px; align-items: flex-end; margin-top: 15px; }
         .form-group { flex-grow: 1; }
         .form-group label { display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: bold; color: #64748b; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
         .btn-blue { background-color: var(--primary-blue); padding: 10px 20px; font-size: 1rem; }
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: white; text-transform: uppercase; }
         @media (max-width: 768px) { .admin-sidebar { display: none; } .main-content { margin-left: 0; width: 100%; padding: 15px; } .stat-grid { grid-template-columns: 1fr; } .wallet-manager { flex-direction: column; } .wallet-manager .btn { width: 100%; } }
     </style>
 </head>
@@ -48,9 +49,9 @@
     <div class="admin-sidebar">
         <div class="admin-brand">Phantom <span>ADMIN</span></div>
         <a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Overview</a>
-        <a href="#"><i class="fa-solid fa-money-bill-transfer"></i> Fund Requests</a>
-        <a href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
-        <a href="#"><i class="fa-solid fa-list-check"></i> All Orders</a>
+        <a href="#orders-section"><i class="fa-solid fa-list-check"></i> All Orders</a>
+        <a href="#funds-section"><i class="fa-solid fa-money-bill-transfer"></i> Fund Requests</a>
+        <a href="#wallet-section"><i class="fa-solid fa-sliders"></i> Wallet Manager</a>
         <div style="flex-grow: 1;"></div>
         <a href="dashboard.html" style="color: #94a3b8;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back to Dashboard</a>
     </div>
@@ -65,7 +66,7 @@
 
         <div class="stat-grid">
             <div class="stat-card">
-                <div class="stat-info"><h3>Total Users</h3><p>--</p></div>
+                <div class="stat-info"><h3>Total Users</h3><p id="totalUsersDisplay"><i class="fa-solid fa-spinner fa-spin" style="font-size: 1.2rem;"></i></p></div>
                 <i class="fa-solid fa-users stat-icon"></i>
             </div>
             <div class="stat-card green">
@@ -73,13 +74,33 @@
                 <i class="fa-solid fa-wallet stat-icon"></i>
             </div>
             <div class="stat-card red">
-                <div class="stat-info"><h3>Orders Today</h3><p>--</p></div>
+                <div class="stat-info"><h3>Total Orders</h3><p id="totalOrdersDisplay"><i class="fa-solid fa-spinner fa-spin" style="font-size: 1.2rem;"></i></p></div>
                 <i class="fa-solid fa-cart-shopping stat-icon"></i>
             </div>
         </div>
 
-        <div class="control-section">
-            <h2>Pending Fund Requests <span id="newBadge" style="background: var(--primary-blue); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; display: none;">New</span></h2>
+        <div class="control-section" id="orders-section">
+            <h2><i class="fa-solid fa-list-check"></i> Live Order Feed</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Service & Link</th>
+                            <th>Qty / Charge</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr><td colspan="5" style="text-align: center; color: #64748b;">Loading live orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="control-section" id="funds-section">
+            <h2><i class="fa-solid fa-money-bill-transfer"></i> Pending Fund Requests <span id="newBadge" style="background: var(--primary-blue); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; display: none;">New</span></h2>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -98,14 +119,14 @@
             </div>
         </div>
 
-        <div class="control-section">
+        <div class="control-section" id="wallet-section">
             <h2><i class="fa-solid fa-sliders"></i> Manual Wallet Adjustment</h2>
             <p style="font-size: 0.9rem; color: #64748b; margin-top: 0;">Use this to manually fix a customer's balance.</p>
             <div class="wallet-manager">
                 <div class="form-group"><label>Customer ID</label><input type="text" id="targetCustomerId" placeholder="e.g. PB-123456"></div>
                 <div class="form-group">
                     <label>Action</label>
-                    <select id="walletAction" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; background: white;">
+                    <select id="walletAction" style="background: white;">
                         <option value="add">Add Funds (+)</option>
                         <option value="deduct">Deduct Funds (-)</option>
                     </select>
@@ -116,10 +137,10 @@
         </div>
     </div>
 
-  <script type="module">
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { initializeFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
@@ -134,7 +155,7 @@
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-        // 1. SECURITY LOCK
+        // 1. SECURITY LOCK & INITIALIZE
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
@@ -145,7 +166,9 @@
 
                     if (docSnap.exists() && docSnap.data().role === "admin") {
                         document.body.style.display = "flex"; 
+                        loadStats();
                         loadPendingRequests(); 
+                        loadAllOrders();
                     } else {
                         window.location.href = "dashboard.html";
                     }
@@ -155,22 +178,95 @@
             }
         });
 
-        // 2. FETCH PENDING REQUESTS
-        window.loadPendingRequests = async function() {
-            const tbody = document.getElementById("requestsTableBody");
-            
+        // 2. LOAD TOP STAT CARDS
+        window.loadStats = async function() {
             try {
-                const q = query(collection(db, "fund_requests"), where("status", "==", "pending"));
+                const usersSnap = await getDocs(collection(db, "users"));
+                document.getElementById("totalUsersDisplay").innerText = usersSnap.size;
+
+                const ordersSnap = await getDocs(collection(db, "orders"));
+                document.getElementById("totalOrdersDisplay").innerText = ordersSnap.size;
+            } catch (e) {
+                console.error("Error loading stats", e);
+            }
+        }
+
+        // 3. LOAD ALL ORDERS
+        window.loadAllOrders = async function() {
+            const tbody = document.getElementById("ordersTableBody");
+            try {
+                // Fetch orders from newest to oldest
+                const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 
                 tbody.innerHTML = ""; 
                 
+                if (querySnapshot.empty) {
+                    tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #64748b;'>No orders placed yet.</td></tr>";
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const orderId = docSnap.id;
+                    const shortId = orderId.substring(0, 8).toUpperCase();
+                    
+                    // Set color based on status
+                    let statusColor = "#eab308"; // Yellow for pending
+                    if(data.status === "processing") statusColor = "#3b82f6"; // Blue
+                    if(data.status === "completed") statusColor = "#22c55e"; // Green
+                    if(data.status === "canceled") statusColor = "#ef4444"; // Red
+
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><strong>${shortId}</strong></td>
+                        <td>
+                            <div style="font-size:0.8rem; color:#64748b; font-weight:bold;">${data.serviceName}</div>
+                            <a href="${data.link}" target="_blank" style="color:var(--primary-blue); font-size:0.9rem; text-decoration:none;">${data.link}</a>
+                        </td>
+                        <td><strong>${data.quantity}</strong><br><span style="color:var(--success); font-size:0.85rem;">₹${data.charge}</span></td>
+                        <td><span class="status-badge" style="background:${statusColor};">${data.status}</span></td>
+                        <td>
+                            <select onchange="updateOrderStatus('${orderId}', this.value)" style="padding: 6px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+                                <option value="">Change Status...</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="completed">Completed</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan='5' style='color: red; text-align: center;'>Error: ${error.message}</td></tr>`;
+            }
+        }
+
+        // 4. UPDATE ORDER STATUS LOGIC
+        window.updateOrderStatus = async function(orderId, newStatus) {
+            if(!newStatus) return; // Ignore if they select the placeholder
+            try {
+                const orderRef = doc(db, "orders", orderId);
+                await updateDoc(orderRef, { status: newStatus });
+                loadAllOrders(); // Refresh table instantly
+            } catch (error) {
+                alert("Error updating order: " + error.message);
+            }
+        }
+
+        // 5. FETCH PENDING FUND REQUESTS
+        window.loadPendingRequests = async function() {
+            const tbody = document.getElementById("requestsTableBody");
+            try {
+                const q = query(collection(db, "fund_requests"), where("status", "==", "pending"));
+                const querySnapshot = await getDocs(q);
+                tbody.innerHTML = ""; 
                 let count = 0;
                 querySnapshot.forEach((docSnap) => {
                     count++;
                     const data = docSnap.data();
                     const requestId = docSnap.id; 
-                    
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td><strong>${data.customerId}</strong></td>
@@ -184,9 +280,7 @@
                     `;
                     tbody.appendChild(tr);
                 });
-
                 document.getElementById("pendingCountDisplay").innerText = count;
-                
                 if(count > 0) {
                     document.getElementById("newBadge").style.display = "inline-block";
                     document.getElementById("newBadge").innerText = count + " New";
@@ -194,30 +288,26 @@
                     tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #64748b;'>No pending requests right now.</td></tr>";
                     document.getElementById("newBadge").style.display = "none";
                 }
-
             } catch (error) {
                 tbody.innerHTML = `<tr><td colspan='5' style='color: red; text-align: center;'>Error loading data: ${error.message}</td></tr>`;
             }
         }
 
-        // 3. APPROVE REQUEST LOGIC
+        // 6. APPROVE FUND REQUEST LOGIC
         window.approveRequest = async function(requestId, userId, amount) {
             if(!confirm("Are you sure you want to add ₹" + amount + " to this user's wallet?")) return;
             try {
                 const userRef = doc(db, "users", userId);
                 await updateDoc(userRef, { balance: increment(amount) });
-
                 const reqRef = doc(db, "fund_requests", requestId);
                 await updateDoc(reqRef, { status: "approved" });
-
-                alert("✅ Funds successfully added!");
                 loadPendingRequests(); 
             } catch (error) {
                 alert("Action Blocked: " + error.message);
             }
         }
 
-        // 4. REJECT REQUEST LOGIC
+        // 7. REJECT FUND REQUEST LOGIC
         window.rejectRequest = async function(requestId) {
             if(!confirm("Are you sure you want to REJECT this payment request?")) return;
             try {
@@ -229,7 +319,7 @@
             }
         }
 
-        // 5. MANUAL WALLET ADJUSTMENT LOGIC (NEW)
+        // 8. MANUAL WALLET ADJUSTMENT LOGIC
         document.getElementById('updateWalletBtn').addEventListener('click', async () => {
             const targetId = document.getElementById('targetCustomerId').value.trim();
             const action = document.getElementById('walletAction').value;
@@ -246,7 +336,6 @@
             btn.disabled = true;
 
             try {
-                // Step A: Search the database for this specific Customer ID
                 const usersRef = collection(db, "users");
                 const q = query(usersRef, where("customerId", "==", targetId));
                 const querySnapshot = await getDocs(q);
@@ -258,24 +347,14 @@
                     return;
                 }
 
-                // Step B: Get their hidden database ID
                 let userDocId = null;
-                querySnapshot.forEach((doc) => {
-                    userDocId = doc.id;
-                });
+                querySnapshot.forEach((doc) => { userDocId = doc.id; });
 
-                // Step C: Do the Math (Positive for Add, Negative for Deduct)
                 const finalAmount = action === "add" ? amount : -amount;
-
-                // Step D: Update their wallet!
                 const userRef = doc(db, "users", userDocId);
-                await updateDoc(userRef, {
-                    balance: increment(finalAmount)
-                });
+                await updateDoc(userRef, { balance: increment(finalAmount) });
 
                 alert(`✅ Success! You just ${action === 'add' ? 'Added' : 'Deducted'} ₹${amount} for ${targetId}.`);
-                
-                // Clear the boxes for the next time
                 document.getElementById('targetCustomerId').value = "";
                 document.getElementById('walletAmount').value = "";
 
@@ -290,3 +369,4 @@
     </script>
 </body>
 </html>
+  
