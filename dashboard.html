@@ -39,7 +39,6 @@
         
         .close-btn { font-size: 1.4rem; cursor: pointer; color: #94a3b8; transition: 0.2s; }
         .close-btn:hover { color: #ef4444; }
-        
         .sidebar-menu a { display: flex; align-items: center; padding: 14px 18px; color: #64748b; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 12px; margin-bottom: 8px; transition: all 0.2s ease; }
         .sidebar-menu a i { width: 32px; font-size: 1.1rem; color: #94a3b8; transition: 0.2s; }
         .sidebar-menu a:hover, .sidebar-menu a.active-link { background: #f8fafc; color: var(--dark-blue); }
@@ -47,6 +46,10 @@
         
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(2px); z-index: 999; display: none; transition: 0.3s; }
         .overlay.active { display: block; }
+
+        /* RESTORED CARDS AND ANNOUNCEMENTS */
+        .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
+        .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
         .card { background: var(--card-white); border-radius: 18px; padding: 18px 22px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.06); }
@@ -59,6 +62,7 @@
         .social-item:active { transform: scale(0.95); background: #f8fafc; }
         .social-item.filter-all { background: var(--dark-blue); color: white; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; }
 
+        /* Premium Custom Dropdown UI */
         .order-section { background: var(--card-white); border-radius: 24px; padding: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); margin-bottom: 25px; border: 1px solid #f1f5f9; }
         .form-group { margin-bottom: 22px; }
         label { display: block; margin-bottom: 10px; font-size: 0.85rem; font-weight: 800; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -81,6 +85,8 @@
         input { width: 100%; padding: 16px 20px; border-radius: 14px; border: 1px solid #e2e8f0; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; font-weight: 600; outline: none; transition: all 0.3s ease; }
         input:focus { border-color: var(--primary-blue); background: #ffffff; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
         
+        .desc-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px; padding: 15px 20px; font-size: 0.85rem; color: #166534; line-height: 1.6; display: none; margin-bottom: 22px; font-weight: 500; }
+        
         .submit-btn { background: var(--dark-blue); color: white; width: 100%; padding: 18px; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; margin-top: 10px; transition: all 0.3s ease; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2); text-transform: uppercase; }
         .submit-btn:hover { background: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3); }
         .submit-btn:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; color: #94a3b8; }
@@ -91,15 +97,6 @@
         .success-receipt span { font-weight: 800; color: #14532d; word-wrap: break-word; }
         .close-receipt { position: absolute; top: 18px; right: 22px; cursor: pointer; color: #22c55e; font-size: 1.3rem; font-weight: bold; transition: 0.2s; }
         .close-receipt:hover { color: #166534; }
-
-        /* THE NEW PREMIUM DESCRIPTION BOX CSS */
-        .desc-card { background: var(--card-white); border-radius: 24px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); margin-bottom: 25px; border: 1px solid #f1f5f9; display: none; }
-        .desc-header { font-size: 0.95rem; font-weight: 900; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .desc-header i { color: var(--primary-blue); font-size: 1.2rem; }
-        .desc-content { font-size: 0.9rem; line-height: 1.8; color: var(--text-main); font-weight: 500; }
-        /* Style the HTML that the API sends back inside the box */
-        .desc-content br { margin-bottom: 5px; }
-        .desc-content a { color: var(--primary-blue); text-decoration: none; font-weight: bold; }
 
         .mega-footer { background: var(--dark-blue); color: white; padding: 50px 20px 80px 20px; border-radius: 40px 40px 0 0; text-align: center; margin-top: 50px; }
         .mega-footer h1 { font-size: 1.5rem; margin: 0 0 15px 0; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -140,6 +137,27 @@
             <i class="fa-solid fa-fingerprint" style="color: #94a3b8;"></i> UID: <span id="displayId" style="color: var(--dark-blue); font-weight: 800;">...</span>
         </div>
 
+        <div class="announcement">
+            <i class="fa-solid fa-bolt"></i>
+            <span><strong>System Active:</strong> Live server connection established.</span>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-user-check"></i></div>
+            <div class="card-info">
+                <h4>Account Status</h4>
+                <p>Active</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="card-info">
+                <h4>Total Spending</h4>
+                <p id="cardSpending">Loading...</p>
+            </div>
+        </div>
+
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="card-info">
@@ -147,6 +165,16 @@
                 <p id="cardBalance">Loading...</p>
             </div>
         </div>
+
+        <a href="add-funds.html" style="text-decoration: none;">
+            <div class="card" style="border-left-color: #22c55e;">
+                <div class="card-icon" style="color: #22c55e; background: #dcfce7;"><i class="fa-solid fa-plus"></i></div>
+                <div class="card-info">
+                    <h4>Add Funds</h4>
+                    <p style="color: #16a34a; font-size: 1.1rem;">Click Here</p>
+                </div>
+            </div>
+        </a>
 
         <div class="social-grid">
             <div class="social-item" onclick="filterPlatform('youtube')"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
@@ -191,6 +219,11 @@
                 <select id="serviceSelect" style="display: none;"></select>
             </div>
 
+            <div class="desc-box" id="serviceDescriptionBox">
+                <strong><i class="fa-solid fa-circle-info"></i> Service Details:</strong><br>
+                <span id="serviceDescriptionText" style="display:block; margin-top:5px;">Select a service to view details.</span>
+            </div>
+
             <div class="form-group">
                 <label>Target URL</label>
                 <input type="url" id="orderLink" placeholder="https://...">
@@ -205,12 +238,6 @@
             </div>
             <button class="submit-btn" id="submitOrderBtn">Confirm Payment</button>
         </div>
-
-        <div class="desc-card" id="serviceDescCard">
-            <div class="desc-header"><i class="fa-solid fa-circle-info"></i> Order Description</div>
-            <div class="desc-content" id="serviceDescText">Select a service to view package details, rules, and delivery speed.</div>
-        </div>
-
     </div>
 
     <div class="mega-footer">
@@ -297,6 +324,19 @@
                     nativeSelect.selectedIndex = index;
                     document.getElementById(wrapperId).classList.remove('open');
                     
+                    // Trigger the description update automatically if it's the Service list
+                    if(isService) {
+                        const descBox = document.getElementById('serviceDescriptionBox');
+                        const descText = document.getElementById('serviceDescriptionText');
+                        if(opt.desc && opt.desc.trim() !== "") {
+                            descBox.style.display = 'block';
+                            descText.innerHTML = opt.desc;
+                        } else {
+                            descBox.style.display = 'block';
+                            descText.innerHTML = "No extra details provided by API for this service.";
+                        }
+                    }
+                    
                     if(onChangeCallback) onChangeCallback();
                 });
                 
@@ -324,16 +364,12 @@
                 document.getElementById('srvSelectText').innerText = '...';
                 document.getElementById('srvOptionsList').innerHTML = '';
                 document.getElementById("orderCharge").value = "₹ 0.00";
-                document.getElementById("serviceDescCard").style.display = "none";
+                document.getElementById('serviceDescriptionBox').style.display = 'none';
                 return;
             }
 
             const catData = filteredCategories.map(cat => ({ value: cat, text: cat, htmlText: cat }));
             populateCustomSelect('catWrapper', 'catOptionsList', 'catSelectText', 'categorySelect', catData, updateServiceDropdown, false);
-
-            if(platformKeyword !== 'all') {
-                document.querySelector('.order-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
         }
 
         function updateServiceDropdown() {
@@ -351,11 +387,20 @@
                     htmlText: beautifulHtml,
                     price: service.price,
                     min: service.min,
-                    max: service.max
+                    max: service.max,
+                    desc: service.description || service.desc || "" // Grabs the description sent by Vercel
                 };
             });
 
             populateCustomSelect('srvWrapper', 'srvOptionsList', 'srvSelectText', 'serviceSelect', srvData, calculateCharge, true);
+            
+            // Automatically show description for the first item on load
+            if(srvData.length > 0) {
+                const descBox = document.getElementById('serviceDescriptionBox');
+                const descText = document.getElementById('serviceDescriptionText');
+                descBox.style.display = 'block';
+                descText.innerHTML = srvData[0].desc && srvData[0].desc.trim() !== "" ? srvData[0].desc : "No extra details provided by API for this service.";
+            }
         }
 
         function calculateCharge() {
@@ -372,17 +417,6 @@
             
             quantityInput.placeholder = `Minimum: ${minQty} | Maximum: ${maxQty}`;
             const quantity = parseInt(quantityInput.value) || 0;
-            
-            // NEW LOGIC: Update the Premium Description Box instantly!
-            const currentServiceId = selectedOption.value;
-            const currentServiceData = allServices.find(s => String(s.service_id) === String(currentServiceId));
-            
-            if(currentServiceData && currentServiceData.description) {
-                document.getElementById("serviceDescText").innerHTML = currentServiceData.description;
-                document.getElementById("serviceDescCard").style.display = "block";
-            } else {
-                document.getElementById("serviceDescCard").style.display = "none";
-            }
             
             if (quantity < minQty) { 
                 chargeInput.value = "₹ 0.00"; 
@@ -433,6 +467,7 @@
                         document.getElementById('displayId').innerText = userData.customerId || "N/A";
                         document.getElementById('navBalance').innerText = "₹ " + currentBalance.toFixed(2);
                         document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
+                        document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || 0).toFixed(2);
                     }
                 } catch (error) {
                     console.error(error);
@@ -477,7 +512,6 @@
                 const apiResult = await orderResponse.json();
 
                 if (apiResult.error || !apiResult.order) {
-                    console.log("API Error:", apiResult);
                     alert("Order Rejected by System: " + (apiResult.error || "Invalid link format."));
                     btn.innerHTML = "Confirm Payment";
                     btn.disabled = false;
@@ -505,8 +539,11 @@
                 });
 
                 currentBalance -= charge; 
+                let newSpending = Number(document.getElementById('cardSpending').innerText.replace(/[^0-9.-]+/g,"")) + charge;
+
                 document.getElementById('navBalance').innerText = "₹ " + currentBalance.toFixed(2);
                 document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
+                document.getElementById('cardSpending').innerText = "₹ " + newSpending.toFixed(2);
 
                 document.getElementById("receiptId").innerText = providerOrderId; 
                 document.getElementById("receiptService").innerText = serviceName;
