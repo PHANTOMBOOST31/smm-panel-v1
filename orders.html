@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order History | Phantom</title>
+    <title>Order History | PHANTOM BOOSTING</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -17,7 +17,6 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; min-height: 70vh; }
 
-        /* Top Nav & Sidebar (Same as Dashboard) */
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 20px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
@@ -26,7 +25,7 @@
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
-        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-style: italic; }
+        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-weight: 900; letter-spacing: 1px; }
         .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
         .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
         .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
@@ -34,7 +33,6 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .overlay.active { display: block; }
 
-        /* Order History Specific Styles */
         .page-title { text-align: center; color: var(--dark-blue); margin-bottom: 20px; }
         
         .history-card { background: var(--card-white); border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); overflow-x: auto; }
@@ -44,16 +42,13 @@
         th { background-color: #f8fafc; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
         tr:hover { background-color: #f8fafc; }
         
-        .status-badge { padding: 5px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; color: white; display: inline-block; text-align: center; min-width: 80px; text-transform: capitalize; }
+        .status-badge { padding: 5px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; color: white; display: inline-block; text-align: center; min-width: 80px; text-transform: capitalize; transition: 0.3s; }
 
-        /* Mega Footer */
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
-        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
+        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
-        .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
-        .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -62,7 +57,7 @@
 
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
-            <h2>Phantom</h2>
+            <h2>FACO</h2>
             <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
         </div>
         <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
@@ -88,10 +83,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Receipt ID</th>
                         <th>Service Details</th>
                         <th>Link</th>
-                        <th>Status</th>
+                        <th>Live Status</th>
                     </tr>
                 </thead>
                 <tbody id="userOrdersBody">
@@ -102,8 +97,8 @@
     </div>
 
     <div class="mega-footer">
-        <h1>Phantom</h1>
-        <p class="tagline">Phantom Boosting is the Best destination for social media marketing services.</p>
+        <h1>FACO</h1>
+        <p class="tagline">FACO is the Best destination for premium social media marketing services.</p>
         <div class="social-circles">
             <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="#"><i class="fa-brands fa-telegram"></i></a>
@@ -118,7 +113,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { initializeFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, getDoc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
@@ -137,7 +132,6 @@
             if (!user) {
                 window.location.href = "login.html";
             } else {
-                // Fetch user balance
                 try {
                     const docRef = doc(db, "users", user.uid);
                     const docSnap = await getDoc(docRef);
@@ -146,15 +140,23 @@
                     }
                 } catch (e) { console.error(e); }
 
-                // Fetch User's Specific Orders
                 fetchMyOrders(user.uid);
             }
         });
 
+        // Color coding function for statuses
+        const getStatusColor = (status) => {
+            if (!status) return "#eab308";
+            const s = status.toLowerCase();
+            if(s === "processing" || s === "in progress") return "#3b82f6";
+            if(s === "completed") return "#22c55e";
+            if(s === "canceled" || s === "partial") return "#ef4444";
+            return "#eab308"; // Pending fallback
+        };
+
         async function fetchMyOrders(uid) {
             const tbody = document.getElementById("userOrdersBody");
             try {
-                // Find ONLY the orders belonging to this logged-in user
                 const q = query(collection(db, "orders"), where("uid", "==", uid));
                 const querySnapshot = await getDocs(q);
                 
@@ -163,10 +165,8 @@
                     myOrders.push({ id: docSnap.id, ...docSnap.data() });
                 });
 
-                // Sort by newest first using Javascript
                 myOrders.sort((a, b) => b.createdAt - a.createdAt);
-
-                tbody.innerHTML = ""; // Clear loading text
+                tbody.innerHTML = ""; 
 
                 if (myOrders.length === 0) {
                     tbody.innerHTML = "<tr><td colspan='4' style='text-align: center; color: #64748b;'>You haven't placed any orders yet.</td></tr>";
@@ -175,23 +175,44 @@
 
                 myOrders.forEach((data) => {
                     const shortId = data.id.substring(0, 8).toUpperCase();
-                    
-                    let statusColor = "#eab308"; // Pending (Yellow)
-                    if(data.status === "processing") statusColor = "#3b82f6"; // Processing (Blue)
-                    if(data.status === "completed") statusColor = "#22c55e"; // Completed (Green)
-                    if(data.status === "canceled") statusColor = "#ef4444"; // Canceled (Red)
+                    let currentStatus = data.status || "Pending";
+                    let statusColor = getStatusColor(currentStatus);
 
+                    // Note: We show the secret provider ID in tiny gray text just in case you ever need to manually verify an order!
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
-                        <td><strong>${shortId}</strong></td>
+                        <td><strong>${shortId}</strong><br><small style="color: #cbd5e1; font-size: 0.7rem;">API #${data.providerOrderId || 'N/A'}</small></td>
                         <td>
                             <div style="font-weight: bold; color: var(--dark-blue); font-size: 0.9rem;">${data.serviceName}</div>
                             <div style="font-size: 0.8rem; color: #64748b;">Qty: ${data.quantity} | Charge: ₹${data.charge}</div>
                         </td>
                         <td><a href="${data.link}" target="_blank" style="color: var(--primary-blue); text-decoration: none; font-size: 0.85rem;">View Link</a></td>
-                        <td><span class="status-badge" style="background:${statusColor};">${data.status}</span></td>
+                        <td><span id="badge-${data.id}" class="status-badge" style="background:${statusColor};">${currentStatus}</span></td>
                     `;
                     tbody.appendChild(tr);
+
+                    // THE AUTO-STATUS CHECKER
+                    // If the order isn't fully completed or canceled, ask the provider API for a live update!
+                    if (data.providerOrderId && !['completed', 'canceled', 'partial'].includes(currentStatus.toLowerCase())) {
+                        fetch(`/api/status?order=${data.providerOrderId}`)
+                            .then(res => res.json())
+                            .then(async (apiResult) => {
+                                if (apiResult && apiResult.status && apiResult.status !== currentStatus) {
+                                    
+                                    // 1. Update the color badge live on the screen
+                                    const badge = document.getElementById(`badge-${data.id}`);
+                                    if (badge) {
+                                        badge.innerText = apiResult.status;
+                                        badge.style.background = getStatusColor(apiResult.status);
+                                    }
+                                    
+                                    // 2. Save the new status back to Firebase so it remembers it for next time
+                                    const orderRef = doc(db, "orders", data.id);
+                                    await updateDoc(orderRef, { status: apiResult.status });
+                                }
+                            })
+                            .catch(err => console.error("Status check failed:", err));
+                    }
                 });
 
             } catch (error) {
@@ -200,7 +221,6 @@
             }
         }
 
-        // Logout
         document.getElementById('logoutBtn').addEventListener('click', async (e) => {
             e.preventDefault();
             await signOut(auth);
