@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Phantom</title>
+    <title>Dashboard | FACO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -27,7 +27,7 @@
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
-        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-style: italic; }
+        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-weight: 800; letter-spacing: 1px; }
         .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
         .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
         .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
@@ -55,6 +55,7 @@
         select, input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
         .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
         .submit-btn:hover { background: var(--dark-blue); }
+        .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
         
         .success-receipt { background-color: #dcfce7; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative; display: none; box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1); }
         .success-receipt h3 { margin: 0 0 10px 0; color: #15803d; font-size: 1.1rem; }
@@ -67,7 +68,7 @@
         .full-desc h4 { margin-top: 0; color: var(--dark-blue); font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
         
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
-        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
+        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
@@ -86,7 +87,7 @@
 
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
-            <h2>Phantom</h2>
+            <h2>FACO</h2>
             <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
         </div>
         <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
@@ -169,7 +170,7 @@
         <div class="success-receipt" id="orderReceipt">
             <span class="close-receipt" onclick="document.getElementById('orderReceipt').style.display='none'">&times;</span>
             <h3>Your order received <i class="fa-solid fa-circle-check"></i></h3>
-            <p>ID: <span id="receiptId">...</span></p>
+            <p>Order ID: <span id="receiptId">...</span></p>
             <p>Service: <span id="receiptService">...</span></p>
             <p>Link: <span id="receiptLink">...</span></p>
             <p>Quantity: <span id="receiptQty">...</span></p>
@@ -207,17 +208,17 @@
 
         <div class="section-title">Important Note</div>
         <div class="full-desc">
-            <h4>IMPORTANT NOTE</h4>
-            🟢 Start time & Delivery speed deppends on the current server load.<br>
-            ⚠️ Make sure your account is completely public & Flag for review must be off before placing an order.<br>
+            <h4>API Active</h4>
+            🟢 Your order will be sent securely to our automated processing system.<br>
+            ⚠️ Make sure your account is completely public before placing an order.<br>
             🎯 High Quality Services are recommended for the best stability.<br>
             Contact us on WhatsApp for any custom requests.
         </div>
     </div>
 
     <div class="mega-footer">
-        <h1>Phantom</h1>
-        <p class="tagline">Phantom Boosting is the Best destination for social media marketing services. 100% Quality focused SMM panel.</p>
+        <h1>FACO</h1>
+        <p class="tagline">FACO is the Best destination for premium social media marketing services. 100% Quality focused SMM dashboard.</p>
         
         <p style="font-weight: bold; margin-bottom: 10px;">Follow us on</p>
         <div class="social-circles">
@@ -268,35 +269,26 @@
                     categorySelect.innerHTML = '<option>Error loading API</option>';
                     return;
                 }
-                
-                // When page first loads, show ALL categories
                 filterPlatform('all');
-
             } catch (error) {
                 categorySelect.innerHTML = '<option>Failed to connect</option>';
             }
         }
 
-        // THE MAGIC FILTER FUNCTION
         window.filterPlatform = function(platformKeyword) {
-            if (allServices.length === 0) return; // Wait until API data is loaded
+            if (allServices.length === 0) return; 
 
-            // 1. Get a unique list of all categories
             let uniqueCategories = [...new Set(allServices.map(s => s.category))];
             let filteredCategories = [];
 
-            // 2. Check if they clicked 'ALL' or a specific icon
             if (platformKeyword === 'all') {
                 filteredCategories = uniqueCategories;
             } else {
-                // Search for the keyword (like 'instagram') in the category name
                 filteredCategories = uniqueCategories.filter(cat => cat.toLowerCase().includes(platformKeyword.toLowerCase()));
             }
 
-            // 3. Clear the current dropdown
             categorySelect.innerHTML = ''; 
 
-            // 4. If the provider doesn't sell services for that platform
             if (filteredCategories.length === 0) {
                 const option = document.createElement('option');
                 option.textContent = `No ${platformKeyword} services found`;
@@ -306,7 +298,6 @@
                 return;
             }
 
-            // 5. Fill the dropdown with ONLY the matching categories
             filteredCategories.forEach(cat => {
                 const option = document.createElement('option');
                 option.value = cat;
@@ -314,10 +305,8 @@
                 categorySelect.appendChild(option);
             });
 
-            // Automatically load the services for the newly filtered list
             updateServiceDropdown();
 
-            // Smoothly scroll down to the order section so the user sees the change!
             if(platformKeyword !== 'all') {
                 document.querySelector('.order-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
@@ -428,8 +417,10 @@
 
             const selOption = document.getElementById("serviceSelect").options[document.getElementById("serviceSelect").selectedIndex];
             const dynamicMin = selOption ? parseInt(selOption.getAttribute("data-min")) : 100;
+            const serviceId = selOption ? selOption.value : null;
+            const serviceName = selOption ? selOption.text : "Unknown Service";
 
-            if(!link || qty < dynamicMin || charge <= 0) {
+            if(!link || qty < dynamicMin || charge <= 0 || !serviceId) {
                 alert(`⚠️ Please enter a valid link and a minimum quantity of ${dynamicMin}.`);
                 return;
             }
@@ -440,29 +431,54 @@
             }
 
             const btn = document.getElementById('submitOrderBtn');
-            btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Processing...";
+            btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Connecting to API...";
             btn.disabled = true;
 
             try {
+                // STEP 1: TALK TO THE WHOLESALER FIRST
+                const orderResponse = await fetch('/api/order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        service: serviceId,
+                        link: link,
+                        quantity: qty
+                    })
+                });
+
+                const apiResult = await orderResponse.json();
+
+                // If LuvSMM rejects the order (e.g. invalid link or empty wholesale wallet)
+                if (apiResult.error) {
+                    alert("Provider API Error: " + apiResult.error);
+                    btn.innerHTML = "Submit Order";
+                    btn.disabled = false;
+                    return; // Stop right here, do NOT charge the customer!
+                }
+
+                // If successful, save the secret tracking ticket from LuvSMM
+                const providerOrderId = apiResult.order || "N/A";
+
+                // STEP 2: DEDUCT CUSTOMER BALANCE AND SAVE TO FIREBASE
                 const userRef = doc(db, "users", globalUserId);
                 await updateDoc(userRef, {
                     balance: increment(-charge),
                     spending: increment(charge)
                 });
 
-                const sel = document.getElementById("serviceSelect");
-                const serviceName = sel.options[sel.selectedIndex].text;
-
                 const newOrder = await addDoc(collection(db, "orders"), {
                     uid: globalUserId,
                     serviceName: serviceName,
+                    serviceId: serviceId,
                     link: link,
                     quantity: qty,
                     charge: charge,
-                    status: "pending",
+                    status: "Pending", // This will be updated automatically later
+                    providerOrderId: providerOrderId, // Save the secret tracking ticket!
                     createdAt: serverTimestamp()
                 });
 
+                // Update UI visually
                 currentBalance -= charge; 
                 let newSpending = Number(document.getElementById('cardSpending').innerText.replace(/[^0-9.-]+/g,"")) + charge;
                 
@@ -470,7 +486,7 @@
                 document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
                 document.getElementById('cardSpending').innerText = "₹ " + newSpending.toFixed(2);
 
-                document.getElementById("receiptId").innerText = newOrder.id.substring(0, 8).toUpperCase(); 
+                document.getElementById("receiptId").innerText = providerOrderId; 
                 document.getElementById("receiptService").innerText = serviceName;
                 document.getElementById("receiptLink").innerText = link;
                 document.getElementById("receiptQty").innerText = qty;
