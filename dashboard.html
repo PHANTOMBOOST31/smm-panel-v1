@@ -55,7 +55,6 @@
         .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
         .submit-btn:hover { background: var(--dark-blue); }
         
-        /* Success Receipt CSS */
         .success-receipt { background-color: #dcfce7; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative; display: none; box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1); }
         .success-receipt h3 { margin: 0 0 10px 0; color: #15803d; font-size: 1.1rem; }
         .success-receipt p { margin: 4px 0; font-size: 0.9rem; color: #166534; font-weight: 500; }
@@ -97,7 +96,7 @@
         <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
         <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
-        <a href="#"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
+        <a href="services.html"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
         <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
@@ -121,14 +120,14 @@
 
         <div class="announcement">
             <i class="fa-solid fa-bolt"></i>
-            <span><strong>Flash Sale:</strong> All Instagram Views are currently 10% off!</span>
+            <span><strong>System Active:</strong> Live server connection established.</span>
         </div>
 
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-user"></i></div>
             <div class="card-info">
                 <h4>Account Status</h4>
-                <p>New</p>
+                <p>Active</p>
             </div>
         </div>
 
@@ -186,15 +185,13 @@
             <div class="form-group">
                 <label>Category</label>
                 <select id="categorySelect">
-                    <option value="youtube">▶️ YouTube Services</option>
-                    <option value="instagram">📸 Instagram Services</option>
+                    <option>Loading Live Categories...</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Service</label>
                 <select id="serviceSelect">
-                    <option value="yt_views">2071 - YouTube Views [Worldwide] (₹70.00 / 1000)</option>
-                    <option value="ig_followers">3052 - Instagram HQ Followers (₹28.00 / 1000)</option>
+                    <option>Loading Services...</option>
                 </select>
             </div>
             <div class="form-group">
@@ -203,7 +200,7 @@
             </div>
             <div class="form-group">
                 <label>Quantity</label>
-                <input type="number" id="orderQuantity" placeholder="Min: 100 - Max: 1000000">
+                <input type="number" id="orderQuantity" placeholder="Min: 100 - Max: 100000">
             </div>
             <div class="form-group">
                 <label>Charge</label>
@@ -212,23 +209,13 @@
             <button class="submit-btn" id="submitOrderBtn">Submit Order</button>
         </div>
 
-        <div class="section-title">Order Description</div>
-        <div class="order-desc-grid">
-            <div class="desc-box"><span>Start time</span><strong>12-48 Hours (for ads)</strong></div>
-            <div class="desc-box"><span>Speed</span><strong>High for big orders</strong></div>
-            <div class="desc-box"><span>Quality</span><strong>100% Real</strong></div>
-            <div class="desc-box"><span>Refill</span><strong><i class="fa-solid fa-check" style="color: #16a34a;"></i> Lifetime</strong></div>
-        </div>
-
+        <div class="section-title">Important Note</div>
         <div class="full-desc">
-            <h4>Description</h4>
-            ⚠️ Max video length 4 min<br>
-            🎯 True Real Views<br>
-            🎯 100% Real worldwide SKIP + Display<br>
-            🌟 We are the <strong>MAIN PROVIDER</strong> of this service<br>
-            🌟 API users are most welcome for discount<br>
-            🌟 We provide 100% <em>High Quality</em> Service & support<br>
-            🟢 Contact us on WhatsApp/Tickets for ❤️ discount ❤️
+            <h4>API Active</h4>
+            🟢 Your order will be sent securely to our automated processing system.<br>
+            ⚠️ Make sure your account is completely public before placing an order.<br>
+            🎯 High Quality Services are recommended for the best stability.<br>
+            Contact us on WhatsApp for any custom requests.
         </div>
     </div>
 
@@ -246,7 +233,7 @@
         <p style="font-weight: bold; margin-bottom: 15px;">Quick Links</p>
         <div class="footer-links">
             <a href="#">Sign in</a>
-            <a href="#">Services</a>
+            <a href="services.html">Services</a>
             <a href="terms.html">Terms</a>
             <a href="#">Sign up</a>
         </div>
@@ -266,32 +253,94 @@
     </a>
 
     <script>
-        // Menu functionality
         function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
         function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
 
-        // Auto-Calculator Logic
-        const services = {
-            "yt_views": { basePrice: 50 },     
-            "ig_followers": { basePrice: 20 }  
-        };
-        const profitMargin = 1.40;
+        const categorySelect = document.getElementById("categorySelect");
         const serviceSelect = document.getElementById("serviceSelect");
         const quantityInput = document.getElementById("orderQuantity");
         const chargeInput = document.getElementById("orderCharge");
 
+        let allServices = []; 
+
+        async function loadLivePrices() {
+            try {
+                const response = await fetch('/api/services');
+                allServices = await response.json();
+
+                if(allServices.error) {
+                    categorySelect.innerHTML = '<option>Error loading API</option>';
+                    return;
+                }
+
+                // Extract all unique categories
+                const uniqueCategories = [...new Set(allServices.map(s => s.category))];
+                categorySelect.innerHTML = ''; 
+                
+                uniqueCategories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    option.textContent = cat;
+                    categorySelect.appendChild(option);
+                });
+
+                // Load services for whatever category shows up first
+                updateServiceDropdown();
+
+            } catch (error) {
+                categorySelect.innerHTML = '<option>Failed to connect</option>';
+            }
+        }
+
+        function updateServiceDropdown() {
+            const selectedCategory = categorySelect.value;
+            const filteredServices = allServices.filter(s => s.category === selectedCategory);
+            
+            serviceSelect.innerHTML = ''; 
+            
+            filteredServices.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service.service_id;
+                option.setAttribute('data-price', service.price); 
+                option.setAttribute('data-min', service.min);
+                option.setAttribute('data-max', service.max);
+                
+                option.textContent = `${service.service_id} - ${service.name} (₹${service.price} / 1000)`;
+                serviceSelect.appendChild(option);
+            });
+
+            calculateCharge(); 
+        }
+
         function calculateCharge() {
-            const selectedServiceId = serviceSelect.value;
+            const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+            if (!selectedOption) return;
+
+            const pricePer1000 = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            const minQty = parseInt(selectedOption.getAttribute('data-min')) || 100;
+            const maxQty = parseInt(selectedOption.getAttribute('data-max')) || 100000;
+            
+            // Smart input box that adapts to the provider's rules
+            quantityInput.placeholder = `Min: ${minQty} - Max: ${maxQty}`;
+
             const quantity = parseInt(quantityInput.value) || 0;
-            if (quantity < 100) { chargeInput.value = "₹ 0.00"; return; }
-            const basePricePer1000 = services[selectedServiceId].basePrice;
-            const baseCost = (quantity / 1000) * basePricePer1000;
-            const finalCharge = baseCost * profitMargin;
+            
+            if (quantity < minQty) { 
+                chargeInput.value = "₹ 0.00"; 
+                return; 
+            }
+
+            // The 40% margin is already applied by the Vercel backend!
+            const finalCharge = (quantity / 1000) * pricePer1000;
             chargeInput.value = "₹ " + finalCharge.toFixed(2);
         }
 
+        categorySelect.addEventListener("change", updateServiceDropdown);
         serviceSelect.addEventListener("change", calculateCharge);
         quantityInput.addEventListener("input", calculateCharge);
+
+        // Turn the system on when the page loads
+        window.addEventListener('DOMContentLoaded', loadLivePrices);
     </script>
 
     <script type="module">
@@ -310,14 +359,11 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        
-        // This line right here permanently fixes the "Loading..." bug
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
         let currentBalance = 0;
         let globalUserId = null;
 
-        // Load Profile Data
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
@@ -336,7 +382,6 @@
                         document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
                         document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || 0).toFixed(2);
                     } else {
-                        alert("Profile missing! Logging out to reset.");
                         await signOut(auth);
                         window.location.href = "login.html";
                     }
@@ -346,7 +391,7 @@
             }
         });
 
-        // Checkout Bouncer Logic
+        // Smart Checkout that checks Dynamic Minimums
         document.getElementById('submitOrderBtn').addEventListener('click', async (e) => {
             e.preventDefault();
             
@@ -355,8 +400,11 @@
             const chargeText = document.getElementById("orderCharge").value; 
             const charge = Number(chargeText.replace(/[^0-9.-]+/g,"")); 
 
-            if(!link || qty < 100 || charge <= 0) {
-                alert("⚠️ Please enter a valid link and a minimum quantity of 100.");
+            const selOption = document.getElementById("serviceSelect").options[document.getElementById("serviceSelect").selectedIndex];
+            const dynamicMin = selOption ? parseInt(selOption.getAttribute("data-min")) : 100;
+
+            if(!link || qty < dynamicMin || charge <= 0) {
+                alert(`⚠️ Please enter a valid link and a minimum quantity of ${dynamicMin}.`);
                 return;
             }
 
@@ -370,18 +418,15 @@
             btn.disabled = true;
 
             try {
-                // Deduct money and add to spending
                 const userRef = doc(db, "users", globalUserId);
                 await updateDoc(userRef, {
                     balance: increment(-charge),
                     spending: increment(charge)
                 });
 
-                // Get selected service name
                 const sel = document.getElementById("serviceSelect");
                 const serviceName = sel.options[sel.selectedIndex].text;
 
-                // Create Order in Database
                 const newOrder = await addDoc(collection(db, "orders"), {
                     uid: globalUserId,
                     serviceName: serviceName,
@@ -392,7 +437,6 @@
                     createdAt: serverTimestamp()
                 });
 
-                // Update UI instantly
                 currentBalance -= charge; 
                 let newSpending = Number(document.getElementById('cardSpending').innerText.replace(/[^0-9.-]+/g,"")) + charge;
                 
@@ -400,7 +444,6 @@
                 document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
                 document.getElementById('cardSpending').innerText = "₹ " + newSpending.toFixed(2);
 
-                // Fill and show Green Receipt
                 document.getElementById("receiptId").innerText = newOrder.id.substring(0, 8).toUpperCase(); 
                 document.getElementById("receiptService").innerText = serviceName;
                 document.getElementById("receiptLink").innerText = link;
@@ -410,23 +453,20 @@
                 
                 document.getElementById("orderReceipt").style.display = "block";
                 
-                // Clear input fields
                 document.getElementById("orderLink").value = "";
                 document.getElementById("orderQuantity").value = "";
                 document.getElementById("orderCharge").value = "₹ 0.00";
 
-                // Scroll to top to see receipt
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
             } catch (error) {
-                alert("Transaction Failed! Check database rules. Error: " + error.message);
+                alert("Transaction Failed! Error: " + error.message);
             }
 
             btn.innerHTML = "Submit Order";
             btn.disabled = false;
         });
 
-        // Logout
         document.getElementById('logoutBtn').addEventListener('click', async (e) => {
             e.preventDefault();
             await signOut(auth);
