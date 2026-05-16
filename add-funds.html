@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Funds | Phantom</title>
+    <title>Add Funds | PHANTOM BOOSTING</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -25,7 +26,7 @@
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
-        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-style: italic; }
+        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-weight: 900; letter-spacing: 1px; }
         .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
         .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
         .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
@@ -50,20 +51,14 @@
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
         
-        /* The Dual-Action WhatsApp Button */
         .wa-submit-btn { background: #25d366; color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.2); transition: 0.2s; }
         .wa-submit-btn:hover { background: #1ebc5a; transform: translateY(-2px); }
 
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
-        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-style: italic; }
+        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
-        .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
-        .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
-        .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
-        .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -72,11 +67,11 @@
 
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
-            <h2>Phantom</h2>
+            <h2>FACO</h2>
             <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
         </div>
         <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
-        <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
+        <a href="add-funds.html" style="background: var(--bg-color); color: var(--dark-blue);"><i class="fa-solid fa-wallet"></i> Add Funds</a>
         <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
@@ -132,6 +127,15 @@
 
     </div>
 
+    <div class="mega-footer">
+        <h1>FACO</h1>
+        <p class="tagline">FACO is the Best destination for premium social media marketing services.</p>
+        <div class="social-circles">
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+        </div>
+    </div>
+
     <script>
         function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
         function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
@@ -178,7 +182,6 @@
             }
         });
 
-        // --- THE MAGIC DUAL-ACTION LOGIC ---
         document.getElementById('dualSubmitBtn').addEventListener('click', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('dualSubmitBtn');
@@ -190,12 +193,11 @@
                 return;
             }
 
-            // Temporarily disable button to prevent double-clicking
             btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Processing...";
             btn.disabled = true;
 
             try {
-                // ACTION 1: Send Data to Firebase Admin Panel Silently
+                // Silently push the ticket to your database
                 await addDoc(collection(db, "fund_requests"), {
                     uid: GLOBAL_UID,
                     customerId: GLOBAL_CUSTOMER_ID,
@@ -205,20 +207,18 @@
                     createdAt: serverTimestamp()
                 });
 
-                // ACTION 2: Immediately Redirect to WhatsApp
+                // Launch the new FACO branded WhatsApp message
                 const myWhatsAppNumber = "919383300728";
-                const textMessage = "Hello Phantom Boosting! 👋%0A%0AI just made a payment.%0A%0A👤 *Customer ID:* " + GLOBAL_CUSTOMER_ID + "%0A💰 *Amount Paid:* ₹" + amountInput + "%0A🔢 *UTR Number:* " + utrInput + "%0A%0APlease verify this.";
+                const textMessage = "Hello FACO! 👋%0A%0AI just made a payment.%0A%0A👤 *Customer ID:* " + GLOBAL_CUSTOMER_ID + "%0A💰 *Amount Paid:* ₹" + amountInput + "%0A🔢 *UTR Number:* " + utrInput + "%0A%0APlease verify this.";
                 
                 window.location.href = "https://wa.me/" + myWhatsAppNumber + "?text=" + textMessage;
 
-                // Reset the form in case they hit the "Back" button later
                 document.getElementById('payAmount').value = "";
                 document.getElementById('payUtr').value = "";
                 btn.innerHTML = "<i class='fa-brands fa-whatsapp' style='font-size: 1.3rem;'></i> Submit & Send via WhatsApp";
                 btn.disabled = false;
                 
             } catch (error) {
-                // This will catch if your database rules block the save!
                 alert("Error connecting to server. Please try again. Code: " + error.message);
                 btn.innerHTML = "<i class='fa-brands fa-whatsapp' style='font-size: 1.3rem;'></i> Submit & Send via WhatsApp";
                 btn.disabled = false;
