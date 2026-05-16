@@ -6,104 +6,91 @@
     <title>Dashboard | Phantom Boosting</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
-
         :root {
-            --bg-color: #f0f4f8;       
+            --bg-color: #e0f2fe;       
             --card-white: #ffffff;     
             --primary-blue: #0ea5e9;   
-            --dark-blue: #0f172a;      
+            --dark-blue: #0369a1;      
             --text-main: #334155;      
         }
 
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; }
 
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0 10px 0; color: var(--dark-blue); }
-        .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.05rem; font-weight: 600; letter-spacing: 0.5px; }
-        .menu-btn { font-size: 1.4rem; cursor: pointer; color: var(--dark-blue); transition: 0.2s; }
-        .menu-btn:hover { color: var(--primary-blue); }
-        .nav-balance { background: var(--card-white); padding: 8px 18px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.04); color: var(--primary-blue); border: 1px solid #e2e8f0; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 5px 0; color: var(--dark-blue); }
+        .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
+        .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
+        .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
-        .id-badge { background: var(--card-white); color: #64748b; padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 0.8rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid #bae6fd; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
 
-        .sidebar-menu { position: fixed; top: 0; left: -300px; width: 280px; height: 100vh; background: var(--card-white); box-shadow: 10px 0 30px rgba(0,0,0,0.08); z-index: 1000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 25px; box-sizing: border-box; display: flex; flex-direction: column; }
+        .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; }
-        
-        .sidebar-header h2 { 
-            margin: 0; font-size: 1.3rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase;
-            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        
-        .close-btn { font-size: 1.4rem; cursor: pointer; color: #94a3b8; transition: 0.2s; }
-        .close-btn:hover { color: #ef4444; }
-        .sidebar-menu a { display: flex; align-items: center; padding: 14px 18px; color: #64748b; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 12px; margin-bottom: 8px; transition: all 0.2s ease; }
-        .sidebar-menu a i { width: 32px; font-size: 1.1rem; color: #94a3b8; transition: 0.2s; }
-        .sidebar-menu a:hover, .sidebar-menu a.active-link { background: #f8fafc; color: var(--dark-blue); }
-        .sidebar-menu a:hover i, .sidebar-menu a.active-link i { color: var(--primary-blue); }
-        
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(2px); z-index: 999; display: none; transition: 0.3s; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-weight: 800; letter-spacing: 1px; font-style: italic; }
+        .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
+        .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
+        .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
+        .sidebar-menu a:hover { background: var(--bg-color); color: var(--dark-blue); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .overlay.active { display: block; }
 
-        /* RESTORED CARDS AND ANNOUNCEMENTS */
         .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
-        .card { background: var(--card-white); border-radius: 18px; padding: 18px 22px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #f1f5f9; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.06); }
-        .card-icon { background: #f0f9ff; color: var(--primary-blue); width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-right: 18px; font-size: 1.3rem; }
-        .card-info h4 { margin: 0; font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 800; }
-        .card-info p { margin: 5px 0 0; font-size: 1.25rem; font-weight: 900; color: var(--dark-blue); }
+        .card { background: var(--card-white); border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); transition: 0.2s; }
+        .card:hover { transform: translateY(-2px); }
+        .card-icon { background: var(--bg-color); color: var(--primary-blue); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 1.2rem; }
+        .card-info h4 { margin: 0; font-size: 0.85rem; color: #64748b; }
+        .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
 
-        .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 30px; margin-top: 10px; }
-        .social-item { background: white; padding: 14px 0; border-radius: 14px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03); font-size: 1.3rem; display: flex; justify-content: center; align-items: center; transition: all 0.2s ease; cursor: pointer; border: 1px solid #f1f5f9; }
-        .social-item:active { transform: scale(0.95); background: #f8fafc; }
-        .social-item.filter-all { background: var(--dark-blue); color: white; font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; }
+        /* FULL SOCIAL GRID RESTORED */
+        .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
+        .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; }
+        .social-item:active { transform: scale(0.95); background: var(--bg-color); }
+        .social-item.filter-all { background: #bae6fd; color: #0369a1; font-size: 0.9rem; font-weight: bold; }
 
-        /* Premium Custom Dropdown UI */
-        .order-section { background: var(--card-white); border-radius: 24px; padding: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); margin-bottom: 25px; border: 1px solid #f1f5f9; }
-        .form-group { margin-bottom: 22px; }
-        label { display: block; margin-bottom: 10px; font-size: 0.85rem; font-weight: 800; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 0.5px; }
+        /* PREMIUM CUSTOM DROPDOWN UI WITH OLD COLORS */
+        .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         
         .premium-select-wrapper { position: relative; user-select: none; width: 100%; }
-        .premium-select { background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px 20px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: var(--dark-blue); transition: all 0.3s ease; }
-        .premium-select:hover { border-color: #cbd5e1; background: #ffffff; }
-        .premium-select .arrow { transition: transform 0.3s ease; color: #94a3b8; }
-        .premium-select-wrapper.open .premium-select { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
-        .premium-select-wrapper.open .arrow { transform: rotate(180deg); color: var(--primary-blue); }
+        .premium-select { background: #f8fafc; border: 1px solid #bae6fd; padding: 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: var(--dark-blue); transition: all 0.2s ease; }
+        .premium-select:hover { border-color: var(--primary-blue); background: #ffffff; }
+        .premium-select .arrow { transition: transform 0.3s ease; color: var(--primary-blue); }
+        .premium-select-wrapper.open .premium-select { border-color: var(--primary-blue); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .premium-select-wrapper.open .arrow { transform: rotate(180deg); }
         
-        .premium-options { position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: #ffffff; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); border: 1px solid #e2e8f0; max-height: 300px; overflow-y: auto; z-index: 99; display: none; opacity: 0; transform: translateY(-10px); transition: all 0.2s ease; }
+        .premium-options { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-radius: 0 0 10px 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid var(--primary-blue); border-top: none; max-height: 300px; overflow-y: auto; z-index: 99; display: none; opacity: 0; transform: translateY(-5px); transition: opacity 0.2s ease, transform 0.2s ease; }
         .premium-select-wrapper.open .premium-options { display: block; opacity: 1; transform: translateY(0); }
         
-        .premium-option { padding: 15px 20px; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; line-height: 1.4; color: var(--text-main); transition: background 0.2s ease; }
+        .premium-option { padding: 14px 18px; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; line-height: 1.4; color: var(--text-main); transition: background 0.2s ease; }
         .premium-option:last-child { border-bottom: none; }
-        .premium-option:hover { background: #f8fafc; color: var(--dark-blue); }
-        .premium-option.selected { background: #f0f9ff; font-weight: 700; color: var(--dark-blue); border-left: 4px solid var(--primary-blue); }
+        .premium-option:hover { background: #e0f2fe; color: var(--dark-blue); }
+        .premium-option.selected { background: #bae6fd; font-weight: bold; color: var(--dark-blue); border-left: 4px solid var(--primary-blue); }
 
-        input { width: 100%; padding: 16px 20px; border-radius: 14px; border: 1px solid #e2e8f0; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; font-weight: 600; outline: none; transition: all 0.3s ease; }
-        input:focus { border-color: var(--primary-blue); background: #ffffff; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
-        
-        .desc-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px; padding: 15px 20px; font-size: 0.85rem; color: #166534; line-height: 1.6; display: none; margin-bottom: 22px; font-weight: 500; }
-        
-        .submit-btn { background: var(--dark-blue); color: white; width: 100%; padding: 18px; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; margin-top: 10px; transition: all 0.3s ease; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2); text-transform: uppercase; }
-        .submit-btn:hover { background: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3); }
-        .submit-btn:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; color: #94a3b8; }
-        
-        .success-receipt { background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 16px; padding: 22px; margin-bottom: 25px; position: relative; display: none; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.05); }
-        .success-receipt h3 { margin: 0 0 12px 0; color: #166534; font-size: 1.05rem; font-weight: 800; }
-        .success-receipt p { margin: 6px 0; font-size: 0.9rem; color: #15803d; font-weight: 500; }
-        .success-receipt span { font-weight: 800; color: #14532d; word-wrap: break-word; }
-        .close-receipt { position: absolute; top: 18px; right: 22px; cursor: pointer; color: #22c55e; font-size: 1.3rem; font-weight: bold; transition: 0.2s; }
-        .close-receipt:hover { color: #166534; }
+        input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; outline: none; transition: 0.2s; }
+        input:focus { border-color: var(--primary-blue); background: #ffffff; }
 
-        .mega-footer { background: var(--dark-blue); color: white; padding: 50px 20px 80px 20px; border-radius: 40px 40px 0 0; text-align: center; margin-top: 50px; }
-        .mega-footer h1 { font-size: 1.5rem; margin: 0 0 15px 0; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .mega-footer p.tagline { color: #94a3b8; font-size: 0.9rem; margin-bottom: 30px; line-height: 1.6; font-weight: 500; padding: 0 15px; }
+        /* SMART DESCRIPTION BOX */
+        .desc-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 15px; font-size: 0.85rem; color: #166534; line-height: 1.6; display: none; margin-bottom: 18px; }
+        
+        .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
+        .submit-btn:hover { background: var(--dark-blue); }
+        .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        
+        .success-receipt { background-color: #dcfce7; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative; display: none; box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1); }
+        .success-receipt h3 { margin: 0 0 10px 0; color: #15803d; font-size: 1.1rem; }
+        .success-receipt p { margin: 4px 0; font-size: 0.9rem; color: #166534; font-weight: 500; }
+        .success-receipt span { font-weight: bold; color: #14532d; word-wrap: break-word; }
+        .close-receipt { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #15803d; font-size: 1.2rem; font-weight: bold; }
+
+        .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
+        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; font-style: italic; }
+        .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
-        .social-circles a { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: 0.3s; }
-        .social-circles a:hover { background: var(--primary-blue); border-color: var(--primary-blue); transform: translateY(-3px); }
+        .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
     </style>
 </head>
 <body>
@@ -112,29 +99,29 @@
 
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
-            <h2>Phantom Boosting</h2>
+            <h2>Phantom</h2>
             <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
         </div>
-        <a href="dashboard.html" class="active-link"><i class="fa-solid fa-layer-group"></i> Dashboard</a>
+        <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
-        <a href="orders.html"><i class="fa-solid fa-receipt"></i> Order History</a>
-        <a href="#"><i class="fa-solid fa-headset"></i> Support</a>
+        <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
         <div style="flex-grow: 1;"></div>
-        <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px; font-weight: 700;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
+        <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
     </div>
 
     <div class="container">
         
         <div class="top-nav">
             <div class="nav-left">
-                <i class="fa-solid fa-bars-staggered menu-btn" onclick="openMenu()"></i>
-                <span style="color: #64748b;">Overview</span>
+                <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
+                <span>👋 Welcome!</span>
             </div>
             <div class="nav-balance" id="navBalance">Loading...</div>
         </div>
 
         <div class="id-badge">
-            <i class="fa-solid fa-fingerprint" style="color: #94a3b8;"></i> UID: <span id="displayId" style="color: var(--dark-blue); font-weight: 800;">...</span>
+            <i class="fa-solid fa-id-badge" style="color: var(--primary-blue);"></i> ID: <span id="displayId" style="color: var(--primary-blue);">Loading...</span>
         </div>
 
         <div class="announcement">
@@ -143,7 +130,7 @@
         </div>
 
         <div class="card">
-            <div class="card-icon"><i class="fa-solid fa-user-check"></i></div>
+            <div class="card-icon"><i class="fa-solid fa-user"></i></div>
             <div class="card-info">
                 <h4>Account Status</h4>
                 <p>Active</p>
@@ -153,7 +140,7 @@
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
             <div class="card-info">
-                <h4>Total Spending</h4>
+                <h4>Account Spending</h4>
                 <p id="cardSpending">Loading...</p>
             </div>
         </div>
@@ -161,7 +148,7 @@
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="card-info">
-                <h4>Available Balance</h4>
+                <h4>Account Balance</h4>
                 <p id="cardBalance">Loading...</p>
             </div>
         </div>
@@ -171,7 +158,7 @@
                 <div class="card-icon" style="color: #22c55e; background: #dcfce7;"><i class="fa-solid fa-plus"></i></div>
                 <div class="card-info">
                     <h4>Add Funds</h4>
-                    <p style="color: #16a34a; font-size: 1.1rem;">Click Here</p>
+                    <p style="color: #16a34a;">Click Now</p>
                 </div>
             </div>
         </a>
@@ -181,25 +168,31 @@
             <div class="social-item" onclick="filterPlatform('instagram')"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
             <div class="social-item" onclick="filterPlatform('facebook')"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
             <div class="social-item" onclick="filterPlatform('twitter')"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
+            <div class="social-item" onclick="filterPlatform('spotify')"><i class="fa-brands fa-spotify" style="color: #1DB954;"></i></div>
+            <div class="social-item" onclick="filterPlatform('tiktok')"><i class="fa-brands fa-tiktok" style="color: #000000;"></i></div>
+            <div class="social-item" onclick="filterPlatform('linkedin')"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i></div>
+            <div class="social-item" onclick="filterPlatform('telegram')"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i></div>
+            <div class="social-item" onclick="filterPlatform('pinterest')"><i class="fa-brands fa-pinterest" style="color: #E60023;"></i></div>
             <div class="social-item filter-all" onclick="filterPlatform('all')">ALL</div>
         </div>
 
         <div class="success-receipt" id="orderReceipt">
             <span class="close-receipt" onclick="document.getElementById('orderReceipt').style.display='none'">&times;</span>
-            <h3>Transaction Successful <i class="fa-solid fa-circle-check"></i></h3>
-            <p>Receipt: <span id="receiptId">...</span></p>
+            <h3>Your order received <i class="fa-solid fa-circle-check"></i></h3>
+            <p>Order ID: <span id="receiptId">...</span></p>
             <p>Service: <span id="receiptService">...</span></p>
             <p>Link: <span id="receiptLink">...</span></p>
             <p>Quantity: <span id="receiptQty">...</span></p>
             <p>Charge: <span id="receiptCharge">...</span></p>
+            <p>Balance: <span id="receiptBalance">...</span></p>
         </div>
 
         <div class="order-section">
             <div class="form-group">
-                <label>Category Selection</label>
+                <label>Category</label>
                 <div class="premium-select-wrapper" id="catWrapper">
                     <div class="premium-select" id="catSelectBtn">
-                        <span id="catSelectText">Loading Catalog...</span>
+                        <span id="catSelectText">Loading Live Categories...</span>
                         <i class="fa-solid fa-chevron-down arrow"></i>
                     </div>
                     <div class="premium-options" id="catOptionsList"></div>
@@ -208,10 +201,10 @@
             </div>
             
             <div class="form-group">
-                <label>Service Package</label>
+                <label>Service</label>
                 <div class="premium-select-wrapper" id="srvWrapper">
                     <div class="premium-select" id="srvSelectBtn">
-                        <span id="srvSelectText">Awaiting Category...</span>
+                        <span id="srvSelectText">Loading Services...</span>
                         <i class="fa-solid fa-chevron-down arrow"></i>
                     </div>
                     <div class="premium-options" id="srvOptionsList"></div>
@@ -221,28 +214,28 @@
 
             <div class="desc-box" id="serviceDescriptionBox">
                 <strong><i class="fa-solid fa-circle-info"></i> Service Details:</strong><br>
-                <span id="serviceDescriptionText" style="display:block; margin-top:5px;">Select a service to view details.</span>
+                <span id="serviceDescriptionText" style="display:block; margin-top:5px;"></span>
             </div>
 
             <div class="form-group">
-                <label>Target URL</label>
-                <input type="url" id="orderLink" placeholder="https://...">
+                <label>Link</label>
+                <input type="url" id="orderLink" placeholder="Paste target URL here">
             </div>
             <div class="form-group">
-                <label>Order Quantity</label>
-                <input type="number" id="orderQuantity" placeholder="Enter amount...">
+                <label>Quantity</label>
+                <input type="number" id="orderQuantity" placeholder="Min: 100 - Max: 100000">
             </div>
             <div class="form-group">
-                <label>Total Charge</label>
-                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: #f0f9ff; color: var(--primary-blue); border-color: #bae6fd; font-weight: 900; font-size: 1.3rem;">
+                <label>Charge</label>
+                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: #e0f2fe; color: #0369a1; border-color: #38bdf8; font-weight: 800; font-size: 1.1rem;">
             </div>
-            <button class="submit-btn" id="submitOrderBtn">Confirm Payment</button>
+            <button class="submit-btn" id="submitOrderBtn">Submit Order</button>
         </div>
     </div>
 
     <div class="mega-footer">
         <h1>Phantom Boosting</h1>
-        <p class="tagline">The premium enterprise dashboard for high-quality digital marketing services.</p>
+        <p class="tagline">Phantom Boosting is the Best destination for premium social media marketing services.</p>
         <div class="social-circles">
             <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="#"><i class="fa-brands fa-telegram"></i></a>
@@ -278,12 +271,12 @@
                 allServices = await response.json();
 
                 if(allServices.error) {
-                    document.getElementById('catSelectText').innerText = 'System Offline';
+                    document.getElementById('catSelectText').innerText = 'Error loading API';
                     return;
                 }
                 filterPlatform('all');
             } catch (error) {
-                document.getElementById('catSelectText').innerText = 'Connection Failed';
+                document.getElementById('catSelectText').innerText = 'Failed to connect';
             }
         }
 
@@ -296,7 +289,7 @@
             nativeSelect.innerHTML = '';
             
             if(optionsData.length === 0) {
-                textBtn.innerHTML = "No packages available";
+                textBtn.innerHTML = "No options available";
                 return;
             }
 
@@ -324,7 +317,7 @@
                     nativeSelect.selectedIndex = index;
                     document.getElementById(wrapperId).classList.remove('open');
                     
-                    // Trigger the description update automatically if it's the Service list
+                    // The SMART Description Box Logic
                     if(isService) {
                         const descBox = document.getElementById('serviceDescriptionBox');
                         const descText = document.getElementById('serviceDescriptionText');
@@ -332,8 +325,7 @@
                             descBox.style.display = 'block';
                             descText.innerHTML = opt.desc;
                         } else {
-                            descBox.style.display = 'block';
-                            descText.innerHTML = "No extra details provided by API for this service.";
+                            descBox.style.display = 'none'; // Hides instantly if there is no description!
                         }
                     }
                     
@@ -359,7 +351,7 @@
             }
 
             if (filteredCategories.length === 0) {
-                document.getElementById('catSelectText').innerText = `No ${platformKeyword} packages`;
+                document.getElementById('catSelectText').innerText = `No ${platformKeyword} services found`;
                 document.getElementById('catOptionsList').innerHTML = '';
                 document.getElementById('srvSelectText').innerText = '...';
                 document.getElementById('srvOptionsList').innerHTML = '';
@@ -370,6 +362,10 @@
 
             const catData = filteredCategories.map(cat => ({ value: cat, text: cat, htmlText: cat }));
             populateCustomSelect('catWrapper', 'catOptionsList', 'catSelectText', 'categorySelect', catData, updateServiceDropdown, false);
+
+            if(platformKeyword !== 'all') {
+                document.querySelector('.order-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         function updateServiceDropdown() {
@@ -379,7 +375,7 @@
             const srvData = filteredServices.map(service => {
                 const titleText = `${service.service_id} - ${service.name}`;
                 const fullText = `${titleText} (₹${service.price} / 1000)`;
-                const beautifulHtml = `<strong>ID: ${service.service_id}</strong> - ${service.name} <br><span style="color:var(--primary-blue); font-weight:800; font-size:0.85rem; padding-left:10px;">₹${service.price} per 1k</span>`;
+                const beautifulHtml = `<strong>${service.service_id}</strong> - ${service.name} <br><span style="color:var(--primary-blue); font-weight:800; font-size:0.85rem; padding-left:10px;">₹${service.price}</span>`;
                 
                 return {
                     value: service.service_id,
@@ -388,18 +384,22 @@
                     price: service.price,
                     min: service.min,
                     max: service.max,
-                    desc: service.description || service.desc || "" // Grabs the description sent by Vercel
+                    desc: service.desc || "" 
                 };
             });
 
             populateCustomSelect('srvWrapper', 'srvOptionsList', 'srvSelectText', 'serviceSelect', srvData, calculateCharge, true);
             
-            // Automatically show description for the first item on load
+            // Smart load for the first item
             if(srvData.length > 0) {
                 const descBox = document.getElementById('serviceDescriptionBox');
                 const descText = document.getElementById('serviceDescriptionText');
-                descBox.style.display = 'block';
-                descText.innerHTML = srvData[0].desc && srvData[0].desc.trim() !== "" ? srvData[0].desc : "No extra details provided by API for this service.";
+                if(srvData[0].desc && srvData[0].desc.trim() !== "") {
+                    descBox.style.display = 'block';
+                    descText.innerHTML = srvData[0].desc;
+                } else {
+                    descBox.style.display = 'none';
+                }
             }
         }
 
@@ -415,7 +415,7 @@
             const minQty = parseInt(selectedOption.getAttribute('data-min')) || 100;
             const maxQty = parseInt(selectedOption.getAttribute('data-max')) || 100000;
             
-            quantityInput.placeholder = `Minimum: ${minQty} | Maximum: ${maxQty}`;
+            quantityInput.placeholder = `Min: ${minQty} - Max: ${maxQty}`;
             const quantity = parseInt(quantityInput.value) || 0;
             
             if (quantity < minQty) { 
@@ -489,7 +489,7 @@
             const serviceName = selOption ? selOption.text : "Unknown Service";
 
             if(!link || qty < dynamicMin || charge <= 0 || !serviceId) {
-                alert(`⚠️ Please enter a valid target URL and a minimum quantity of ${dynamicMin}.`);
+                alert(`⚠️ Please enter a valid link and a minimum quantity of ${dynamicMin}.`);
                 return;
             }
 
@@ -499,7 +499,7 @@
             }
 
             const btn = document.getElementById('submitOrderBtn');
-            btn.innerHTML = "<i class='fa-solid fa-circle-notch fa-spin'></i> Processing...";
+            btn.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> Connecting to API...";
             btn.disabled = true;
 
             try {
@@ -512,8 +512,8 @@
                 const apiResult = await orderResponse.json();
 
                 if (apiResult.error || !apiResult.order) {
-                    alert("Order Rejected by System: " + (apiResult.error || "Invalid link format."));
-                    btn.innerHTML = "Confirm Payment";
+                    alert("Order Rejected by Wholesaler: " + (apiResult.error || "Invalid link or service offline."));
+                    btn.innerHTML = "Submit Order";
                     btn.disabled = false;
                     return; 
                 }
@@ -550,6 +550,7 @@
                 document.getElementById("receiptLink").innerText = link;
                 document.getElementById("receiptQty").innerText = qty;
                 document.getElementById("receiptCharge").innerText = "₹ " + charge.toFixed(2);
+                document.getElementById("receiptBalance").innerText = "₹ " + currentBalance.toFixed(2);
                 
                 document.getElementById("orderReceipt").style.display = "block";
                 
@@ -562,7 +563,7 @@
                 alert("Transaction Failed! Error: " + error.message);
             }
 
-            btn.innerHTML = "Confirm Payment";
+            btn.innerHTML = "Submit Order";
             btn.disabled = false;
         });
 
