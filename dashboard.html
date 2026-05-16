@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | PHANTOM BOOSTING</title>
+    <title>Dashboard | Phantom Boosting</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -17,9 +17,33 @@
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg-color); margin: 0; color: var(--text-main); }
         .container { padding: 15px; }
 
+        /* Premium Brand Textures */
+        .premium-brand {
+            font-size: 1.35rem; /* Sleek, controlled size */
+            font-weight: 900;
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        
+        .footer-brand {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #bae6fd 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0 0 10px 0;
+        }
+
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 5px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
-        .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
+        .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); transition: 0.2s; }
+        .menu-btn:hover { color: var(--primary-blue); }
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
         .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid #bae6fd; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
@@ -27,8 +51,8 @@
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
         .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
-        .sidebar-header h2 { margin: 0; color: var(--dark-blue); font-weight: 800; letter-spacing: 1px; }
-        .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; }
+        .close-btn { font-size: 1.5rem; cursor: pointer; color: #ef4444; transition: 0.2s; }
+        .close-btn:hover { transform: scale(1.1); }
         .sidebar-menu a { display: flex; align-items: center; padding: 15px; color: var(--text-main); text-decoration: none; font-weight: bold; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
         .sidebar-menu a i { width: 30px; font-size: 1.2rem; color: var(--primary-blue); }
         .sidebar-menu a:hover { background: var(--bg-color); color: var(--dark-blue); }
@@ -39,7 +63,6 @@
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
         .card { background: var(--card-white); border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); transition: 0.2s; }
-        .card:hover { transform: translateY(-2px); }
         .card-icon { background: var(--bg-color); color: var(--primary-blue); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 1.2rem; }
         .card-info h4 { margin: 0; font-size: 0.85rem; color: #64748b; }
         .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
@@ -49,13 +72,32 @@
         .social-item:active { transform: scale(0.95); background: var(--bg-color); }
         .social-item.filter-all { background: #bae6fd; color: #0369a1; font-size: 0.9rem; font-weight: bold; }
 
+        /* Premium Custom Dropdown CSS */
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
-        select, input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; }
-        .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
-        .submit-btn:hover { background: var(--dark-blue); }
-        .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .form-group { margin-bottom: 22px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 700; color: var(--text-main); }
+        
+        .premium-select-wrapper { position: relative; user-select: none; width: 100%; }
+        .premium-select { background: #f8fafc; border: 1.5px solid #bae6fd; padding: 15px 18px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: var(--dark-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.3s ease; }
+        .premium-select:hover { border-color: var(--primary-blue); background: #ffffff; }
+        .premium-select .arrow { transition: transform 0.3s ease; color: var(--primary-blue); }
+        .premium-select-wrapper.open .premium-select { border-color: var(--primary-blue); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .premium-select-wrapper.open .arrow { transform: rotate(180deg); }
+        
+        .premium-options { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-radius: 0 0 12px 12px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1.5px solid var(--primary-blue); border-top: none; max-height: 300px; overflow-y: auto; z-index: 99; display: none; opacity: 0; transform: translateY(-5px); transition: opacity 0.2s ease, transform 0.2s ease; }
+        .premium-select-wrapper.open .premium-options { display: block; opacity: 1; transform: translateY(0); }
+        
+        .premium-option { padding: 14px 18px; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; line-height: 1.4; color: var(--text-main); transition: background 0.2s ease; }
+        .premium-option:last-child { border-bottom: none; }
+        .premium-option:hover { background: #f0f9ff; color: var(--dark-blue); }
+        .premium-option.selected { background: #e0f2fe; font-weight: bold; color: var(--dark-blue); border-left: 4px solid var(--primary-blue); }
+
+        input { width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; font-weight: 600; outline: none; transition: 0.2s; }
+        input:focus { border-color: var(--primary-blue); background: #ffffff; }
+        
+        .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 18px; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3); }
+        .submit-btn:hover { background: var(--dark-blue); transform: translateY(-2px); }
+        .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
         
         .success-receipt { background-color: #dcfce7; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 20px; position: relative; display: none; box-shadow: 0 4px 6px rgba(22, 163, 74, 0.1); }
         .success-receipt h3 { margin: 0 0 10px 0; color: #15803d; font-size: 1.1rem; }
@@ -65,20 +107,12 @@
 
         .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
         .full-desc { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 15px; padding: 20px; font-size: 0.85rem; line-height: 1.6; color: var(--text-main); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .full-desc h4 { margin-top: 0; color: var(--dark-blue); font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
         
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
-        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; }
         .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
-        .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
-        .footer-links { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; font-weight: bold; }
-        .footer-links a { color: white; text-decoration: none; font-size: 1.1rem; }
-        .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
-        .pay-icon { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .pay-text { background: white; color: var(--dark-blue); padding: 12px 0; border-radius: 8px; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
-        
-        .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; z-index: 100; }
+        .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; transition: 0.2s; }
+        .social-circles a:hover { background: rgba(255,255,255,0.3); transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -87,18 +121,16 @@
 
     <div class="sidebar-menu" id="sideMenu">
         <div class="sidebar-header">
-            <h2>PHANTOM BOOSTING</h2>
+            <h2 class="premium-brand">Phantom</h2>
             <i class="fa-solid fa-xmark close-btn" onclick="closeMenu()"></i>
         </div>
-        <a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a href="dashboard.html" style="background: var(--bg-color); color: var(--dark-blue);"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a href="add-funds.html"><i class="fa-solid fa-wallet"></i> Add Funds</a>
         <a href="orders.html"><i class="fa-solid fa-list-check"></i> Order History</a>
         <a href="services.html"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
-        <a href="#"><i class="fa-solid fa-headset"></i> Support Tickets</a>
         <div style="flex-grow: 1;"></div>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; width: 100%; margin: 10px 0;">
         <a href="#" id="logoutBtn" style="color: #ef4444; margin-bottom: 5px;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Log Out</a>
-        <a href="terms.html" style="color: #64748b; font-size: 0.9rem; margin-bottom: 0;"><i class="fa-solid fa-file-shield" style="color: #94a3b8;"></i> Terms & Conditions</a>
     </div>
 
     <div class="container">
@@ -106,7 +138,7 @@
         <div class="top-nav">
             <div class="nav-left">
                 <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
-                <span>👋 Welcome!</span>
+                <span class="premium-brand" style="font-size: 1.2rem; background: var(--dark-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard</span>
             </div>
             <div class="nav-balance" id="navBalance">Loading...</div>
         </div>
@@ -121,38 +153,12 @@
         </div>
 
         <div class="card">
-            <div class="card-icon"><i class="fa-solid fa-user"></i></div>
-            <div class="card-info">
-                <h4>Account Status</h4>
-                <p>Active</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-            <div class="card-info">
-                <h4>Account Spending</h4>
-                <p id="cardSpending">Loading...</p>
-            </div>
-        </div>
-
-        <div class="card">
             <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
             <div class="card-info">
                 <h4>Account Balance</h4>
                 <p id="cardBalance">Loading...</p>
             </div>
         </div>
-
-        <a href="add-funds.html" style="text-decoration: none;">
-            <div class="card" style="border-left-color: #22c55e;">
-                <div class="card-icon" style="color: #22c55e; background: #dcfce7;"><i class="fa-solid fa-plus"></i></div>
-                <div class="card-info">
-                    <h4>Add Funds</h4>
-                    <p style="color: #16a34a;">Click Now</p>
-                </div>
-            </div>
-        </a>
 
         <div class="social-grid">
             <div class="social-item" onclick="filterPlatform('youtube')"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
@@ -181,16 +187,28 @@
         <div class="order-section">
             <div class="form-group">
                 <label>Category</label>
-                <select id="categorySelect">
-                    <option>Loading Live Categories...</option>
-                </select>
+                <div class="premium-select-wrapper" id="catWrapper">
+                    <div class="premium-select" id="catSelectBtn">
+                        <span id="catSelectText">Loading Live Categories...</span>
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                    <div class="premium-options" id="catOptionsList"></div>
+                </div>
+                <select id="categorySelect" style="display: none;"></select>
             </div>
+            
             <div class="form-group">
                 <label>Service</label>
-                <select id="serviceSelect">
-                    <option>Loading Services...</option>
-                </select>
+                <div class="premium-select-wrapper" id="srvWrapper">
+                    <div class="premium-select" id="srvSelectBtn">
+                        <span id="srvSelectText">Loading Services...</span>
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                    <div class="premium-options" id="srvOptionsList"></div>
+                </div>
+                <select id="serviceSelect" style="display: none;"></select>
             </div>
+
             <div class="form-group">
                 <label>Link</label>
                 <input type="url" id="orderLink" placeholder="Paste target URL here">
@@ -201,7 +219,7 @@
             </div>
             <div class="form-group">
                 <label>Charge</label>
-                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: #e0f2fe; color: #0369a1; border-color: #38bdf8; font-weight: 800; font-size: 1.1rem;">
+                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: #e0f2fe; color: #0369a1; border-color: #38bdf8; font-weight: 800; font-size: 1.2rem;">
             </div>
             <button class="submit-btn" id="submitOrderBtn">Submit Order</button>
         </div>
@@ -212,51 +230,38 @@
             🟢 Your order will be sent securely to our automated processing system.<br>
             ⚠️ Make sure your account is completely public before placing an order.<br>
             🎯 High Quality Services are recommended for the best stability.<br>
-            Contact us on WhatsApp for any custom requests.
         </div>
     </div>
 
     <div class="mega-footer">
-        <h1>PHANTOM BOOSTING</h1>
-        <p class="tagline">PHANTOM BOOSTING is the Best destination for premium social media marketing services. 100% Quality focused SMM dashboard.</p>
-        
-        <p style="font-weight: bold; margin-bottom: 10px;">Follow us on</p>
+        <h1 class="footer-brand">Phantom Boosting</h1>
+        <p class="tagline">The premier destination for high-quality social media marketing services.</p>
         <div class="social-circles">
             <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
             <a href="#"><i class="fa-brands fa-telegram"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-
-        <p style="font-weight: bold; margin-bottom: 15px;">Quick Links</p>
-        <div class="footer-links">
-            <a href="#">Sign in</a>
-            <a href="services.html">Services</a>
-            <a href="terms.html">Terms</a>
-            <a href="#">Sign up</a>
-        </div>
-
-        <div class="payment-methods">
-            <div class="pay-icon"><i class="fa-brands fa-google-pay" style="color: #4285f4; font-size: 2rem;"></i></div>
-            <div class="pay-text" style="color: #5f259f; font-size: 1rem; font-weight: 900;">PhonePe</div>
-            <div class="pay-text" style="color: #002970; font-size: 1.1rem; font-weight: 900;">Paytm</div>
-            <div class="pay-text" style="color: #16a34a; font-size: 1rem; font-weight: 900;">Navi</div>
-            <div class="pay-text" style="color: #ca8a04; font-size: 1rem; font-weight: 900;">FamPay</div>
-            <div class="pay-text" style="color: #ea580c; font-size: 1.1rem; font-weight: 900; font-style: italic;">UPI</div>
         </div>
     </div>
-
-    <a href="#" class="whatsapp-float">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
 
     <script>
         function openMenu() { document.getElementById("sideMenu").classList.add("active"); document.getElementById("menuOverlay").classList.add("active"); }
         function closeMenu() { document.getElementById("sideMenu").classList.remove("active"); document.getElementById("menuOverlay").classList.remove("active"); }
 
-        const categorySelect = document.getElementById("categorySelect");
-        const serviceSelect = document.getElementById("serviceSelect");
-        const quantityInput = document.getElementById("orderQuantity");
-        const chargeInput = document.getElementById("orderCharge");
+        document.getElementById('catSelectBtn').addEventListener('click', (e) => {
+            document.getElementById('catWrapper').classList.toggle('open');
+            document.getElementById('srvWrapper').classList.remove('open');
+            e.stopPropagation();
+        });
+        
+        document.getElementById('srvSelectBtn').addEventListener('click', (e) => {
+            document.getElementById('srvWrapper').classList.toggle('open');
+            document.getElementById('catWrapper').classList.remove('open');
+            e.stopPropagation();
+        });
+
+        document.addEventListener('click', () => {
+            document.getElementById('catWrapper').classList.remove('open');
+            document.getElementById('srvWrapper').classList.remove('open');
+        });
 
         let allServices = []; 
 
@@ -266,13 +271,59 @@
                 allServices = await response.json();
 
                 if(allServices.error) {
-                    categorySelect.innerHTML = '<option>Error loading API</option>';
+                    document.getElementById('catSelectText').innerText = 'Error loading API';
                     return;
                 }
                 filterPlatform('all');
             } catch (error) {
-                categorySelect.innerHTML = '<option>Failed to connect</option>';
+                document.getElementById('catSelectText').innerText = 'Failed to connect';
             }
+        }
+
+        function populateCustomSelect(wrapperId, listId, textId, nativeSelectId, optionsData, onChangeCallback, isService = false) {
+            const list = document.getElementById(listId);
+            const textBtn = document.getElementById(textId);
+            const nativeSelect = document.getElementById(nativeSelectId);
+            
+            list.innerHTML = '';
+            nativeSelect.innerHTML = '';
+            
+            if(optionsData.length === 0) {
+                textBtn.innerHTML = "No options available";
+                return;
+            }
+
+            textBtn.innerHTML = optionsData[0].htmlText || optionsData[0].text;
+            
+            optionsData.forEach((opt, index) => {
+                const nativeOpt = document.createElement('option');
+                nativeOpt.value = opt.value;
+                nativeOpt.textContent = opt.text;
+                if(isService) {
+                    nativeOpt.setAttribute('data-price', opt.price);
+                    nativeOpt.setAttribute('data-min', opt.min);
+                    nativeOpt.setAttribute('data-max', opt.max);
+                }
+                nativeSelect.appendChild(nativeOpt);
+
+                const div = document.createElement('div');
+                div.className = 'premium-option' + (index === 0 ? ' selected' : '');
+                div.innerHTML = opt.htmlText || opt.text; 
+                
+                div.addEventListener('click', (e) => {
+                    document.querySelectorAll(`#${listId} .premium-option`).forEach(el => el.classList.remove('selected'));
+                    div.classList.add('selected');
+                    textBtn.innerHTML = opt.htmlText || opt.text;
+                    nativeSelect.selectedIndex = index;
+                    document.getElementById(wrapperId).classList.remove('open');
+                    
+                    if(onChangeCallback) onChangeCallback();
+                });
+                
+                list.appendChild(div);
+            });
+            
+            if(onChangeCallback) onChangeCallback();
         }
 
         window.filterPlatform = function(platformKeyword) {
@@ -287,25 +338,17 @@
                 filteredCategories = uniqueCategories.filter(cat => cat.toLowerCase().includes(platformKeyword.toLowerCase()));
             }
 
-            categorySelect.innerHTML = ''; 
-
             if (filteredCategories.length === 0) {
-                const option = document.createElement('option');
-                option.textContent = `No ${platformKeyword} services found`;
-                categorySelect.appendChild(option);
-                serviceSelect.innerHTML = '<option>...</option>';
-                chargeInput.value = "₹ 0.00";
+                document.getElementById('catSelectText').innerText = `No ${platformKeyword} services found`;
+                document.getElementById('catOptionsList').innerHTML = '';
+                document.getElementById('srvSelectText').innerText = '...';
+                document.getElementById('srvOptionsList').innerHTML = '';
+                document.getElementById("orderCharge").value = "₹ 0.00";
                 return;
             }
 
-            filteredCategories.forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat;
-                option.textContent = cat;
-                categorySelect.appendChild(option);
-            });
-
-            updateServiceDropdown();
+            const catData = filteredCategories.map(cat => ({ value: cat, text: cat, htmlText: cat }));
+            populateCustomSelect('catWrapper', 'catOptionsList', 'catSelectText', 'categorySelect', catData, updateServiceDropdown, false);
 
             if(platformKeyword !== 'all') {
                 document.querySelector('.order-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -313,27 +356,33 @@
         }
 
         function updateServiceDropdown() {
-            const selectedCategory = categorySelect.value;
+            const selectedCategory = document.getElementById("categorySelect").value;
             const filteredServices = allServices.filter(s => s.category === selectedCategory);
             
-            serviceSelect.innerHTML = ''; 
-            
-            filteredServices.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service.service_id;
-                option.setAttribute('data-price', service.price); 
-                option.setAttribute('data-min', service.min);
-                option.setAttribute('data-max', service.max);
+            const srvData = filteredServices.map(service => {
+                const titleText = `${service.service_id} - ${service.name}`;
+                const fullText = `${titleText} (₹${service.price} / 1000)`;
+                const beautifulHtml = `<strong>${service.service_id}</strong> - ${service.name} <br><span style="color:var(--primary-blue); font-weight:800; font-size:0.85rem; padding-left:10px;">₹${service.price}</span>`;
                 
-                option.textContent = `${service.service_id} - ${service.name} (₹${service.price} / 1000)`;
-                serviceSelect.appendChild(option);
+                return {
+                    value: service.service_id,
+                    text: fullText,
+                    htmlText: beautifulHtml,
+                    price: service.price,
+                    min: service.min,
+                    max: service.max
+                };
             });
 
-            calculateCharge(); 
+            populateCustomSelect('srvWrapper', 'srvOptionsList', 'srvSelectText', 'serviceSelect', srvData, calculateCharge, true);
         }
 
         function calculateCharge() {
-            const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+            const nativeSelect = document.getElementById("serviceSelect");
+            const selectedOption = nativeSelect.options[nativeSelect.selectedIndex];
+            const quantityInput = document.getElementById("orderQuantity");
+            const chargeInput = document.getElementById("orderCharge");
+
             if (!selectedOption) return;
 
             const pricePer1000 = parseFloat(selectedOption.getAttribute('data-price')) || 0;
@@ -352,10 +401,7 @@
             chargeInput.value = "₹ " + finalCharge.toFixed(2);
         }
 
-        categorySelect.addEventListener("change", updateServiceDropdown);
-        serviceSelect.addEventListener("change", calculateCharge);
-        quantityInput.addEventListener("input", calculateCharge);
-
+        document.getElementById("orderQuantity").addEventListener("input", calculateCharge);
         window.addEventListener('DOMContentLoaded', loadLivePrices);
     </script>
 
@@ -392,17 +438,12 @@
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
                         currentBalance = userData.balance || 0;
-                        
                         document.getElementById('displayId').innerText = userData.customerId || "N/A";
                         document.getElementById('navBalance').innerText = "₹ " + currentBalance.toFixed(2);
                         document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
-                        document.getElementById('cardSpending').innerText = "₹ " + (userData.spending || 0).toFixed(2);
-                    } else {
-                        await signOut(auth);
-                        window.location.href = "login.html";
                     }
                 } catch (error) {
-                    console.error("Firebase error: ", error);
+                    console.error(error);
                 }
             }
         });
@@ -435,57 +476,45 @@
             btn.disabled = true;
 
             try {
-                // STEP 1: TALK TO THE WHOLESALER FIRST
                 const orderResponse = await fetch('/api/order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        service: serviceId,
-                        link: link,
-                        quantity: qty
-                    })
+                    body: JSON.stringify({ service: serviceId, link: link, quantity: qty })
                 });
 
                 const apiResult = await orderResponse.json();
 
-               // RUTHLESS SAFETY GATE: If LuvSMM gives an error OR fails to provide a real Order ID
-if (apiResult.error || !apiResult.order) {
-    console.log("Full API Response:", apiResult); // Secretly logs the exact reason for you
-    alert("Order Rejected by Wholesaler: " + (apiResult.error || "Invalid link or service offline."));
-    btn.innerHTML = "Submit Order";
-    btn.disabled = false;
-    return; // CRITICAL STOP: Do NOT touch the customer's Firebase money!
-}
+                if (apiResult.error || !apiResult.order) {
+                    console.log("API Error:", apiResult);
+                    alert("Order Rejected by Wholesaler: " + (apiResult.error || "Invalid link or offline."));
+                    btn.innerHTML = "Submit Order";
+                    btn.disabled = false;
+                    return; 
+                }
 
-// If successful, strictly save the secret tracking ticket
-const providerOrderId = apiResult.order;
-                
-                // STEP 2: DEDUCT CUSTOMER BALANCE AND SAVE TO FIREBASE
+                const providerOrderId = apiResult.order;
+
                 const userRef = doc(db, "users", globalUserId);
                 await updateDoc(userRef, {
                     balance: increment(-charge),
                     spending: increment(charge)
                 });
 
-                const newOrder = await addDoc(collection(db, "orders"), {
+                await addDoc(collection(db, "orders"), {
                     uid: globalUserId,
                     serviceName: serviceName,
                     serviceId: serviceId,
                     link: link,
                     quantity: qty,
                     charge: charge,
-                    status: "Pending", // This will be updated automatically later
-                    providerOrderId: providerOrderId, // Save the secret tracking ticket!
+                    status: "Pending", 
+                    providerOrderId: providerOrderId, 
                     createdAt: serverTimestamp()
                 });
 
-                // Update UI visually
                 currentBalance -= charge; 
-                let newSpending = Number(document.getElementById('cardSpending').innerText.replace(/[^0-9.-]+/g,"")) + charge;
-                
                 document.getElementById('navBalance').innerText = "₹ " + currentBalance.toFixed(2);
                 document.getElementById('cardBalance').innerText = "₹ " + currentBalance.toFixed(2);
-                document.getElementById('cardSpending').innerText = "₹ " + newSpending.toFixed(2);
 
                 document.getElementById("receiptId").innerText = providerOrderId; 
                 document.getElementById("receiptService").innerText = serviceName;
@@ -499,7 +528,6 @@ const providerOrderId = apiResult.order;
                 document.getElementById("orderLink").value = "";
                 document.getElementById("orderQuantity").value = "";
                 document.getElementById("orderCharge").value = "₹ 0.00";
-
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
             } catch (error) {
