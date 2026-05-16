@@ -448,17 +448,18 @@
 
                 const apiResult = await orderResponse.json();
 
-                // If LuvSMM rejects the order (e.g. invalid link or empty wholesale wallet)
-                if (apiResult.error) {
-                    alert("Provider API Error: " + apiResult.error);
-                    btn.innerHTML = "Submit Order";
-                    btn.disabled = false;
-                    return; // Stop right here, do NOT charge the customer!
-                }
+               // RUTHLESS SAFETY GATE: If LuvSMM gives an error OR fails to provide a real Order ID
+if (apiResult.error || !apiResult.order) {
+    console.log("Full API Response:", apiResult); // Secretly logs the exact reason for you
+    alert("Order Rejected by Wholesaler: " + (apiResult.error || "Invalid link or service offline."));
+    btn.innerHTML = "Submit Order";
+    btn.disabled = false;
+    return; // CRITICAL STOP: Do NOT touch the customer's Firebase money!
+}
 
-                // If successful, save the secret tracking ticket from LuvSMM
-                const providerOrderId = apiResult.order || "N/A";
-
+// If successful, strictly save the secret tracking ticket
+const providerOrderId = apiResult.order;
+                
                 // STEP 2: DEDUCT CUSTOMER BALANCE AND SAVE TO FIREBASE
                 const userRef = doc(db, "users", globalUserId);
                 await updateDoc(userRef, {
