@@ -47,15 +47,14 @@ export default async function handler(req, res) {
             let cleanCategory = cleanText(service.category);
             let cleanName = cleanText(service.name);
 
-            return {
+          return {
                 service_id: service.service,
                 name: addIcon(cleanName),
                 category: addIcon(cleanCategory),
                 price: finalPrice.toFixed(2),
                 min: service.min,
                 max: service.max,
-                // NEW: Grab the description safely
-                description: service.desc || service.description || "No specific details provided for this service."
+                desc: service.description || service.desc || ""
             };
         });
 
