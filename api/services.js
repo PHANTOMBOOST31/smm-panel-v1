@@ -1,7 +1,5 @@
 export default async function handler(req, res) {
     const API_KEY = process.env.SMM_API_KEY; 
-    
-    // We have officially switched the bridge to LuvSMM
     const API_URL = "https://luvsmm.com/api/v2";
 
     if (!API_KEY) {
@@ -22,16 +20,13 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: "Invalid response from provider API." });
         }
 
-        // Custom USD to INR exchange rate strictly locked at ₹98
         const exchangeRate = 98.00; 
 
-        // 1. The Text Cleaner
         const cleanText = (text) => {
             if (!text) return "";
             return text.replace(/[^\x20-\x7E]/g, '').replace(/\s{2,}/g, ' ').trim();
         };
 
-        // 2. The Smart Icon Injector
         const addIcon = (text) => {
             let lower = text.toLowerCase();
             if (lower.includes("instagram")) return "📸 " + text;
@@ -46,7 +41,6 @@ export default async function handler(req, res) {
         };
 
         const processedServices = originalData.map(service => {
-            // Convert USD to INR (at ₹98), then add 40% margin
             let priceInINR = parseFloat(service.rate) * exchangeRate;
             let finalPrice = priceInINR * 1.40;
 
@@ -59,7 +53,9 @@ export default async function handler(req, res) {
                 category: addIcon(cleanCategory),
                 price: finalPrice.toFixed(2),
                 min: service.min,
-                max: service.max
+                max: service.max,
+                // NEW: Grab the description safely
+                description: service.desc || service.description || "No specific details provided for this service."
             };
         });
 
