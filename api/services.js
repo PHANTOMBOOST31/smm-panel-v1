@@ -7,7 +7,6 @@ export default async function handler(req, res) {
     }
 
     try {
-        // We added a "fake ID" here so SMM Wiz's security doesn't block Vercel
         const response = await fetch(`${API_URL}?key=${API_KEY}&action=services`, {
             headers: {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -21,14 +20,21 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: "Invalid response from provider API." });
         }
 
+        // Custom USD to INR exchange rate locked at ₹98
+        const exchangeRate = 98.00; 
+
         const processedServices = originalData.map(service => {
-            let newPrice = parseFloat(service.rate) * 1.40;
+            // 1. Convert the USD API price into INR using your custom 98 rate
+            let priceInINR = parseFloat(service.rate) * exchangeRate;
+            
+            // 2. Add your 40% profit margin to the new INR price
+            let finalPrice = priceInINR * 1.40;
 
             return {
                 service_id: service.service,
                 name: service.name,
                 category: service.category,
-                price: newPrice.toFixed(2),
+                price: finalPrice.toFixed(2),
                 min: service.min,
                 max: service.max
             };
