@@ -1,25 +1,26 @@
 export default async function handler(req, res) {
-    // DO NOT PASTE YOUR REAL KEY HERE! 
-    // This line securely pulls your hidden key from Vercel's vault.
     const API_KEY = process.env.SMM_API_KEY; 
-    const API_URL = "https://smmwinz.com/api/v2";
+    const API_URL = "https://smmwiz.com/api/v2";
 
-    // Safety check to ensure Vercel has the key
     if (!API_KEY) {
         return res.status(500).json({ error: "API Key is missing from Vercel Vault!" });
     }
 
     try {
-        // Securely ask smmwins.com for their list
-        const response = await fetch(`${API_URL}?key=${API_KEY}&action=services`);
+        // We added a "fake ID" here so SMM Wiz's security doesn't block Vercel
+        const response = await fetch(`${API_URL}?key=${API_KEY}&action=services`, {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "Accept": "application/json"
+            }
+        });
+        
         const originalData = await response.json();
 
-        // Safety check: ensure the provider didn't send an error message
         if (!Array.isArray(originalData)) {
             return res.status(500).json({ error: "Invalid response from provider API." });
         }
 
-        // Loop through the list and add your 40% profit markup
         const processedServices = originalData.map(service => {
             let newPrice = parseFloat(service.rate) * 1.40;
 
@@ -33,7 +34,6 @@ export default async function handler(req, res) {
             };
         });
 
-        // Send the profitable list back to your website
         res.status(200).json(processedServices);
 
     } catch (error) {
