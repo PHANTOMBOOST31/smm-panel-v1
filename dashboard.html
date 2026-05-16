@@ -45,8 +45,9 @@
         .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
 
         .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
-        .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; }
-        .social-item:hover { transform: scale(1.05); }
+        .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; }
+        .social-item:active { transform: scale(0.95); background: var(--bg-color); }
+        .social-item.filter-all { background: #bae6fd; color: #0369a1; font-size: 0.9rem; font-weight: bold; }
 
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .form-group { margin-bottom: 18px; }
@@ -60,13 +61,8 @@
         .success-receipt p { margin: 4px 0; font-size: 0.9rem; color: #166534; font-weight: 500; }
         .success-receipt span { font-weight: bold; color: #14532d; word-wrap: break-word; }
         .close-receipt { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #15803d; font-size: 1.2rem; font-weight: bold; }
-        .close-receipt:hover { color: #14532d; }
 
         .section-title { background: var(--primary-blue); color: white; display: inline-block; padding: 8px 15px; border-radius: 8px; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
-        .order-desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-        .desc-box { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 12px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .desc-box span { display: block; color: #64748b; font-size: 0.85rem; margin-bottom: 5px; }
-        .desc-box strong { color: var(--dark-blue); font-size: 0.95rem; }
         .full-desc { background: var(--card-white); border: 1px solid #bae6fd; border-radius: 15px; padding: 20px; font-size: 0.85rem; line-height: 1.6; color: var(--text-main); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .full-desc h4 { margin-top: 0; color: var(--dark-blue); font-size: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
         
@@ -158,16 +154,16 @@
         </a>
 
         <div class="social-grid">
-            <div class="social-item"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-spotify" style="color: #1DB954;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-tiktok" style="color: #000000;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-pinterest" style="color: #E60023;"></i></div>
-            <div class="social-item"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i></div>
+            <div class="social-item" onclick="filterPlatform('youtube')"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
+            <div class="social-item" onclick="filterPlatform('instagram')"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
+            <div class="social-item" onclick="filterPlatform('facebook')"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
+            <div class="social-item" onclick="filterPlatform('twitter')"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
+            <div class="social-item" onclick="filterPlatform('spotify')"><i class="fa-brands fa-spotify" style="color: #1DB954;"></i></div>
+            <div class="social-item" onclick="filterPlatform('tiktok')"><i class="fa-brands fa-tiktok" style="color: #000000;"></i></div>
+            <div class="social-item" onclick="filterPlatform('linkedin')"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i></div>
+            <div class="social-item" onclick="filterPlatform('telegram')"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i></div>
+            <div class="social-item" onclick="filterPlatform('pinterest')"><i class="fa-brands fa-pinterest" style="color: #E60023;"></i></div>
+            <div class="social-item filter-all" onclick="filterPlatform('all')">ALL</div>
         </div>
 
         <div class="success-receipt" id="orderReceipt">
@@ -211,9 +207,9 @@
 
         <div class="section-title">Important Note</div>
         <div class="full-desc">
-            <h4>API Active</h4>
-            🟢 Your order will be sent securely to our automated processing system.<br>
-            ⚠️ Make sure your account is completely public before placing an order.<br>
+            <h4>IMPORTANT NOTE</h4>
+            🟢 Start time & Delivery speed deppends on the current server load.<br>
+            ⚠️ Make sure your account is completely public & Flag for review must be off before placing an order.<br>
             🎯 High Quality Services are recommended for the best stability.<br>
             Contact us on WhatsApp for any custom requests.
         </div>
@@ -272,23 +268,58 @@
                     categorySelect.innerHTML = '<option>Error loading API</option>';
                     return;
                 }
-
-                // Extract all unique categories
-                const uniqueCategories = [...new Set(allServices.map(s => s.category))];
-                categorySelect.innerHTML = ''; 
                 
-                uniqueCategories.forEach(cat => {
-                    const option = document.createElement('option');
-                    option.value = cat;
-                    option.textContent = cat;
-                    categorySelect.appendChild(option);
-                });
-
-                // Load services for whatever category shows up first
-                updateServiceDropdown();
+                // When page first loads, show ALL categories
+                filterPlatform('all');
 
             } catch (error) {
                 categorySelect.innerHTML = '<option>Failed to connect</option>';
+            }
+        }
+
+        // THE MAGIC FILTER FUNCTION
+        window.filterPlatform = function(platformKeyword) {
+            if (allServices.length === 0) return; // Wait until API data is loaded
+
+            // 1. Get a unique list of all categories
+            let uniqueCategories = [...new Set(allServices.map(s => s.category))];
+            let filteredCategories = [];
+
+            // 2. Check if they clicked 'ALL' or a specific icon
+            if (platformKeyword === 'all') {
+                filteredCategories = uniqueCategories;
+            } else {
+                // Search for the keyword (like 'instagram') in the category name
+                filteredCategories = uniqueCategories.filter(cat => cat.toLowerCase().includes(platformKeyword.toLowerCase()));
+            }
+
+            // 3. Clear the current dropdown
+            categorySelect.innerHTML = ''; 
+
+            // 4. If the provider doesn't sell services for that platform
+            if (filteredCategories.length === 0) {
+                const option = document.createElement('option');
+                option.textContent = `No ${platformKeyword} services found`;
+                categorySelect.appendChild(option);
+                serviceSelect.innerHTML = '<option>...</option>';
+                chargeInput.value = "₹ 0.00";
+                return;
+            }
+
+            // 5. Fill the dropdown with ONLY the matching categories
+            filteredCategories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                categorySelect.appendChild(option);
+            });
+
+            // Automatically load the services for the newly filtered list
+            updateServiceDropdown();
+
+            // Smoothly scroll down to the order section so the user sees the change!
+            if(platformKeyword !== 'all') {
+                document.querySelector('.order-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
 
@@ -320,9 +351,7 @@
             const minQty = parseInt(selectedOption.getAttribute('data-min')) || 100;
             const maxQty = parseInt(selectedOption.getAttribute('data-max')) || 100000;
             
-            // Smart input box that adapts to the provider's rules
             quantityInput.placeholder = `Min: ${minQty} - Max: ${maxQty}`;
-
             const quantity = parseInt(quantityInput.value) || 0;
             
             if (quantity < minQty) { 
@@ -330,7 +359,6 @@
                 return; 
             }
 
-            // The 40% margin is already applied by the Vercel backend!
             const finalCharge = (quantity / 1000) * pricePer1000;
             chargeInput.value = "₹ " + finalCharge.toFixed(2);
         }
@@ -339,7 +367,6 @@
         serviceSelect.addEventListener("change", calculateCharge);
         quantityInput.addEventListener("input", calculateCharge);
 
-        // Turn the system on when the page loads
         window.addEventListener('DOMContentLoaded', loadLivePrices);
     </script>
 
@@ -391,7 +418,6 @@
             }
         });
 
-        // Smart Checkout that checks Dynamic Minimums
         document.getElementById('submitOrderBtn').addEventListener('click', async (e) => {
             e.preventDefault();
             
