@@ -44,13 +44,11 @@
         .card-info h4 { margin: 0; font-size: 0.85rem; color: #64748b; }
         .card-info p { margin: 5px 0 0; font-size: 1.2rem; font-weight: bold; color: var(--dark-blue); }
 
-        /* FULL SOCIAL GRID RESTORED */
         .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
         .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; }
         .social-item:active { transform: scale(0.95); background: var(--bg-color); }
         .social-item.filter-all { background: #bae6fd; color: #0369a1; font-size: 0.9rem; font-weight: bold; }
 
-        /* PREMIUM CUSTOM DROPDOWN UI WITH OLD COLORS */
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
@@ -73,7 +71,6 @@
         input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; outline: none; transition: 0.2s; }
         input:focus { border-color: var(--primary-blue); background: #ffffff; }
 
-        /* SMART DESCRIPTION BOX */
         .desc-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 15px; font-size: 0.85rem; color: #166534; line-height: 1.6; display: none; margin-bottom: 18px; }
         
         .submit-btn { background: var(--primary-blue); color: white; width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-bottom: 20px; transition: 0.2s; }
@@ -167,13 +164,16 @@
             <div class="social-item" onclick="filterPlatform('youtube')"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i></div>
             <div class="social-item" onclick="filterPlatform('instagram')"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i></div>
             <div class="social-item" onclick="filterPlatform('facebook')"><i class="fa-brands fa-facebook" style="color: #1877F2;"></i></div>
-            <div class="social-item" onclick="filterPlatform('twitter')"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
-            <div class="social-item" onclick="filterPlatform('spotify')"><i class="fa-brands fa-spotify" style="color: #1DB954;"></i></div>
-            <div class="social-item" onclick="filterPlatform('tiktok')"><i class="fa-brands fa-tiktok" style="color: #000000;"></i></div>
-            <div class="social-item" onclick="filterPlatform('linkedin')"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i></div>
+            <div class="social-item" onclick="filterPlatform('whatsapp')"><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i></div>
             <div class="social-item" onclick="filterPlatform('telegram')"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i></div>
+            
+            <div class="social-item" onclick="filterPlatform('tiktok')"><i class="fa-brands fa-tiktok" style="color: #000000;"></i></div>
             <div class="social-item" onclick="filterPlatform('pinterest')"><i class="fa-brands fa-pinterest" style="color: #E60023;"></i></div>
-            <div class="social-item filter-all" onclick="filterPlatform('all')">ALL</div>
+            <div class="social-item" onclick="filterPlatform('spotify')"><i class="fa-brands fa-spotify" style="color: #1DB954;"></i></div>
+            <div class="social-item" onclick="filterPlatform('linkedin')"><i class="fa-brands fa-linkedin" style="color: #0077b5;"></i></div>
+            <div class="social-item" onclick="filterPlatform('twitter')"><i class="fa-brands fa-twitter" style="color: #1DA1F2;"></i></div>
+            
+            <div class="social-item filter-all" style="grid-column: span 5; padding: 15px 0;" onclick="filterPlatform('all')">VIEW ALL SERVICES</div>
         </div>
 
         <div class="success-receipt" id="orderReceipt">
@@ -317,7 +317,6 @@
                     nativeSelect.selectedIndex = index;
                     document.getElementById(wrapperId).classList.remove('open');
                     
-                    // The SMART Description Box Logic
                     if(isService) {
                         const descBox = document.getElementById('serviceDescriptionBox');
                         const descText = document.getElementById('serviceDescriptionText');
@@ -325,7 +324,7 @@
                             descBox.style.display = 'block';
                             descText.innerHTML = opt.desc;
                         } else {
-                            descBox.style.display = 'none'; // Hides instantly if there is no description!
+                            descBox.style.display = 'none';
                         }
                     }
                     
@@ -390,7 +389,6 @@
 
             populateCustomSelect('srvWrapper', 'srvOptionsList', 'srvSelectText', 'serviceSelect', srvData, calculateCharge, true);
             
-            // Smart load for the first item
             if(srvData.length > 0) {
                 const descBox = document.getElementById('serviceDescriptionBox');
                 const descText = document.getElementById('serviceDescriptionText');
