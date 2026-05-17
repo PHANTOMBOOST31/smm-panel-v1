@@ -22,7 +22,7 @@
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
-        .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid #bae6fd; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
 
         .sidebar-menu { position: fixed; top: 0; left: -300px; width: 260px; height: 100vh; background: var(--card-white); box-shadow: 4px 0 15px rgba(0,0,0,0.1); z-index: 1000; transition: 0.3s ease-in-out; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
         .sidebar-menu.active { left: 0; }
@@ -35,7 +35,7 @@
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .overlay.active { display: block; }
 
-        .announcement { background: linear-gradient(to right, #0ea5e9, #38bdf8); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2); }
+        .announcement { background: linear-gradient(to right, var(--dark-blue), var(--primary-blue)); color: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; font-size: 0.9rem; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .announcement i { margin-right: 10px; font-size: 1.2rem; }
 
         .card { background: var(--card-white); border-radius: 15px; padding: 15px 20px; margin-bottom: 15px; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-left: 4px solid var(--primary-blue); transition: 0.2s; }
@@ -47,17 +47,17 @@
         .social-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 25px; }
         .social-item { background: white; padding: 12px 0; border-radius: 12px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.4rem; display: flex; justify-content: center; align-items: center; transition: 0.2s; cursor: pointer; }
         .social-item:active { transform: scale(0.95); background: var(--bg-color); }
-        .social-item.filter-all { background: #bae6fd; color: #0369a1; font-size: 0.9rem; font-weight: bold; }
+        .social-item.filter-all { background: var(--primary-blue); color: white; font-size: 0.9rem; font-weight: bold; }
 
         .order-section { background: var(--card-white); border-radius: 20px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         
         .premium-select-wrapper { position: relative; user-select: none; width: 100%; }
-        .premium-select { background: #f8fafc; border: 1px solid #bae6fd; padding: 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: var(--dark-blue); transition: all 0.2s ease; }
-        .premium-select:hover { border-color: var(--primary-blue); background: #ffffff; }
+        .premium-select { background: #f8fafc; border: 1px solid var(--primary-blue); padding: 14px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: var(--dark-blue); transition: all 0.2s ease; }
+        .premium-select:hover { background: var(--bg-color); }
         .premium-select .arrow { transition: transform 0.3s ease; color: var(--primary-blue); }
-        .premium-select-wrapper.open .premium-select { border-color: var(--primary-blue); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .premium-select-wrapper.open .premium-select { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
         .premium-select-wrapper.open .arrow { transform: rotate(180deg); }
         
         .premium-options { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-radius: 0 0 10px 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid var(--primary-blue); border-top: none; max-height: 300px; overflow-y: auto; z-index: 99; display: none; opacity: 0; transform: translateY(-5px); transition: opacity 0.2s ease, transform 0.2s ease; }
@@ -65,11 +65,11 @@
         
         .premium-option { padding: 14px 18px; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; line-height: 1.4; color: var(--text-main); transition: background 0.2s ease; }
         .premium-option:last-child { border-bottom: none; }
-        .premium-option:hover { background: #e0f2fe; color: var(--dark-blue); }
-        .premium-option.selected { background: #bae6fd; font-weight: bold; color: var(--dark-blue); border-left: 4px solid var(--primary-blue); }
+        .premium-option:hover { background: var(--bg-color); color: var(--dark-blue); }
+        .premium-option.selected { background: var(--primary-blue); color: white; border-left: 4px solid var(--dark-blue); }
 
-        input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #bae6fd; background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; outline: none; transition: 0.2s; }
-        input:focus { border-color: var(--primary-blue); background: #ffffff; }
+        input { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--primary-blue); background: #f8fafc; color: var(--text-main); box-sizing: border-box; font-size: 0.95rem; outline: none; transition: 0.2s; }
+        input:focus { background: var(--bg-color); }
 
         .desc-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 15px; font-size: 0.85rem; color: #166534; line-height: 1.6; display: none; margin-bottom: 18px; }
 
@@ -113,8 +113,8 @@
         .close-receipt { position: absolute; top: 15px; right: 20px; cursor: pointer; color: #15803d; font-size: 1.2rem; font-weight: bold; }
 
         .mega-footer { background: var(--dark-blue); color: white; padding: 40px 20px 80px 20px; border-radius: 35px 35px 0 0; text-align: center; margin-top: 40px; }
-        .mega-footer h1 { color: #38bdf8; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; font-style: italic; }
-        .mega-footer p.tagline { color: #bae6fd; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
+        .mega-footer h1 { color: white; font-size: 2.5rem; margin: 0 0 10px 0; font-weight: 900; letter-spacing: 2px; font-style: italic; }
+        .mega-footer p.tagline { color: rgba(255, 255, 255, 0.8); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; }
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
     </style>
@@ -155,7 +155,7 @@
 
         <div class="announcement">
             <i class="fa-solid fa-bolt"></i>
-            <span><strong>Live Offer:</strong> Get your first order Now !.</span>
+            <span><strong>Live Offer:</strong> Get your first order Now !</span>
         </div>
 
         <div class="card">
@@ -170,7 +170,7 @@
             <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
             <div class="card-info">
                 <h4>Account Spending</h4>
-                <p id="cardSpending">Loading...</p>
+                <p id="cardSpending">Loading... </p>
             </div>
         </div>
 
@@ -259,7 +259,7 @@
             </div>
             <div class="form-group">
                 <label>Charge</label>
-                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: #e0f2fe; color: #0369a1; border-color: #38bdf8; font-weight: 800; font-size: 1.1rem;">
+                <input type="text" id="orderCharge" placeholder="₹ 0.00" readonly style="background: var(--bg-color); color: var(--dark-blue); border: 2px solid var(--primary-blue); font-weight: 800; font-size: 1.1rem;">
             </div>
             <button class="submit-btn" id="submitOrderBtn">Submit Order</button>
            
@@ -417,6 +417,7 @@
             const srvData = filteredServices.map(service => {
                 const titleText = `${service.service_id} - ${service.name}`;
                 const fullText = `${titleText} (₹${service.price} / 1000)`;
+                // Notice the inline style here uses var(--primary-blue) so it will change colors too!
                 const beautifulHtml = `<strong>${service.service_id}</strong> - ${service.name} <br><span style="color:var(--primary-blue); font-weight:800; font-size:0.85rem; padding-left:10px;">₹${service.price}</span>`;
                 
                 return {
