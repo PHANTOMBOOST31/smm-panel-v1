@@ -179,27 +179,34 @@
             appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
         };
 
-        const app = initializeApp(firebaseConfig);
+       const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+
+        // ⚠️ PUT YOUR EXACT ADMIN GMAIL HERE
+        const MASTER_ADMIN_EMAIL = "francodebbarma3110@gmail.com";
 
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = "login.html";
-            } else {
-                try {
-                    const docRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(docRef);
+                return;
+            }
 
-                    // Simplified logic - assuming if they can see this, they are allowed for now, 
-                    // or you can add your `if (docSnap.data().role === "admin")` logic back here!
-                    document.body.style.display = "flex"; 
-                    loadStats();
-                    loadPendingRequests(); 
-                    loadAllOrders();
-                } catch (error) {
-                    alert("Database Error: " + error.message);
-                }
+            // THE RUTHLESS BOUNCER: Checks the email instantly
+            if (user.email !== MASTER_ADMIN_EMAIL) {
+                // If it's not you, kick them instantly to the dashboard
+                window.location.href = "dashboard.html";
+                return;
+            }
+
+            // ONLY IF IT'S YOU: Reveal the panel and load the data
+            try {
+                document.body.style.display = "flex"; 
+                loadStats();
+                loadPendingRequests(); 
+                loadAllOrders();
+            } catch (error) {
+                alert("Database Error: " + error.message);
             }
         });
 
