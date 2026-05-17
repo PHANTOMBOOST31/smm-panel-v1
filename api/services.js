@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
         const processedServices = originalData.map(service => {
             let priceInINR = parseFloat(service.rate) * exchangeRate;
-            let finalPrice = priceInINR * 1.40;
+            let finalPrice = priceInINR * 1.45;
 
             let cleanCategory = cleanText(service.category);
             let cleanName = cleanText(service.name);
