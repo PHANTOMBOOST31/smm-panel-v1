@@ -272,12 +272,12 @@
                 return;
             }
 
-            // Checks the exact email string instantly. 100% unhackable.
+         // Checks the exact email string instantly. 100% unhackable.
             if (user.email !== MASTER_ADMIN_EMAIL) {
+                alert("Firebase sees your email as: [" + user.email + "]\nBut the code is looking for: [" + MASTER_ADMIN_EMAIL + "]");
                 window.location.href = "dashboard.html";
                 return;
             }
-
             // ONLY IF IT MATCHES:
             try {
                 document.body.style.display = "block"; // Reveals the UI
