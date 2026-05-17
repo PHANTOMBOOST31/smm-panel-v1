@@ -73,7 +73,7 @@
 
         .desc-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 15px; font-size: 0.85rem; color: #166534; line-height: 1.6; display: none; margin-bottom: 18px; }
 
-.important-rules-box {
+        .important-rules-box {
             background: #fffbeb; 
             border-left: 4px solid #f59e0b; 
             padding: 18px; 
@@ -263,17 +263,16 @@
             </div>
             <button class="submit-btn" id="submitOrderBtn">Submit Order</button>
            
-    <div class="important-rules-box">
-        <h4><i class="fa-solid fa-triangle-exclamation"></i> Important Guidelines</h4>
-        <ul>
-            <li>Ensure your account profile is set to <strong>Public & Flag for Review</strong> must be off before ordering.</li>
-            <li>Do not place multiple orders for the exact same link at once.</li>
-            <li>Wait for your current order to say "Completed" before re-ordering.</li>
-            <li>Double-check your Target URL; mistakes cannot be reversed.</li>
-            <li>The speed of the Order delivary will depends on the current traffic status.</li>
-        </ul>
-    </div>
-</div>
+            <div class="important-rules-box">
+                <h4><i class="fa-solid fa-triangle-exclamation"></i> Important Guidelines</h4>
+                <ul>
+                    <li>Ensure your account profile is set to <strong>Public & Flag for Review</strong> must be off before ordering.</li>
+                    <li>Do not place multiple orders for the exact same link at once.</li>
+                    <li>Wait for your current order to say "Completed" before re-ordering.</li>
+                    <li>Double-check your Target URL; mistakes cannot be reversed.</li>
+                    <li>The speed of the Order delivary will depends on the current traffic status.</li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -476,7 +475,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { initializeFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
@@ -490,6 +489,20 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+
+        // REAL-TIME THEME LISTENER
+        onSnapshot(doc(db, "settings", "branding"), (docData) => {
+            if (docData.exists()) {
+                const color = docData.data().primaryColor;
+                const root = document.documentElement;
+                if(color === 'green') { root.style.setProperty('--primary-blue', '#10b981'); root.style.setProperty('--dark-blue', '#047857'); root.style.setProperty('--bg-color', '#d1fae5'); }
+                else if(color === 'red') { root.style.setProperty('--primary-blue', '#ef4444'); root.style.setProperty('--dark-blue', '#b91c1c'); root.style.setProperty('--bg-color', '#fee2e2'); }
+                else if(color === 'purple') { root.style.setProperty('--primary-blue', '#8b5cf6'); root.style.setProperty('--dark-blue', '#6d28d9'); root.style.setProperty('--bg-color', '#ede9fe'); }
+                else if(color === 'pink') { root.style.setProperty('--primary-blue', '#ec4899'); root.style.setProperty('--dark-blue', '#be185d'); root.style.setProperty('--bg-color', '#fce7f3'); }
+                else if(color === 'dark') { root.style.setProperty('--primary-blue', '#475569'); root.style.setProperty('--dark-blue', '#0f172a'); root.style.setProperty('--bg-color', '#f1f5f9'); }
+                else { root.style.setProperty('--primary-blue', '#0ea5e9'); root.style.setProperty('--dark-blue', '#0369a1'); root.style.setProperty('--bg-color', '#e0f2fe'); } 
+            }
+        });
 
         let currentBalance = 0;
         let globalUserId = null;
