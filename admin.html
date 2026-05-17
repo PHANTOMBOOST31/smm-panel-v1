@@ -6,46 +6,79 @@
     <title>Admin Command Center | Phantom</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --admin-bg: #f1f5f9; --admin-dark: #0f172a; --admin-panel: #1e293b; --card-white: #ffffff; --primary-blue: #0ea5e9; --text-main: #334155; --success: #10b981; --danger: #ef4444; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--admin-bg); margin: 0; color: var(--text-main); display: none; }
-        .admin-sidebar { width: 260px; background-color: var(--admin-panel); color: white; height: 100vh; position: fixed; display: flex; flex-direction: column; padding-top: 20px; box-shadow: 4px 0 15px rgba(0,0,0,0.1); }
-        .admin-brand { font-size: 1.5rem; font-weight: bold; font-style: italic; text-align: center; color: var(--primary-blue); margin-bottom: 30px; letter-spacing: 1px; }
-        .admin-brand span { color: white; font-style: normal; font-size: 0.9rem; background: var(--danger); padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 5px; }
-        .admin-sidebar a { color: #cbd5e1; text-decoration: none; padding: 15px 25px; display: flex; align-items: center; gap: 15px; font-weight: 500; transition: 0.2s; border-left: 4px solid transparent; }
-        .admin-sidebar a:hover, .admin-sidebar a.active { background-color: var(--admin-dark); color: white; border-left: 4px solid var(--primary-blue); }
-        .admin-sidebar a i { width: 20px; text-align: center; font-size: 1.1rem; }
-        .main-content { margin-left: 260px; padding: 30px; width: calc(100% - 260px); box-sizing: border-box; }
-        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .top-header h1 { margin: 0; color: var(--admin-dark); font-size: 1.8rem; }
-        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: var(--card-white); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-top: 4px solid var(--primary-blue); display: flex; align-items: center; justify-content: space-between; }
-        .stat-card.green { border-top-color: var(--success); }
-        .stat-card.red { border-top-color: var(--danger); }
-        .stat-info h3 { margin: 0; font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-info p { margin: 5px 0 0; font-size: 1.8rem; font-weight: bold; color: var(--admin-dark); }
-        .stat-icon { font-size: 2.5rem; color: #e2e8f0; }
-        .control-section { background: var(--card-white); border-radius: 12px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .control-section h2 { margin-top: 0; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; color: var(--admin-dark); font-size: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+        :root { 
+            --admin-bg: #f3f4f6; 
+            --admin-panel: #0d0d0f; 
+            --admin-hover: rgba(255, 255, 255, 0.05);
+            --admin-active: #27272a; 
+            --text-muted: #a1a1aa; 
+            --card-white: #ffffff; 
+            --primary-blue: #0ea5e9; 
+            --text-main: #1e293b; 
+            --success: #10b981; 
+            --danger: #ef4444; 
+        }
+
+        body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--admin-bg); margin: 0; color: var(--text-main); display: none; }
+        
+        /* PREMIUM SIDEBAR */
+        .admin-sidebar { width: 270px; background-color: var(--admin-panel); color: white; height: 100vh; position: fixed; display: flex; flex-direction: column; padding: 25px 15px; box-sizing: border-box; z-index: 100; }
+        
+        .admin-brand { font-size: 1.15rem; font-weight: 800; color: #ffffff; margin-bottom: 40px; letter-spacing: 1px; display: flex; align-items: center; gap: 12px; padding-left: 10px; text-transform: uppercase; }
+        .admin-brand i { font-size: 1.3rem; }
+
+        .admin-sidebar button { background: transparent; border: none; width: 100%; text-align: left; color: var(--text-muted); padding: 14px 18px; display: flex; align-items: center; gap: 16px; font-weight: 600; font-size: 0.95rem; border-radius: 12px; margin-bottom: 6px; cursor: pointer; transition: all 0.2s ease; font-family: 'Inter', sans-serif; }
+        .admin-sidebar button:hover { background-color: var(--admin-hover); color: white; }
+        .admin-sidebar button.active { background-color: var(--admin-active); color: white; }
+        .admin-sidebar button i { width: 22px; text-align: center; font-size: 1.1rem; }
+        .admin-sidebar a { color: var(--text-muted); text-decoration: none; padding: 14px 18px; display: flex; align-items: center; gap: 16px; font-weight: 600; font-size: 0.95rem; border-radius: 12px; transition: all 0.2s ease; }
+        .admin-sidebar a:hover { color: white; }
+
+        /* MAIN CONTENT & TAB SWITCHING */
+        .main-content { margin-left: 270px; padding: 40px; width: calc(100% - 270px); box-sizing: border-box; }
+        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
+        .top-header h1 { margin: 0; color: var(--text-main); font-size: 1.8rem; font-weight: 800; }
+        
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CARDS & TABLES */
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 40px; }
+        .stat-card { background: var(--card-white); padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; transition: 0.2s; }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+        .stat-info h3 { margin: 0; font-size: 0.85rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+        .stat-info p { margin: 8px 0 0; font-size: 2rem; font-weight: 900; color: var(--text-main); }
+        .stat-icon { font-size: 2.5rem; color: #f3f4f6; }
+        
+        .control-section { background: var(--card-white); border-radius: 16px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e5e7eb; }
+        .control-section h2 { margin-top: 0; border-bottom: 2px solid #f3f4f6; padding-bottom: 15px; color: var(--text-main); font-size: 1.3rem; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+        
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { text-align: left; padding: 12px 15px; border-bottom: 1px solid #e2e8f0; font-size: 0.95rem; }
-        th { background-color: #f8fafc; color: #64748b; font-weight: 600; }
-        tr:hover { background-color: #f8fafc; }
-        .btn { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85rem; color: white; transition: 0.2s; margin-right: 5px; }
+        th, td { text-align: left; padding: 15px; border-bottom: 1px solid #f3f4f6; font-size: 0.95rem; }
+        th { background-color: #f9fafb; color: #6b7280; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+        tr:hover { background-color: #f9fafb; }
+        
+        .btn { padding: 10px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.85rem; color: white; transition: 0.2s; margin-right: 8px; }
         .btn-approve { background-color: var(--success); }
         .btn-approve:hover { background-color: #059669; }
         .btn-reject { background-color: var(--danger); }
         .btn-reject:hover { background-color: #dc2626; }
-        .wallet-manager { display: flex; gap: 15px; align-items: flex-end; margin-top: 15px; }
-        .form-group { flex-grow: 1; }
-        .form-group label { display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: bold; color: #64748b; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        .btn-blue { background-color: var(--primary-blue); padding: 10px 20px; font-size: 1rem; }
-        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; color: white; text-transform: uppercase; }
         
-        /* NEW THEME SELECTOR CSS */
-        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px; }
-        .theme-btn { padding: 15px; border-radius: 8px; border: 2px solid transparent; cursor: pointer; font-weight: bold; text-align: center; color: white; transition: 0.2s; }
-        .theme-btn:hover { transform: translateY(-3px); }
+        .wallet-manager { display: flex; gap: 20px; align-items: flex-end; margin-top: 20px; }
+        .form-group { flex-grow: 1; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; color: #4b5563; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 15px; border: 1px solid #d1d5db; border-radius: 10px; box-sizing: border-box; font-size: 1rem; outline: none; transition: 0.2s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
+        .btn-blue { background-color: var(--primary-blue); padding: 12px 25px; font-size: 1rem; }
+        
+        .status-badge { padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+        .theme-btn { padding: 18px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; font-weight: 800; text-align: center; color: white; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .theme-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
         .theme-blue { background: #0ea5e9; }
         .theme-green { background: #10b981; }
         .theme-red { background: #ef4444; }
@@ -53,122 +86,169 @@
         .theme-pink { background: #ec4899; }
         .theme-dark { background: #1e293b; }
 
-        @media (max-width: 768px) { .admin-sidebar { display: none; } .main-content { margin-left: 0; width: 100%; padding: 15px; } .stat-grid { grid-template-columns: 1fr; } .wallet-manager { flex-direction: column; } .wallet-manager .btn { width: 100%; } .theme-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .admin-sidebar { display: none; } .main-content { margin-left: 0; width: 100%; padding: 20px; } .stat-grid { grid-template-columns: 1fr; } .wallet-manager { flex-direction: column; } .wallet-manager .btn { width: 100%; } .theme-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
     <div class="admin-sidebar">
-        <div class="admin-brand">Phantom <span>ADMIN</span></div>
-        <a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Overview</a>
-        <a href="#orders-section"><i class="fa-solid fa-list-check"></i> All Orders</a>
-        <a href="#funds-section"><i class="fa-solid fa-money-bill-transfer"></i> Fund Requests</a>
-        <a href="#wallet-section"><i class="fa-solid fa-sliders"></i> Wallet Manager</a>
-        <a href="#theme-section"><i class="fa-solid fa-palette"></i> Website Theme</a>
+        <div class="admin-brand">
+            <i class="fa-solid fa-shield-halved"></i> ADMIN PANEL
+        </div>
+        
+        <button class="sidebar-link active" onclick="switchTab('overview-tab', this)"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+        <button class="sidebar-link" onclick="switchTab('orders-tab', this)"><i class="fa-solid fa-cart-shopping"></i> Orders</button>
+        <button class="sidebar-link" onclick="switchTab('users-tab', this)"><i class="fa-solid fa-users"></i> Users</button>
+        <button class="sidebar-link" onclick="switchTab('funds-tab', this)"><i class="fa-solid fa-money-bill-transfer"></i> Fund Requests</button>
+        <button class="sidebar-link" onclick="switchTab('wallet-tab', this)"><i class="fa-solid fa-sliders"></i> Wallet Manager</button>
+        <button class="sidebar-link" onclick="switchTab('theme-tab', this)"><i class="fa-solid fa-paintbrush"></i> Themes</button>
+        
         <div style="flex-grow: 1;"></div>
-        <a href="dashboard.html" style="color: #94a3b8;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back to Dashboard</a>
+        <a href="dashboard.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit to Store</a>
     </div>
 
     <div class="main-content">
         <div class="top-header">
-            <h1>Command Center</h1>
-            <div style="background: white; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; border: 1px solid #e2e8f0;">
-                <i class="fa-solid fa-shield-halved" style="color: var(--primary-blue);"></i> System Secure
+            <h1 id="pageTitle">Overview</h1>
+            <div style="background: white; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; border: 1px solid #e5e7eb; color: #10b981; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                <i class="fa-solid fa-check-circle"></i> System Secure
             </div>
         </div>
 
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-info"><h3>Total Users</h3><p id="totalUsersDisplay"><i class="fa-solid fa-spinner fa-spin" style="font-size: 1.2rem;"></i></p></div>
-                <i class="fa-solid fa-users stat-icon"></i>
-            </div>
-            <div class="stat-card green">
-                <div class="stat-info"><h3>Pending Requests</h3><p id="pendingCountDisplay">0</p></div>
-                <i class="fa-solid fa-wallet stat-icon"></i>
-            </div>
-            <div class="stat-card red">
-                <div class="stat-info"><h3>Total Orders</h3><p id="totalOrdersDisplay"><i class="fa-solid fa-spinner fa-spin" style="font-size: 1.2rem;"></i></p></div>
-                <i class="fa-solid fa-cart-shopping stat-icon"></i>
-            </div>
-        </div>
-
-        <div class="control-section" id="orders-section">
-            <h2><i class="fa-solid fa-list-check"></i> Live Order Feed</h2>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Service & Link</th>
-                            <th>Qty / Charge</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ordersTableBody">
-                        <tr><td colspan="5" style="text-align: center; color: #64748b;">Loading live orders...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="control-section" id="funds-section">
-            <h2><i class="fa-solid fa-money-bill-transfer"></i> Pending Fund Requests <span id="newBadge" style="background: var(--primary-blue); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; display: none;">New</span></h2>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Customer ID</th>
-                            <th>Method</th>
-                            <th>Transaction ID</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requestsTableBody">
-                        <tr><td colspan="5" style="text-align: center; color: #64748b;">Loading live data...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="control-section" id="wallet-section">
-            <h2><i class="fa-solid fa-sliders"></i> Manual Wallet Adjustment</h2>
-            <p style="font-size: 0.9rem; color: #64748b; margin-top: 0;">Use this to manually fix a customer's balance.</p>
-            <div class="wallet-manager">
-                <div class="form-group"><label>Customer ID</label><input type="text" id="targetCustomerId" placeholder="e.g. PB-123456"></div>
-                <div class="form-group">
-                    <label>Action</label>
-                    <select id="walletAction" style="background: white;">
-                        <option value="add">Add Funds (+)</option>
-                        <option value="deduct">Deduct Funds (-)</option>
-                    </select>
+        <div id="overview-tab" class="tab-content active">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Total Users</h3><p id="totalUsersDisplay"><i class="fa-solid fa-spinner fa-spin" style="font-size: 1.2rem;"></i></p></div>
+                    <i class="fa-solid fa-users stat-icon" style="color: #e0f2fe;"></i>
                 </div>
-                <div class="form-group"><label>Amount (₹)</label><input type="number" id="walletAmount" placeholder="0.00"></div>
-                <button class="btn btn-blue" id="updateWalletBtn">Update Wallet</button>
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Pending Requests</h3><p id="pendingCountDisplay">0</p></div>
+                    <i class="fa-solid fa-wallet stat-icon" style="color: #dcfce7;"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info"><h3>Total Orders</h3><p id="totalOrdersDisplay"><i class="fa-solid fa-spinner fa-spin" style="font-size: 1.2rem;"></i></p></div>
+                    <i class="fa-solid fa-cart-shopping stat-icon" style="color: #fef08a;"></i>
+                </div>
             </div>
         </div>
 
-        <div class="control-section" id="theme-section">
-            <h2><i class="fa-solid fa-palette"></i> Website Theme Control</h2>
-            <p style="font-size: 0.9rem; color: #64748b; margin-top: 0;">Click a color to instantly update the customer-facing dashboard.</p>
-            <div class="theme-grid">
-                <div class="theme-btn theme-blue" onclick="saveTheme('blue')">Ocean Blue</div>
-                <div class="theme-btn theme-green" onclick="saveTheme('green')">Emerald Green</div>
-                <div class="theme-btn theme-red" onclick="saveTheme('red')">Ruby Red</div>
-                <div class="theme-btn theme-purple" onclick="saveTheme('purple')">Royal Purple</div>
-                <div class="theme-btn theme-pink" onclick="saveTheme('pink')">Neon Pink</div>
-                <div class="theme-btn theme-dark" onclick="saveTheme('dark')">Midnight Dark</div>
+        <div id="orders-tab" class="tab-content">
+            <div class="control-section">
+                <h2><i class="fa-solid fa-cart-shopping" style="color: var(--primary-blue);"></i> Live Order Feed</h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Service & Link</th>
+                                <th>Qty / Charge</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <tr><td colspan="5" style="text-align: center; color: #6b7280;">Loading live orders...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="users-tab" class="tab-content">
+            <div class="control-section">
+                <h2><i class="fa-solid fa-users" style="color: #8b5cf6;"></i> User Database</h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Email Address</th>
+                                <th>Current Balance</th>
+                                <th>Total Spent</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td colspan="4" style="text-align: center; color: #6b7280;">Loading user data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="funds-tab" class="tab-content">
+            <div class="control-section">
+                <h2><i class="fa-solid fa-money-bill-transfer" style="color: #10b981;"></i> Pending Fund Requests <span id="newBadge" style="background: var(--primary-blue); color: white; padding: 2px 8px; border-radius: 8px; font-size: 0.8rem; display: none; margin-left: 10px;">New</span></h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Method</th>
+                                <th>Transaction ID</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTableBody">
+                            <tr><td colspan="5" style="text-align: center; color: #6b7280;">Loading live data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="wallet-tab" class="tab-content">
+            <div class="control-section">
+                <h2><i class="fa-solid fa-sliders" style="color: #f59e0b;"></i> Manual Wallet Adjustment</h2>
+                <p style="font-size: 0.95rem; color: #6b7280; margin-top: 0;">Use this to manually fix or adjust a customer's balance.</p>
+                <div class="wallet-manager">
+                    <div class="form-group"><label>Customer ID</label><input type="text" id="targetCustomerId" placeholder="e.g. PB-123456"></div>
+                    <div class="form-group">
+                        <label>Action</label>
+                        <select id="walletAction" style="background: white;">
+                            <option value="add">Add Funds (+)</option>
+                            <option value="deduct">Deduct Funds (-)</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Amount (₹)</label><input type="number" id="walletAmount" placeholder="0.00"></div>
+                    <button class="btn btn-blue" id="updateWalletBtn">Update Wallet</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="theme-tab" class="tab-content">
+            <div class="control-section">
+                <h2><i class="fa-solid fa-paintbrush" style="color: #ec4899;"></i> Website Theme Control</h2>
+                <p style="font-size: 0.95rem; color: #6b7280; margin-top: 0;">Click a color to instantly update the customer-facing dashboard.</p>
+                <div class="theme-grid">
+                    <div class="theme-btn theme-blue" onclick="saveTheme('blue')">Ocean Blue</div>
+                    <div class="theme-btn theme-green" onclick="saveTheme('green')">Emerald Green</div>
+                    <div class="theme-btn theme-red" onclick="saveTheme('red')">Ruby Red</div>
+                    <div class="theme-btn theme-purple" onclick="saveTheme('purple')">Royal Purple</div>
+                    <div class="theme-btn theme-pink" onclick="saveTheme('pink')">Neon Pink</div>
+                    <div class="theme-btn theme-dark" onclick="saveTheme('dark')">Midnight Dark</div>
+                </div>
             </div>
         </div>
 
     </div>
 
+    <script>
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            document.getElementById('pageTitle').innerText = btnElement.innerText.trim();
+        }
+    </script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        // ADDED setDoc to the imports
-        import { initializeFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, updateDoc, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { initializeFirestore, doc, setDoc, collection, query, where, getDocs, updateDoc, increment, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB4D33tTSZgsLSOvyBBkZttjn9iW_7PGGs",
@@ -179,12 +259,12 @@
             appId: "1:954894417214:web:e9b13f5f2f889b4578006f"
         };
 
-       const app = initializeApp(firebaseConfig);
+        const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-        // ⚠️ PUT YOUR EXACT ADMIN GMAIL HERE
-        const MASTER_ADMIN_EMAIL = "francodebbarma3110@gmail.com";
+        // ⚠️ THE RUTHLESS BOUNCER: PUT YOUR MASTER GMAIL HERE ⚠️
+        const MASTER_ADMIN_EMAIL = "francodebbarma3110gmail.com";
 
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
@@ -192,19 +272,19 @@
                 return;
             }
 
-            // THE RUTHLESS BOUNCER: Checks the email instantly
+            // Checks the exact email string instantly. 100% unhackable.
             if (user.email !== MASTER_ADMIN_EMAIL) {
-                // If it's not you, kick them instantly to the dashboard
                 window.location.href = "dashboard.html";
                 return;
             }
 
-            // ONLY IF IT'S YOU: Reveal the panel and load the data
+            // ONLY IF IT MATCHES:
             try {
-                document.body.style.display = "flex"; 
+                document.body.style.display = "block"; // Reveals the UI
                 loadStats();
                 loadPendingRequests(); 
                 loadAllOrders();
+                loadAllUsers(); 
             } catch (error) {
                 alert("Database Error: " + error.message);
             }
@@ -222,6 +302,28 @@
             }
         }
 
+        window.loadAllUsers = async function() {
+            const tbody = document.getElementById("usersTableBody");
+            try {
+                const querySnapshot = await getDocs(collection(db, "users"));
+                tbody.innerHTML = ""; 
+                
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><strong>${data.customerId || docSnap.id.substring(0,8)}</strong></td>
+                        <td>${data.email || 'N/A'}</td>
+                        <td style="color:var(--success); font-weight:800;">₹${(data.balance || 0).toFixed(2)}</td>
+                        <td>₹${(data.spending || 0).toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan='4' style='color: red; text-align: center;'>Error: ${error.message}</td></tr>`;
+            }
+        }
+
         window.loadAllOrders = async function() {
             const tbody = document.getElementById("ordersTableBody");
             try {
@@ -229,7 +331,7 @@
                 const querySnapshot = await getDocs(q);
                 tbody.innerHTML = ""; 
                 if (querySnapshot.empty) {
-                    tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #64748b;'>No orders placed yet.</td></tr>";
+                    tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #6b7280;'>No orders placed yet.</td></tr>";
                     return;
                 }
                 querySnapshot.forEach((docSnap) => {
@@ -237,22 +339,22 @@
                     const orderId = docSnap.id;
                     const shortId = orderId.substring(0, 8).toUpperCase();
                     
-                    let statusColor = "#eab308"; 
+                    let statusColor = "#f59e0b"; 
                     if(data.status === "processing") statusColor = "#3b82f6"; 
-                    if(data.status === "completed") statusColor = "#22c55e"; 
+                    if(data.status === "completed") statusColor = "#10b981"; 
                     if(data.status === "canceled") statusColor = "#ef4444"; 
 
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td><strong>${shortId}</strong></td>
                         <td>
-                            <div style="font-size:0.8rem; color:#64748b; font-weight:bold;">${data.serviceName}</div>
-                            <a href="${data.link}" target="_blank" style="color:var(--primary-blue); font-size:0.9rem; text-decoration:none;">${data.link}</a>
+                            <div style="font-size:0.85rem; color:#4b5563; font-weight:700;">${data.serviceName}</div>
+                            <a href="${data.link}" target="_blank" style="color:var(--primary-blue); font-size:0.85rem; text-decoration:none;">${data.link}</a>
                         </td>
-                        <td><strong>${data.quantity}</strong><br><span style="color:var(--success); font-size:0.85rem;">₹${data.charge}</span></td>
+                        <td><strong>${data.quantity}</strong><br><span style="color:var(--success); font-size:0.85rem; font-weight:800;">₹${data.charge}</span></td>
                         <td><span class="status-badge" style="background:${statusColor};">${data.status}</span></td>
                         <td>
-                            <select onchange="updateOrderStatus('${orderId}', this.value)" style="padding: 6px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+                            <select onchange="updateOrderStatus('${orderId}', this.value)" style="padding: 8px; border-radius: 8px; border: 1px solid #d1d5db; font-size: 0.85rem; font-weight:600; outline:none;">
                                 <option value="">Change Status...</option>
                                 <option value="pending">Pending</option>
                                 <option value="processing">Processing</option>
@@ -293,12 +395,12 @@
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td><strong>${data.customerId}</strong></td>
-                        <td><span style="color: #ea580c; font-weight: bold; font-style: italic;">UPI / Manual</span></td>
+                        <td><span style="color: #f59e0b; font-weight: 800;">UPI / Manual</span></td>
                         <td>${data.utr}</td>
-                        <td style="font-weight: bold; color: var(--success);">₹ ${data.amount}</td>
+                        <td style="font-weight: 900; color: var(--success); font-size: 1.1rem;">₹${data.amount}</td>
                         <td>
                             <button class="btn btn-approve" onclick="approveRequest('${requestId}', '${data.uid}', ${data.amount})"><i class="fa-solid fa-check"></i> Approve</button>
-                            <button class="btn btn-reject" onclick="rejectRequest('${requestId}')"><i class="fa-solid fa-xmark"></i> Reject</button>
+                            <button class="btn btn-reject" onclick="rejectRequest('${requestId}')"><i class="fa-solid fa-xmark"></i></button>
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -308,7 +410,7 @@
                     document.getElementById("newBadge").style.display = "inline-block";
                     document.getElementById("newBadge").innerText = count + " New";
                 } else {
-                    tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #64748b;'>No pending requests right now.</td></tr>";
+                    tbody.innerHTML = "<tr><td colspan='5' style='text-align: center; color: #6b7280;'>No pending requests right now.</td></tr>";
                     document.getElementById("newBadge").style.display = "none";
                 }
             } catch (error) {
@@ -317,7 +419,7 @@
         }
 
         window.approveRequest = async function(requestId, userId, amount) {
-            if(!confirm("Are you sure you want to add ₹" + amount + " to this user's wallet?")) return;
+            if(!confirm("Approve ₹" + amount + " to this user?")) return;
             try {
                 const userRef = doc(db, "users", userId);
                 await updateDoc(userRef, { balance: increment(amount) });
@@ -347,7 +449,7 @@
             const amount = Number(amountStr);
 
             if (!targetId || amountStr === "" || amount <= 0) {
-                alert("⚠️ Please enter a valid Customer ID and an amount greater than 0.");
+                alert("⚠️ Enter a valid Customer ID and an amount.");
                 return;
             }
 
@@ -377,6 +479,7 @@
                 alert(`✅ Success! You just ${action === 'add' ? 'Added' : 'Deducted'} ₹${amount} for ${targetId}.`);
                 document.getElementById('targetCustomerId').value = "";
                 document.getElementById('walletAmount').value = "";
+                loadAllUsers(); 
 
             } catch (error) {
                 alert("Database Error: " + error.message);
@@ -386,13 +489,10 @@
             btn.disabled = false;
         });
 
-        // NEW THEME SAVING LOGIC
         window.saveTheme = async function(color) {
             try {
-                await setDoc(doc(db, "settings", "branding"), {
-                    primaryColor: color
-                });
-                alert(`✅ Theme successfully changed to ${color.toUpperCase()}! The customer dashboard will now update.`);
+                await setDoc(doc(db, "settings", "branding"), { primaryColor: color });
+                alert(`✅ Theme changed to ${color.toUpperCase()}! The customer dashboard is now updated.`);
             } catch (error) {
                 alert("Error saving theme: " + error.message);
             }
