@@ -23,7 +23,6 @@
         
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
 
-        /* PREMIUM ANIMATED GRADIENT TEXT */
         .animated-gradient-text {
             background: linear-gradient(to right, var(--primary-blue), var(--dark-blue), var(--primary-blue));
             background-size: 200% auto;
@@ -529,12 +528,10 @@
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-        // REAL-TIME THEME LISTENER (Upgraded with LocalStorage)
         onSnapshot(doc(db, "settings", "branding"), (docData) => {
             if (docData.exists()) {
                 const color = docData.data().primaryColor;
                 
-                // Save the color to the browser memory for instant loading
                 localStorage.setItem('phantom_theme', color); 
                 
                 const root = document.documentElement;
