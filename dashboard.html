@@ -20,7 +20,24 @@
         .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 5px 0; color: var(--dark-blue); }
         .nav-left { display: flex; align-items: center; gap: 15px; font-size: 1.1rem; font-weight: bold; }
         .menu-btn { font-size: 1.6rem; cursor: pointer; color: var(--dark-blue); }
+        
         .nav-balance { background: var(--card-white); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--primary-blue); }
+
+        /* PREMIUM ANIMATED GRADIENT TEXT */
+        .animated-gradient-text {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue), var(--primary-blue));
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
 
         .id-badge { background: var(--card-white); color: var(--dark-blue); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; border: 1px solid var(--primary-blue); box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 15px; }
 
@@ -118,6 +135,21 @@
         .social-circles { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .social-circles a { background: rgba(255,255,255,0.15); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; }
     </style>
+
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('phantom_theme');
+            if (savedTheme) {
+                const root = document.documentElement;
+                if(savedTheme === 'green') { root.style.setProperty('--primary-blue', '#10b981'); root.style.setProperty('--dark-blue', '#047857'); root.style.setProperty('--bg-color', '#d1fae5'); }
+                else if(savedTheme === 'red') { root.style.setProperty('--primary-blue', '#ef4444'); root.style.setProperty('--dark-blue', '#b91c1c'); root.style.setProperty('--bg-color', '#fee2e2'); }
+                else if(savedTheme === 'purple') { root.style.setProperty('--primary-blue', '#8b5cf6'); root.style.setProperty('--dark-blue', '#6d28d9'); root.style.setProperty('--bg-color', '#ede9fe'); }
+                else if(savedTheme === 'pink') { root.style.setProperty('--primary-blue', '#ec4899'); root.style.setProperty('--dark-blue', '#be185d'); root.style.setProperty('--bg-color', '#fce7f3'); }
+                else if(savedTheme === 'dark') { root.style.setProperty('--primary-blue', '#475569'); root.style.setProperty('--dark-blue', '#0f172a'); root.style.setProperty('--bg-color', '#f1f5f9'); }
+                else { root.style.setProperty('--primary-blue', '#0ea5e9'); root.style.setProperty('--dark-blue', '#0369a1'); root.style.setProperty('--bg-color', '#e0f2fe'); } 
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -144,9 +176,16 @@
         <div class="top-nav">
             <div class="nav-left">
                 <i class="fa-solid fa-bars menu-btn" onclick="openMenu()"></i>
-                <span>👋 Welcome!</span>
+                <span class="animated-gradient-text">👋 Welcome!</span>
             </div>
-            <div class="nav-balance" id="navBalance">Loading...</div>
+            
+            <div class="nav-right" style="display: flex; align-items: center; gap: 12px;">
+                <div class="nav-balance" id="navBalance">Loading...</div>
+                
+                <div class="account-icon" onclick="openMenu()" style="background: var(--card-white); color: var(--primary-blue); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; border: 2px solid var(--bg-color); transition: 0.2s;">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
         </div>
 
         <div class="id-badge">
@@ -417,7 +456,6 @@
             const srvData = filteredServices.map(service => {
                 const titleText = `${service.service_id} - ${service.name}`;
                 const fullText = `${titleText} (₹${service.price} / 1000)`;
-                // Notice the inline style here uses var(--primary-blue) so it will change colors too!
                 const beautifulHtml = `<strong>${service.service_id}</strong> - ${service.name} <br><span style="color:var(--primary-blue); font-weight:800; font-size:0.85rem; padding-left:10px;">₹${service.price}</span>`;
                 
                 return {
@@ -491,10 +529,14 @@
         const auth = getAuth(app);
         const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-        // REAL-TIME THEME LISTENER
+        // REAL-TIME THEME LISTENER (Upgraded with LocalStorage)
         onSnapshot(doc(db, "settings", "branding"), (docData) => {
             if (docData.exists()) {
                 const color = docData.data().primaryColor;
+                
+                // Save the color to the browser memory for instant loading
+                localStorage.setItem('phantom_theme', color); 
+                
                 const root = document.documentElement;
                 if(color === 'green') { root.style.setProperty('--primary-blue', '#10b981'); root.style.setProperty('--dark-blue', '#047857'); root.style.setProperty('--bg-color', '#d1fae5'); }
                 else if(color === 'red') { root.style.setProperty('--primary-blue', '#ef4444'); root.style.setProperty('--dark-blue', '#b91c1c'); root.style.setProperty('--bg-color', '#fee2e2'); }
